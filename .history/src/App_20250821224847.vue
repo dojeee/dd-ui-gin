@@ -19,8 +19,4 @@
 
 
 
-<style scoped>
-.app {
-  background-color: skyblue;
-}
-</style>
+<style scoped></style>

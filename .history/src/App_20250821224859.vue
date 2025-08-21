@@ -21,6 +21,6 @@
 
 <style scoped>
 .app {
-  background-color: skyblue;
+  height: 100vh;
 }
 </style>

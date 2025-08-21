@@ -1,5 +1,7 @@
 <template>
-  <a-layout class="app">
+  <a-layout>
+
+
     <a-layout-header>
       <h2>Header</h2>
     </a-layout-header>
@@ -19,8 +21,4 @@
 
 
 
-<style scoped>
-.app {
-  background-color: skyblue;
-}
-</style>
+<style scoped></style>
