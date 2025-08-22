@@ -69,9 +69,11 @@
         <div class=" logo-top-left">
 
         </div>
+
         <div class="info-bottom-left">
 
         </div>
+
         <div class="links-bottm-right">
 
         </div>
