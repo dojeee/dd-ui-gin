@@ -1,21 +1,47 @@
-import request from '@/utils/request'
-import type { User } from '@/types'
+import request from '@/utils/request';
 
-// 登录
-export const login = (data: { phone: string; password: string }) => {
-  return request.post('/auth/login', data)
+// 定义登录请求的参数类型
+export interface LoginParams {
+    phone: string;
+    password: string;
 }
 
-// 获取用户信息
-export const getUserInfo = (id: string) => {
-  return request.get<User>(`/users/${id}`) // 泛型支持类型提示
+// 定义登录响应的数据类型
+export interface LoginResponse {
+    code: number;
+    message: string;
+    data: {
+        token: string;
+        userInfo: {
+            id: string;
+            name: string;
+            phone: string;
+            avatar?: string;
+        };
+    };
 }
 
-// 更新用户
-export const updateUser = (id: string, data: Partial<User>) => {
-  return request.put(`/users/${id}`, data)
-}
+// 登录 API 函数
+export const loginApi = (params: LoginParams): Promise<LoginResponse> => {
+    return request({
+        url: '/user/login',
+        method: 'post',
+        data: params
+    });
+};
 
-export * from './user'
-export * from './product'
-export * from './order'
+// 获取用户信息 API 函数
+export const getUserInfoApi = (): Promise<any> => {
+    return request({
+        url: '/user/info',
+        method: 'get'
+    });
+};
+
+// 退出登录 API 函数
+export const logoutApi = (): Promise<any> => {
+    return request({
+        url: '/user/logout',
+        method: 'post'
+    });
+};
