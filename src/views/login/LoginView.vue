@@ -29,7 +29,7 @@
                     </a-form-item>
 
                     <a-form-item>
-                        <a-button type="primary" html-type="submit" block size="large">
+                        <a-button type="primary" html-type="submit" block size="large" :loading="userStore.loading">
                             ནང་འཛུལ།
                         </a-button>
                     </a-form-item>
@@ -82,6 +82,7 @@ import {
 } from '@ant-design/icons-vue';
 
 import { ref } from 'vue';
+import { useUserStore } from '@/stores/userStores';
 
 
 const form = ref({
@@ -100,9 +101,20 @@ const rules = {
     ],
 };
 
-const handleSubmit = (values: any) => {
-    console.log('表单值:', values); // { phone: '138...', password: '...' }
-    // 这里的 values 是自动从 form 和 rules 中提取的
+const userStore = useUserStore();
+
+const handleSubmit = async (values: any) => {
+    try {
+        // 调用 store 中的登录 action
+        await userStore.login({
+            phone: values.phone,
+            password: values.password
+        });
+        // 登录成功后会自动跳转，这里不需要额外处理
+    } catch (error) {
+        // 错误处理已在 store 中完成，这里可以添加额外的处理逻辑
+        console.error('登录失败:', error);
+    }
 };
 
 
