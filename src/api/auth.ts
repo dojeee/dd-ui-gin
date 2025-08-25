@@ -1,8 +1,9 @@
 import { authService } from '@/utils/request';
 import type { LoginParams, LoginResponse } from '@/types/auth';
+import { ApiResponse } from '@/types/api';
 
 // 登录接口
-export const loginApi = (params: LoginParams): Promise<LoginResponse> => {
+export const loginApi = (params: LoginParams): Promise<ApiResponse> => {
     return authService.post('/login', params);
 };
 
