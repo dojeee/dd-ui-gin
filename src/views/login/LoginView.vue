@@ -7,8 +7,8 @@
                 </a-typography-title>
 
                 <a-form :model="form" :rules="rules" @finish="handleSubmit">
-                    <a-form-item name="phone">
-                        <a-input type="tel" v-model:value="form.phone" bordered placeholder="ཁ་པར་ཨང་གྲངས" size="large">
+                    <a-form-item name="mobile">
+                        <a-input type="tel" v-model:value="form.mobile" bordered placeholder="ཁ་པར་ཨང་གྲངས" size="large">
                             <template #prefix>
                                 <MobileOutlined />
                             </template>
@@ -75,8 +75,6 @@
 
 <script setup lang='ts'>
 import {
-    GithubOutlined,
-    GoogleOutlined,
     LockOutlined,
     MobileOutlined
 } from '@ant-design/icons-vue';
@@ -86,11 +84,11 @@ import { useUserStore } from '@/stores/userStores';
 
 
 const form = ref({
-    phone: '',
+    mobile: '',
     password: ''
 });
 const rules = {
-    phone: [
+    mobile: [
         { required: true, message: 'ཁ་པར་ཨང་གྲངས་གཞག་རོགས།', whitespace: false, trigger: 'change', validateTrigger: 'change' },
         { pattern: /^1[3-9]\d{9}$/, message: 'ཁ་པར་ཨང་གྲངས་ཡོངས་གྲགས་མ་ཡིན།', trigger: 'change',validateTrigger: 'change' },
     ],
@@ -107,7 +105,7 @@ const handleSubmit = async (values: any) => {
     try {
         // 调用 store 中的登录 action
         await userStore.login({
-            phone: values.phone,
+            mobile: values.mobile,
             password: values.password
         });
         // 登录成功后会自动跳转，这里不需要额外处理
