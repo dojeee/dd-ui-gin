@@ -41,32 +41,70 @@ const setupRequestInterceptor = (service: AxiosInstance) => {
 const setupResponseInterceptor = (service: AxiosInstance) => {
     service.interceptors.response.use(
         (response: AxiosResponse) => {
-            // 直接返回响应数据，让具体的 API 函数处理数据结构
-            return response.data;
+            const res = response.data;
+            
+            // 根据你的后端响应格式判断成功状态
+            const successCodes = [0, 200, 20000]; // 添加你的成功状态码
+            
+            if (successCodes.includes(res.code)) {
+                // 成功情况：返回完整响应数据
+                return res;
+            } else {
+                // 业务逻辑错误：显示后端返回的 msg
+                const errorMessage = res.msg || res.message || '请求失败';
+                message.error(errorMessage);
+                
+                // 创建一个包含错误信息的 Error 对象，使用类型断言
+                const error = new Error(errorMessage) as Error & {
+                    code?: number;
+                    response?: AxiosResponse;
+                };
+                error.code = res.code;
+                error.response = response;
+                
+                return Promise.reject(error);
+            }
         },
         (error) => {
             console.error('API 请求错误:', error);
             
-            // 统一错误处理
+            // HTTP 状态码错误处理
             if (error.response) {
                 const { status, data } = error.response;
-                switch (status) {
-                    case 401:
-                        message.error('未授权，请重新登录');
-                        localStorage.removeItem('token');
-                        // 可以在这里跳转到登录页
-                        break;
-                    case 403:
-                        message.error('权限不足');
-                        break;
-                    case 500:
-                        message.error('服务器错误');
-                        break;
-                    default:
-                        message.error(data?.message || '请求失败');
+                
+                // 先尝试从响应数据中提取错误信息
+                let errorMessage = '';
+                if (data && data.msg) {
+                    errorMessage = data.msg;
+                } else if (data && data.message) {
+                    errorMessage = data.message;
+                } else {
+                    // 根据 HTTP 状态码设置默认错误信息
+                    switch (status) {
+                        case 401:
+                            errorMessage = '未授权，请重新登录';
+                            localStorage.removeItem('token');
+                            break;
+                        case 403:
+                            errorMessage = '权限不足';
+                            break;
+                        case 404:
+                            errorMessage = '请求的资源不存在';
+                            break;
+                        case 500:
+                            errorMessage = '服务器内部错误';
+                            break;
+                        default:
+                            errorMessage = `请求失败 (${status})`;
+                    }
                 }
-            } else {
+                message.error(errorMessage);
+            } else if (error.request) {
+                // 网络错误
                 message.error('网络错误，请检查网络连接');
+            } else {
+                // 其他错误
+                message.error(error.message || '请求失败');
             }
             
             return Promise.reject(error);
