@@ -67,7 +67,7 @@ const setupResponseInterceptor = (service: AxiosInstance) => {
       }
     },
     (error) => {
-      console.error("API 请求错误:", error);
+      console.error("API request error:", error);
 
       // HTTP 状态码错误处理
       if (error.response) {
