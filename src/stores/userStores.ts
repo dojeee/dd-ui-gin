@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { loginApi, logoutApi } from "@/api/auth";
+import { loginApi, logoutApi, sendVerificationCodeApi } from "@/api/auth";
 import { getUserApi } from "@/api/user";
 import { message } from "ant-design-vue";
 import router from "@/routers/index";
@@ -52,6 +52,15 @@ export const useUserStore = defineStore("user", {
       } catch (error: any) {
       } finally {
         this.loading = false;
+      }
+    },
+
+    async sendVerificationCode(mobile: string) {
+      try {
+        await sendVerificationCodeApi(mobile);
+      } catch (error) {
+        console.error("发送验证码失败:", error);
+        throw error;
       }
     },
 
