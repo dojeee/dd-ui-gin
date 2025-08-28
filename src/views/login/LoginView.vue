@@ -16,14 +16,15 @@
           </a-form-item>
 
           <a-form-item name="verificationCode">
-            <div style="display: flex; gap: 12px; align-items: center;">
-              <a-input v-model:value="form.verificationCode" bordered placeholder="བདེན་དཔང་ཨང་རྟགས།" size="large"
-                style="flex:1">
+            <div class="sms-group">
+              <a-input class="sms-input" v-model:value="form.verificationCode" bordered placeholder="བདེན་དཔང་ཨང་རྟགས།"
+                size="large">
               </a-input>
 
-              <a-button :disabled="sending || countdown > 0" @click="handleSendCode(form.mobile)" size="large">
+              <a-button class="sms-btn" :disabled="sending || countdown > 0" :loading="sending"
+                @click="handleSendCode(form.mobile)" size="large">
                 <template v-if="countdown === 0">
-                  {{ sending ? 'ཨང་རྟགས་བསྐུར་བཞིན་ཡོད།...' : 'ཨང་རྟགས་བསྐུར' }}
+                  ཨང་རྟགས་བསྐུར
                 </template>
                 <template v-else>
                   {{ countdown }}
@@ -217,6 +218,25 @@ const handleSubmit = async (values: any) => {
 .terms-text {
   font-size: 12px;
   color: #5b6675;
+}
+
+/* SMS code group: keep input width stable while button text/countdown changes */
+.sms-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.sms-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  /* allow flex children to shrink without changing layout */
+}
+
+.sms-btn {
+  width: 120px;
+  /* 固定按钮宽度，避免倒计时文字改变导致输入框宽度抖动 */
+  flex: 0 0 120px;
 }
 
 .terms-text a {
