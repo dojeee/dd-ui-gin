@@ -153,33 +153,31 @@ const handleSubmit = async (values: any) => {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: #080d17;
-  /* 深邃的夜空蓝 */
-  color: #dcdcdc;
+  background:
+    radial-gradient(1000px 700px at 0% 20%, rgba(94, 234, 212, 0.85) 0%, rgba(94, 234, 212, 0) 60%),
+    linear-gradient(135deg, #8ec5fc 0%, #c4d5ef 45%, #a7f3d0 75%, #34d399 100%);
+  /* 晴朗暖色系渐变（日出暖黄 -> 柔橙 -> 天空蓝） */
+  color: #2c3e50;
 }
-
 .login-form-wrapper {
   width: 450px;
   padding: 20px;
 }
 
 .login-form-inner {
-  background-color: rgba(25, 28, 36, 0.8);
+  background: #ffffff;
   padding: 48px;
-  border-radius: 10px;
-  /* 更柔和的暗金色边框 */
-  border: 2px solid #b08e5c86;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  border: 1px solid #eef0f3;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
   margin-bottom: 24px;
-  backdrop-filter: blur(3px);
 }
 
 .form-title {
   text-align: center;
   margin-bottom: 32px;
-  color: #b08f5c !important;
-  /* 暗金色标题 */
-  font-weight: 600;
+  color: #2c3e50 !important;
+  font-weight: 700;
   font-size: 26px !important;
 }
 
@@ -193,14 +191,13 @@ const handleSubmit = async (values: any) => {
 
 .forgot-password {
   float: left;
-  /* Moved to the left */
-  color: #40a9ff;
-  /* Standard link color */
-  transition: color 0.3s;
+  color: #ff8a3d;
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
 
 .forgot-password:hover {
-  color: #69c0ff;
+  color: #ff7a1a;
 }
 
 .social-btn {
@@ -220,73 +217,87 @@ const handleSubmit = async (values: any) => {
 }
 
 .terms-text {
-  font-size: 10px;
-  /* Adjusted for better readability */
-  color: #a0a0a0;
+  font-size: 12px;
+  color: #5b6675;
 }
 
 .terms-text a {
-  color: #b08f5c;
+  color: #ff8a3d;
   text-decoration: none;
   margin: 0 4px;
-  /* Added space around links */
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.terms-text a:hover {
+  color: #ff7a1a;
 }
 
 /* Ant Design 组件深度定制 */
 :deep(.ant-input-affix-wrapper) {
-  background-color: rgba(0, 0, 0, 0.25) !important;
-  border: 1px solid #b08f5c !important;
-  border-radius: 8px !important;
+  background: #ffffff !important;
+  border: 1px solid #e6e9ee !important;
+  border-radius: 12px !important;
+  transition: all 0.2s ease;
+}
+
+:deep(.ant-input-affix-wrapper:hover) {
+  border-color: #ffb266 !important;
+}
+
+:deep(.ant-input-affix-wrapper:focus-within) {
+  border-color: #ff8a3d !important;
+  box-shadow: 0 0 0 2px rgba(255, 138, 61, 0.15) !important;
 }
 
 :deep(.ant-input) {
-  background-color: transparent !important;
-  color: #dcdcdc !important;
+  background-color: #ffffff !important;
+  color: #2c3e50 !important;
   font-size: 16px;
 }
 
 :deep(.ant-input::placeholder) {
-  color: #8c7b62 !important;
-  /* 更暗的占位符颜色 */
-  opacity: 0.8;
+  color: #9aa4b2 !important;
+  opacity: 1;
 }
 
 :deep(.ant-input-prefix .anticon) {
-  color: #b08f5c !important;
+  color: #ff8a3d !important;
 }
 
 :deep(.ant-btn-primary) {
-  background: #b08f5c !important;
-  border-color: #b08f5c !important;
-  color: #080d17 !important;
-  /* 深色文字 */
-  font-weight: bold;
-  border-radius: 8px !important;
-  transition: all 0.3s;
+  background: #ff8a3d !important;
+  border: 1px solid #ff8a3d !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  border-radius: 12px !important;
+  transition: all 0.2s ease;
 }
 
 :deep(.ant-btn-primary:hover) {
-  background: #c8a97e !important;
-  /* 悬停时提亮 */
+  background: #ff7a1a !important;
+  border-color: #ff7a1a !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(255, 138, 61, 0.3);
 }
 
 :deep(.ant-divider) {
-  border-color: #b08f5c !important;
-  color: #b08f5c;
+  border-color: #eef0f3 !important;
+  color: #73819a;
 }
 
 .register-text {
-  color: #a0a0a0;
+  color: #5b6675;
 }
 
 .register-text a {
-  color: #40a9ff;
-  /* Standard link color */
+  color: #ff8a3d;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.2s ease;
+  font-weight: 700;
 }
 
 .register-text a:hover {
-  color: #69c0ff;
+  color: #ff7a1a;
 }
 </style>
