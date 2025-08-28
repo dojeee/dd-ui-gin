@@ -4,7 +4,7 @@ import { ApiResponse } from '@/types/api';
 
 // 登录接口
 export const loginApi = (params: LoginParams): Promise<ApiResponse> => {
-    return authService.post('/login2', params);
+    return authService.post('/login', params);
 };
 
 // 退出登录接口（如果后端有的话）
