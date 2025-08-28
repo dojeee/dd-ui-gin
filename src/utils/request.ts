@@ -102,10 +102,10 @@ const setupResponseInterceptor = (service: AxiosInstance) => {
         message.error(errorMessage);
       } else if (error.request) {
         // 网络错误
-        message.error("Network error, Please check your network connection.");
+        console.error("Network error:", error.request);
       } else {
         // 其他错误
-        message.error(error.message || "请求失败");
+        message.error(error.message);[]
       }
 
       return Promise.reject(error);
