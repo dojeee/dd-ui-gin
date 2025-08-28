@@ -1,7 +1,7 @@
 // 登录请求参数
 export interface LoginParams {
     mobile: string;    // 匹配后端接口
-    password: string;
+    verificationCode: string;
 }
 
 // 登录响应数据

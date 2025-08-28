@@ -8,65 +8,48 @@
 
         <a-form :model="form" :rules="rules" @finish="handleSubmit">
           <a-form-item name="mobile">
-            <a-input
-              type="tel"
-              v-model:value="form.mobile"
-              bordered
-              placeholder="ཁ་པར་ཨང་གྲངས"
-              size="large"
-            >
+            <a-input v-model:value="form.mobile" bordered placeholder="ཁ་པར་ཨང་གྲངས" size="large">
               <template #prefix>
                 <MobileOutlined />
               </template>
             </a-input>
           </a-form-item>
 
-          <a-form-item name="password">
-            <a-input-password
-              type="password"
-              v-model:value="form.password"
-              placeholder="གསང་གྲངས"
-              size="large"
-            >
-              <template #prefix>
-                <LockOutlined />
-              </template>
-            </a-input-password>
+          <a-form-item name="verificationCode">
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <a-input v-model:value="form.verificationCode" bordered placeholder="བདེན་དཔང་ཨང་རྟགས།" size="large"
+                style="flex:1">
+              </a-input>
+
+              <a-button :disabled="sending || countdown > 0" @click="handleSendCode" size="large">
+                <template v-if="countdown === 0">
+                  {{ sending ? 'ཨང་རྟགས་བསྐུར་བཞིན་ཡོད།...' : 'ཨང་རྟགས་བསྐུར' }}
+                </template>
+                <template v-else>
+                  {{ countdown }}
+                </template>
+              </a-button>
+            </div>
           </a-form-item>
 
-          <a-form-item style="margin-bottom: 16px">
-            <a href="#" class="forgot-password">གསང་གྲངས་བརྗེད་སོང་།</a>
-          </a-form-item>
 
+          <a-divider></a-divider>
           <a-form-item>
-            <a-button
-              type="primary"
-              html-type="submit"
-              block
-              size="large"
-              :loading="userStore.loading"
-            >
+            <a-button type="primary" html-type="submit" block size="large" :loading="userStore.loading">
               ནང་འཛུལ།
             </a-button>
           </a-form-item>
 
-          <a-divider>or</a-divider>
-
-          <a-typography-text
-            type="secondary"
-            class="register-text"
-            style="display: block; text-align: center; margin-bottom: 16px"
-          >
+          <!-- <a-typography-text type="secondary" class="register-text"
+            style="display: block; text-align: center; margin-bottom: 16px">
             རྩིས་ཁྲ་མེད། <a href="#">ད་ལྟ་ཐོ་འགོད་བྱོས།</a>
-          </a-typography-text>
+          </a-typography-text> -->
         </a-form>
       </div>
       <div class="terms-container">
         <a-typography-text type="secondary" class="terms-text">
           ཁྱེད་ཀྱིས་ང་ཚོའི་བེད་སྤྱོད་ཀྱི་ཆ་རྐྱེན་དང་སྒེར་གྱི་སྲིད་ཇུས་ལ་མོས་མཐུན་བྱེད་ཡོད།<a
-            href="#"
-            >སྤྱོད་མཁན་གྱི་ཆིངས་ཡིག།</a
-          >
+            href="#">སྤྱོད་མཁན་གྱི་ཆིངས་ཡིག།</a>
           & <a href="#">གསང་བའི་སྲིད་ཇུས།</a>
         </a-typography-text>
       </div>
@@ -89,7 +72,7 @@ import { message } from "ant-design-vue";
 
 const form = ref({
   mobile: "",
-  password: "",
+  verificationCode: "",
 });
 const rules = {
   mobile: [
@@ -106,36 +89,61 @@ const rules = {
       trigger: "change",
       validateTrigger: "change",
     },
-  ],
-  password: [
-    {
-      required: true,
-      message: "གསང་གྲངས་གཞག་རོགས།",
-      trigger: "change",
-    },
-    {
-      min: 8,
-      message: "གསང་གྲངས་ཡིག་འབྲུ བརྒྱད ལས་ཆེ་དགོས།",
-      trigger: "change",
-      validateTrigger: "change",
-    },
-    {
-      max: 15,
-      message: "གསང་གྲངས་ཡིག་འབྲུ་ བཅོ་ལྔའི ་མན་ཡིན་དགོས།",
-      trigger: "change",
-      validateTrigger: "change",
-    },
-  ],
+  ]
 };
 
 const userStore = useUserStore();
+
+// 验证码发送状态
+const sending = ref(false);
+const countdown = ref(0);
+let timer: number | undefined = undefined;
+
+const startCountdown = (seconds = 60) => {
+  countdown.value = seconds;
+  timer && clearInterval(timer);
+  timer = setInterval(() => {
+    countdown.value -= 1;
+    if (countdown.value <= 0) {
+      timer && clearInterval(timer);
+      timer = undefined;
+    }
+  }, 1000) as unknown as number;
+};
+
+const validateMobile = (mobile: string) => {
+  return /^1[3-9]\d{9}$/.test(mobile);
+};
+
+const handleSendCode = async () => {
+  if (sending.value || countdown.value > 0) return;
+  if (!validateMobile(form.value.mobile)) {
+    message.warning('ཁ་པར་ཨང་གྲངས་ནོར་འདུག');
+    return;
+  }
+
+  try {
+    sending.value = true;
+    // TODO: 在这里调用真实的发送验证码 API，例如 import { sendSms } from '@/api/auth'
+    // await sendSms({ mobile: form.value.mobile });
+    // 目前用 message 占位并启动倒计时
+    await new Promise((res) => setTimeout(res, 800));
+    message.success('བདེན་དཔང་ཨང་རྟགས་བསྐུར་ཟིན།');
+    startCountdown(60);
+  } catch (err) {
+    console.error('བདེན་དཔང་ཨང་རྟགས་བསྐུར་མ་ཐུབ།', err);
+    message.error('ཨང་རྟགས་བསྐུར་མ་ཐུབ། ཡང་བསྐྱར་ཚོད་ལྟ་གནང་རོགས།');
+  } finally {
+    sending.value = false;
+  }
+};
 
 const handleSubmit = async (values: any) => {
   try {
     // 调用 store 中的登录 action
     await userStore.login({
       mobile: values.mobile,
-      password: values.password,
+      verificationCode: values.verificationCode,
     });
     // 登录成功后会自动跳转，这里不需要额外处理
   } catch (error) {
@@ -159,6 +167,7 @@ const handleSubmit = async (values: any) => {
   /* 晴朗暖色系渐变（日出暖黄 -> 柔橙 -> 天空蓝） */
   color: #2c3e50;
 }
+
 .login-form-wrapper {
   width: 450px;
   padding: 20px;
@@ -187,17 +196,6 @@ const handleSubmit = async (values: any) => {
 
 .login-form-inner .ant-form-item:nth-of-type(2) {
   margin-top: -5px;
-}
-
-.forgot-password {
-  float: left;
-  color: #ff8a3d;
-  font-weight: 600;
-  transition: color 0.2s ease;
-}
-
-.forgot-password:hover {
-  color: #ff7a1a;
 }
 
 .social-btn {
