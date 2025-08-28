@@ -11,7 +11,7 @@ const authPrefix = import.meta.env.VITE_APP_AUTH_PREFIX || "/auth";
 
 // 1. 认证接口实例 (带 /auth 前缀) - 用于 /login, /register 等
 export const authService: AxiosInstance = axios.create({
-  baseURL: baseURL + authPrefix,
+  baseURL: baseURL,
   timeout: 10000,
 });
 

@@ -21,7 +21,7 @@
                 style="flex:1">
               </a-input>
 
-              <a-button :disabled="sending || countdown > 0" @click="handleSendCode" size="large">
+              <a-button :disabled="sending || countdown > 0" @click="handleSendCode(form.mobile)" size="large">
                 <template v-if="countdown === 0">
                   {{ sending ? 'ཨང་རྟགས་བསྐུར་བཞིན་ཡོད།...' : 'ཨང་རྟགས་བསྐུར' }}
                 </template>
@@ -115,9 +115,9 @@ const validateMobile = (mobile: string) => {
   return /^1[3-9]\d{9}$/.test(mobile);
 };
 
-const handleSendCode = async () => {
+const handleSendCode = async (mobile: string) => {
   if (sending.value || countdown.value > 0) return;
-  if (!validateMobile(form.value.mobile)) {
+  if (!validateMobile(mobile)) {
     message.warning('ཁ་པར་ཨང་གྲངས་ནོར་འདུག');
     return;
   }
@@ -127,7 +127,7 @@ const handleSendCode = async () => {
     // TODO: 在这里调用真实的发送验证码 API，例如 import { sendSms } from '@/api/auth'
     // await sendSms({ mobile: form.value.mobile });
     // 目前用 message 占位并启动倒计时
-    await new Promise((res) => setTimeout(res, 800));
+    await userStore.sendVerificationCode(mobile)
     message.success('བདེན་དཔང་ཨང་རྟགས་བསྐུར་ཟིན།');
     startCountdown(60);
   } catch (err) {
