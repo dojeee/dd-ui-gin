@@ -181,6 +181,14 @@ const handleSubmit = async (values: any) => {
   border: 1px solid #eef0f3;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
   margin-bottom: 24px;
+
+  /* -- Theme Variables for Unified Styling -- */
+  --primary-color: #bfba29;
+  --primary-color-hover: #ff7a1a;
+  --border-color: #e6e9ee;
+  --border-color-hover: #ffb266;
+  --focus-shadow-color: rgba(255, 138, 61, 0.15);
+  --component-border-radius: 12px;
 }
 
 .form-title {
@@ -240,7 +248,7 @@ const handleSubmit = async (values: any) => {
 }
 
 .terms-text a {
-  color: #ff8a3d;
+  color: var(--primary-color);
   text-decoration: none;
   margin: 0 4px;
   font-weight: 600;
@@ -248,24 +256,27 @@ const handleSubmit = async (values: any) => {
 }
 
 .terms-text a:hover {
-  color: #ff7a1a;
+  color: var(--primary-color-hover);
 }
 
 /* Ant Design 组件深度定制 */
-:deep(.ant-input-affix-wrapper) {
+:deep(.ant-input-affix-wrapper),
+:deep(.sms-input.ant-input) {
   background: #ffffff !important;
-  border: 1px solid #e6e9ee !important;
-  border-radius: 12px !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--component-border-radius) !important;
   transition: all 0.2s ease;
 }
 
-:deep(.ant-input-affix-wrapper:hover) {
-  border-color: #ffb266 !important;
+:deep(.ant-input-affix-wrapper:hover),
+:deep(.sms-input.ant-input:hover) {
+  border-color: var(--border-color-hover) !important;
 }
 
-:deep(.ant-input-affix-wrapper:focus-within) {
-  border-color: #ff8a3d !important;
-  box-shadow: 0 0 0 2px rgba(255, 138, 61, 0.15) !important;
+:deep(.ant-input-affix-wrapper:focus-within),
+:deep(.sms-input.ant-input:focus) {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 2px var(--focus-shadow-color) !important;
 }
 
 :deep(.ant-input) {
@@ -280,23 +291,48 @@ const handleSubmit = async (values: any) => {
 }
 
 :deep(.ant-input-prefix .anticon) {
-  color: #ff8a3d !important;
+  color: var(--primary-color) !important;
 }
 
 :deep(.ant-btn-primary) {
-  background: #ff8a3d !important;
-  border: 1px solid #ff8a3d !important;
+  background: var(--primary-color) !important;
+  border: 1px solid var(--primary-color) !important;
   color: #ffffff !important;
   font-weight: 700;
-  border-radius: 12px !important;
+  border-radius: var(--component-border-radius) !important;
   transition: all 0.2s ease;
 }
 
 :deep(.ant-btn-primary:hover) {
-  background: #ff7a1a !important;
-  border-color: #ff7a1a !important;
+  background: var(--primary-color-hover) !important;
+  border-color: var(--primary-color-hover) !important;
   transform: translateY(-1px);
   box-shadow: 0 6px 14px rgba(255, 138, 61, 0.3);
+}
+
+/* -- Unified style for the SMS button -- */
+:deep(.sms-btn.ant-btn) {
+  background: #ffffff !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--component-border-radius) !important;
+  color: #2c3e50 !important;
+  transition: all 0.2s ease;
+}
+
+:deep(.sms-btn.ant-btn:hover) {
+  border-color: var(--border-color-hover) !important;
+  color: var(--primary-color) !important;
+}
+
+:deep(.sms-btn.ant-btn:focus) {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 2px var(--focus-shadow-color) !important;
+}
+
+:deep(.sms-btn.ant-btn:disabled) {
+  background: #f5f5f5 !important;
+  border-color: #d9d9d9 !important;
+  color: rgba(0, 0, 0, 0.25) !important;
 }
 
 :deep(.ant-divider) {
@@ -309,13 +345,13 @@ const handleSubmit = async (values: any) => {
 }
 
 .register-text a {
-  color: #ff8a3d;
+  color: var(--primary-color);
   text-decoration: none;
   transition: color 0.2s ease;
   font-weight: 700;
 }
 
 .register-text a:hover {
-  color: #ff7a1a;
+  color: var(--primary-color-hover);
 }
 </style>
