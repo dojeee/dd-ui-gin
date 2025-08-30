@@ -196,13 +196,28 @@ import { ref, watch } from 'vue';
 const collapsed = ref(false);
 const selectedKeys = ref(['foryou']);
 const allSubMenuKeys = ['customFeeds', 'network', 'bookmarks', 'discover'];
-const openKeys = ref(allSubMenuKeys);
+const openKeys = ref(collapsed.value ? [] : allSubMenuKeys);
+
+// 监听折叠状态变化，自动展开/收起所有子菜单
+watch(collapsed, (newVal) => {
+    if (newVal) {
+        // 折叠时展开所有子菜单，让图标显示
+        openKeys.value = allSubMenuKeys;
+    } else {
+        // 展开时保持所有子菜单打开
+        openKeys.value = allSubMenuKeys;
+    }
+});
 const allKeysOpen = ref(true);
 
 
 // 切换侧边栏（左右展开/收起）
 const toggleSide = () => {
     collapsed.value = !collapsed.value;
+    // 确保折叠时所有子菜单都展开显示图标
+    if (collapsed.value) {
+        openKeys.value = allSubMenuKeys;
+    }
 };
 
 const logout = () => {
@@ -395,7 +410,7 @@ const logout = () => {
     color: #6a6a6a;
 }
 
-/* 折叠时的样式处理 */
+/* 折叠时的样式处理 - 让所有菜单项平铺显示 */
 .sider.is-collapsed .menu :deep(.ant-menu-submenu-title) {
     display: none !important;
 }
@@ -404,9 +419,12 @@ const logout = () => {
     display: none !important;
 }
 
+/* 让子菜单容器展开，不显示嵌套结构 */
 .sider.is-collapsed .menu :deep(.ant-menu-submenu) {
     height: auto !important;
     line-height: normal !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .sider.is-collapsed .menu :deep(.ant-menu-sub) {
@@ -415,58 +433,63 @@ const logout = () => {
     box-shadow: none !important;
     border-radius: 0 !important;
     padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    display: block !important;
 }
 
-/* 折叠状态下的菜单项样式 */
-.sider.is-collapsed .menu :deep(.ant-menu-item) {
-    text-align: center !important;
-    padding: 0 !important;
-    margin: 4px 8px !important;
-    width: calc(100% - 16px) !important;
-    height: 40px !important;
-    line-height: 40px !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-}
-
+/* 统一所有菜单项样式 - 一级和二级菜单项都显示为同样的图标 */
+.sider.is-collapsed .menu :deep(.ant-menu-item),
 .sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item) {
     text-align: center !important;
     padding: 0 !important;
-    margin: 4px 8px !important;
+    margin: 2px 8px !important;
     width: calc(100% - 16px) !important;
     height: 40px !important;
     line-height: 40px !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+    border-radius: 8px !important;
+    position: relative !important;
 }
 
-/* 隐藏文字，保留图标 */
+/* 隐藏所有文字，只保留图标 */
 .sider.is-collapsed .menu :deep(.ant-menu-item) .ant-menu-title-content,
-.sider.is-collapsed .menu :deep(.ant-menu-item) span:not(.anticon) {
-    display: none !important;
-}
-
+.sider.is-collapsed .menu :deep(.ant-menu-item) span:not(.anticon),
 .sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item) .ant-menu-title-content,
 .sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item) span:not(.anticon) {
     display: none !important;
 }
 
-/* 确保图标显示 */
+/* 确保所有图标显示并对齐 */
 .sider.is-collapsed .menu :deep(.anticon) {
     font-size: 18px !important;
     margin: 0 !important;
-    display: inline-block !important;
+    display: inline-flex !important;
     color: var(--menu-icon-color) !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
-.sider.is-collapsed .menu :deep(.ant-menu-item .anticon) {
-    margin-right: 0 !important;
-}
-
+.sider.is-collapsed .menu :deep(.ant-menu-item .anticon),
 .sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item .anticon) {
     margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+/* 确保子菜单项的悬停和选中效果 */
+.sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item:hover) {
+    background-color: var(--menu-hover-bg) !important;
+    color: var(--menu-selected-color) !important;
+}
+
+.sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item-selected) {
+    background-color: var(--menu-selected-bg) !important;
+    color: var(--menu-selected-color) !important;
 }
 
 /* 图标统一样式 */
