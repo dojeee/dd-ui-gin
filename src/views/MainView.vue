@@ -3,33 +3,7 @@
     <a-layout class="admin-layout">
 
         <!-- 顶部导航 -->
-        <a-layout-header class="header">
-
-            <h2 class="header-title">Td Site</h2>
-
-            <div class="header-right">
-                <a-button class="feed-settings-btn">
-                    <template #icon>
-                        <ControlOutlined />
-                    </template>
-                    Feed settings
-                </a-button>
-
-                <a-dropdown>
-                    <div class="user-panel">
-                        <a-avatar size="small" src="https://randomuser.me/api/portraits/men/1.jpg" />
-                    </div>
-                    <template #overlay>
-                        <a-menu>
-                            <a-menu-item key="1">Profile</a-menu-item>
-                            <a-menu-item key="3" @click="logout">Logout</a-menu-item>
-                        </a-menu>
-                    </template>
-                </a-dropdown>
-            </div>
-        </a-layout-header>
-
-
+        <MainHeaderView />
 
         <!-- 侧边栏 -->
         <a-layout-sider v-model:collapsed="collapsed" :width="240" :collapsed-width="70"
@@ -190,7 +164,7 @@ import {
     ControlOutlined, LeftOutlined, RightOutlined,
     ClockCircleOutlined, TrophyOutlined, MessageOutlined
 } from '@ant-design/icons-vue';
-
+import MainHeaderView from './main/MainHeaderView.vue';
 import { ref, watch } from 'vue';
 
 const collapsed = ref(false);
@@ -503,22 +477,6 @@ const logout = () => {
     background: #0d0d0d;
 }
 
-.header {
-    background: #1a1a1a;
-    padding: 0 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: none;
-    border-bottom: 1px solid #2a2a2a;
-    height: 64px;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 1000;
-}
-
 
 .collapse-sidebar-btn {
     color: #a0a0a0;
@@ -532,11 +490,6 @@ const logout = () => {
     font-weight: 600;
 }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
 
 .feed-settings-btn {
     background-color: #2a2a2a;
@@ -545,9 +498,6 @@ const logout = () => {
     border-radius: 8px;
 }
 
-.user-panel {
-    cursor: pointer;
-}
 
 /* 内容区域 */
 .main-content {
