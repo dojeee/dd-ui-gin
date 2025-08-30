@@ -120,6 +120,18 @@
                         </template>
                         <span>Quick saves</span>
                     </a-menu-item>
+                    <a-menu-item key="readLater" title="Read it later">
+                        <template #icon>
+                            <ClockCircleOutlined />
+                        </template>
+                        <span>Read it later</span>
+                    </a-menu-item>
+                    <a-menu-item key="newFolder" title="New folder">
+                        <template #icon>
+                            <PlusOutlined />
+                        </template>
+                        <span>New folder</span>
+                    </a-menu-item>
                 </a-sub-menu>
 
                 <a-sub-menu key="discover">
@@ -137,6 +149,18 @@
                             <GlobalOutlined />
                         </template>
                         <span>Sources</span>
+                    </a-menu-item>
+                    <a-menu-item key="leaderboard" title="Leaderboard">
+                        <template #icon>
+                            <TrophyOutlined />
+                        </template>
+                        <span>Leaderboard</span>
+                    </a-menu-item>
+                    <a-menu-item key="discussions" title="Discussions">
+                        <template #icon>
+                            <MessageOutlined />
+                        </template>
+                        <span>Discussions</span>
                     </a-menu-item>
                 </a-sub-menu>
             </a-menu>
@@ -163,7 +187,8 @@ import {
     PlusOutlined,
     CompassOutlined, UsergroupAddOutlined, RiseOutlined, HistoryOutlined,
     ReadOutlined, BookOutlined, TagOutlined, GlobalOutlined,
-    ControlOutlined, LeftOutlined, RightOutlined
+    ControlOutlined, LeftOutlined, RightOutlined,
+    ClockCircleOutlined, TrophyOutlined, MessageOutlined
 } from '@ant-design/icons-vue';
 
 import { ref, watch } from 'vue';
@@ -194,24 +219,24 @@ const logout = () => {
 
 /* 侧边栏样式 */
 .sider {
-    background: #1a1a1a !important;
+    background: #1f2937 !important;
     box-shadow: none;
-    border-right: 1px solid #2a2a2a;
+    border-right: 1px solid #374151;
     transition: all 0.2s;
     flex: 0 0 auto;
 }
 
 /* 可定制变量：统一管理侧边栏颜色/图标/字体等 */
 .sider {
-    --menu-icon-color: #e42f2f;
-    --menu-icon-size: 20px;
-    --menu-toggle-icon-size: 5px;
-    --menu-font-size: 16px;
-    --menu-text-color: #a0a0a0;
-    --submenu-title-color: #6a6a6a;
-    --submenu-font-size: 12px;
-    --menu-hover-bg: #252525;
-    --menu-selected-bg: #2a2a2a;
+    --menu-icon-color: #9ca3af;
+    --menu-icon-size: 18px;
+    --menu-toggle-icon-size: 16px;
+    --menu-font-size: 14px;
+    --menu-text-color: #d1d5db;
+    --submenu-title-color: #9ca3af;
+    --submenu-font-size: 11px;
+    --menu-hover-bg: #374151;
+    --menu-selected-bg: #4b5563;
     --menu-selected-color: #ffffff;
 }
 
@@ -301,15 +326,20 @@ const logout = () => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 32px;
-    min-width: 32px;
+    height: 28px;
+    min-width: 28px;
     color: var(--menu-icon-color);
     font-size: var(--menu-toggle-icon-size);
-    padding: 2px 6px;
+    padding: 4px;
     border: none;
     background: transparent;
     cursor: pointer;
-    clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.menu-toggle-btn:hover {
+    background-color: var(--menu-hover-bg);
 }
 
 /* 保证折叠状态下按钮和菜单图标在同一行基线 */
@@ -329,10 +359,13 @@ const logout = () => {
 .menu :deep(.ant-menu-item),
 .menu :deep(.ant-menu-submenu-title) {
     color: var(--menu-text-color);
-    border-radius: 6px;
-    margin: 4px 0 !important;
-    width: 100%;
+    border-radius: 8px;
+    margin: 2px 8px !important;
+    width: calc(100% - 16px);
     font-size: var(--menu-font-size);
+    height: 40px;
+    line-height: 40px;
+    padding: 0 12px !important;
 }
 
 .menu :deep(.ant-menu-item-selected) {
@@ -362,36 +395,78 @@ const logout = () => {
     color: #6a6a6a;
 }
 
-/* 折叠时：隐藏父级 a-sub-menu（标题/箭头），展示其子项为图标形式 */
-.sider.is-collapsed .menu :deep(.ant-menu-submenu-title),
+/* 折叠时的样式处理 */
+.sider.is-collapsed .menu :deep(.ant-menu-submenu-title) {
+    display: none !important;
+}
+
 .sider.is-collapsed .menu :deep(.ant-menu-submenu-arrow) {
     display: none !important;
 }
 
 .sider.is-collapsed .menu :deep(.ant-menu-submenu) {
-    padding: 0 !important;
+    height: auto !important;
+    line-height: normal !important;
 }
 
 .sider.is-collapsed .menu :deep(.ant-menu-sub) {
-    display: block !important;
+    position: static !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
 }
 
-.sider.is-collapsed .menu :deep(.ant-menu-sub) .ant-menu-item {
+/* 折叠状态下的菜单项样式 */
+.sider.is-collapsed .menu :deep(.ant-menu-item) {
+    text-align: center !important;
+    padding: 0 !important;
+    margin: 4px 8px !important;
+    width: calc(100% - 16px) !important;
+    height: 40px !important;
+    line-height: 40px !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    padding: 0 !important;
-    height: 40px;
-    margin: 4px 0 !important;
 }
 
-.sider.is-collapsed .menu :deep(.ant-menu-item) span,
-.sider.is-collapsed .menu :deep(.ant-menu-sub) .ant-menu-item span {
+.sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item) {
+    text-align: center !important;
+    padding: 0 !important;
+    margin: 4px 8px !important;
+    width: calc(100% - 16px) !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+/* 隐藏文字，保留图标 */
+.sider.is-collapsed .menu :deep(.ant-menu-item) .ant-menu-title-content,
+.sider.is-collapsed .menu :deep(.ant-menu-item) span:not(.anticon) {
     display: none !important;
 }
 
+.sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item) .ant-menu-title-content,
+.sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item) span:not(.anticon) {
+    display: none !important;
+}
+
+/* 确保图标显示 */
 .sider.is-collapsed .menu :deep(.anticon) {
-    font-size: var(--menu-icon-size) !important;
+    font-size: 18px !important;
+    margin: 0 !important;
+    display: inline-block !important;
+    color: var(--menu-icon-color) !important;
+}
+
+.sider.is-collapsed .menu :deep(.ant-menu-item .anticon) {
+    margin-right: 0 !important;
+}
+
+.sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item .anticon) {
+    margin-right: 0 !important;
 }
 
 /* 图标统一样式 */
