@@ -141,15 +141,7 @@
 
         </a-layout-sider>
 
-        <!-- 主内容区 -->
-        <a-layout class="content-layout">
-
-
-            <!-- 页面内容 -->
-            <a-layout-content class="main-content">
-                <router-view />
-            </a-layout-content>
-        </a-layout>
+        <MainContentView />
     </a-layout>
 </template>
 
@@ -165,6 +157,8 @@ import {
     ClockCircleOutlined, TrophyOutlined, MessageOutlined
 } from '@ant-design/icons-vue';
 import MainHeaderView from './main/MainHeaderView.vue';
+import MainContentView from './main/MainContentView.vue';
+
 import { ref, watch } from 'vue';
 
 const collapsed = ref(false);
@@ -241,14 +235,7 @@ const logout = () => {
 }
 
 /* 主内容根据侧边栏宽度偏移，保证不被覆盖 */
-.sider+.content-layout {
-    margin-left: 240px;
-    transition: margin-left 0.2s;
-}
 
-.sider.is-collapsed+.content-layout {
-    margin-left: 80px;
-}
 
 .sider-content {
     flex-direction: column;
@@ -472,10 +459,6 @@ const logout = () => {
     font-size: var(--menu-icon-size);
 }
 
-/* 主内容区 */
-.content-layout {
-    background: #0d0d0d;
-}
 
 
 .collapse-sidebar-btn {
@@ -498,11 +481,4 @@ const logout = () => {
     border-radius: 8px;
 }
 
-
-/* 内容区域 */
-.main-content {
-    padding: 88px 24px 24px 24px;
-    /* 顶部留出 header 空间 */
-    color: #ffffff;
-}
 </style>
