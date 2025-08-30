@@ -4,9 +4,8 @@
 
         <!-- 顶部导航 -->
         <a-layout-header class="header">
-            <div class="header-left">
-                <span class="header-title">For You</span>
-            </div>
+
+            <h2 class="header-title">Td Site</h2>
 
             <div class="header-right">
                 <a-button class="feed-settings-btn">
@@ -33,126 +32,116 @@
 
 
         <!-- 侧边栏 -->
-        <a-layout-sider v-model:collapsed="collapsed" collapsible :width="240" :collapsed-width="80"
+        <a-layout-sider v-model:collapsed="collapsed" collapsible :width="240" :collapsed-width="70"
             :class="['sider', { 'is-collapsed': collapsed }]" theme="dark">
-            <div class="sider-content">
-                <div class="menu-header">
-                    <div class="menu-header-left">
-                        <span class="menu-header-title" v-if="!collapsed">Menu</span>
-                    </div>
-                    <div class="menu-header-right">
-                        <a-button type="text" class="menu-header-toggle" @click.stop="toggleSide">
-                            <template #icon>
-                                <LeftOutlined v-if="!collapsed" />
-                                <RightOutlined v-else />
-                            </template>
-                        </a-button>
-                    </div>
-                </div>
 
-                <a-menu v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" mode="inline" theme="dark"
-                    class="menu">
-                    <!-- Static Group -->
-                    <a-sub-menu key="menu" class="no-arrow">
-                        <template #title>
-                            <div class="menu-title">
-                                <span class="submenu-title">MENUS</span>
-                            </div>
-                        </template>
-                    </a-sub-menu>
-                    <a-menu-item key="foryou">
+            <a-menu v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" mode="inline" class="menu">
+
+                <a-view class="menu-title">
+                    <span style="color: #a0a0a0;">Menus</span>
+                    <a-button type="button" style="color: teal;">
                         <template #icon>
-                            <CompassOutlined />
+                            <LeftOutlined v-if="!collapsed" @click="toggleSide" />
+                            <RightOutlined v-else @click="toggleSide" />
                         </template>
-                        <span>For You</span>
-                    </a-menu-item>
-                    <a-menu-item key="following">
+                    </a-button>
+                </a-view>
+
+
+
+                <a-menu-item key="foryou">
+                    <template #icon>
+                        <CompassOutlined />
+                    </template>
+                    <span>For You</span>
+                </a-menu-item>
+                <a-menu-item key="following">
+                    <template #icon>
+                        <UsergroupAddOutlined />
+                    </template>
+                    <span>Following</span>
+                </a-menu-item>
+                <a-menu-item key="explore">
+                    <template #icon>
+                        <RiseOutlined />
+                    </template>
+                    <span>Explore</span>
+                </a-menu-item>
+                <a-menu-item key="history">
+                    <template #icon>
+                        <HistoryOutlined />
+                    </template>
+                    <span>History</span>
+                </a-menu-item>
+
+                <!-- Collapsible Groups -->
+                <a-sub-menu key="customFeeds">
+                    <template #title>
+                        <span class="submenu-title">Custom feeds</span>
+                    </template>
+                    <a-menu-item key="addCustomFeed">
                         <template #icon>
-                            <UsergroupAddOutlined />
+                            <PlusOutlined />
                         </template>
-                        <span>Following</span>
+                        <span>Custom feed</span>
                     </a-menu-item>
-                    <a-menu-item key="explore">
+                </a-sub-menu>
+
+                <a-sub-menu key="network">
+                    <template #title>
+                        <span class="submenu-title">Network</span>
+                    </template>
+                    <a-menu-item key="findSquads">
                         <template #icon>
-                            <RiseOutlined />
+                            <TeamOutlined />
                         </template>
-                        <span>Explore</span>
+                        <span>Find Squads</span>
                     </a-menu-item>
-                    <a-menu-item key="history">
+                    <a-menu-item key="newSquad">
                         <template #icon>
-                            <HistoryOutlined />
+                            <PlusOutlined />
                         </template>
-                        <span>History</span>
+                        <span>New Squad</span>
                     </a-menu-item>
+                </a-sub-menu>
 
-                    <!-- Collapsible Groups -->
-                    <a-sub-menu key="customFeeds">
-                        <template #title>
-                            <span class="submenu-title">Custom feeds</span>
+                <a-sub-menu key="bookmarks">
+                    <template #title>
+                        <span class="submenu-title">Bookmarks</span>
+                    </template>
+                    <a-menu-item key="briefings">
+                        <template #icon>
+                            <ReadOutlined />
                         </template>
-                        <a-menu-item key="addCustomFeed">
-                            <template #icon>
-                                <PlusOutlined />
-                            </template>
-                            <span>Custom feed</span>
-                        </a-menu-item>
-                    </a-sub-menu>
+                        <span>Presidential briefings</span>
+                    </a-menu-item>
+                    <a-menu-item key="saves">
+                        <template #icon>
+                            <BookOutlined />
+                        </template>
+                        <span>Quick saves</span>
+                    </a-menu-item>
+                </a-sub-menu>
 
-                    <a-sub-menu key="network">
-                        <template #title>
-                            <span class="submenu-title">Network</span>
+                <a-sub-menu key="discover">
+                    <template #title>
+                        <span class="submenu-title">Discover</span>
+                    </template>
+                    <a-menu-item key="tags">
+                        <template #icon>
+                            <TagOutlined />
                         </template>
-                        <a-menu-item key="findSquads">
-                            <template #icon>
-                                <TeamOutlined />
-                            </template>
-                            <span>Find Squads</span>
-                        </a-menu-item>
-                        <a-menu-item key="newSquad">
-                            <template #icon>
-                                <PlusOutlined />
-                            </template>
-                            <span>New Squad</span>
-                        </a-menu-item>
-                    </a-sub-menu>
+                        <span>Tags</span>
+                    </a-menu-item>
+                    <a-menu-item key="sources">
+                        <template #icon>
+                            <GlobalOutlined />
+                        </template>
+                        <span>Sources</span>
+                    </a-menu-item>
+                </a-sub-menu>
+            </a-menu>
 
-                    <a-sub-menu key="bookmarks">
-                        <template #title>
-                            <span class="submenu-title">Bookmarks</span>
-                        </template>
-                        <a-menu-item key="briefings">
-                            <template #icon>
-                                <ReadOutlined />
-                            </template>
-                            <span>Presidential briefings</span>
-                        </a-menu-item>
-                        <a-menu-item key="saves">
-                            <template #icon>
-                                <BookOutlined />
-                            </template>
-                            <span>Quick saves</span>
-                        </a-menu-item>
-                    </a-sub-menu>
-
-                    <a-sub-menu key="discover">
-                        <template #title>
-                            <span class="submenu-title">Discover</span>
-                        </template>
-                        <a-menu-item key="tags">
-                            <template #icon>
-                                <TagOutlined />
-                            </template>
-                            <span>Tags</span>
-                        </a-menu-item>
-                        <a-menu-item key="sources">
-                            <template #icon>
-                                <GlobalOutlined />
-                            </template>
-                            <span>Sources</span>
-                        </a-menu-item>
-                    </a-sub-menu>
-                </a-menu>
-            </div>
         </a-layout-sider>
 
         <!-- 主内容区 -->
@@ -211,28 +200,32 @@ const logout = () => {
     flex: 0 0 auto;
 }
 
+/* 让侧边栏从 header 底部开始，不嵌入 header 下方 */
+.sider {
+    position: fixed;
+    top: 64px;
+    /* 与 header 高度一致 */
+    bottom: 0;
+    left: 0;
+    z-index: 900;
+    height: calc(100vh - 64px);
+}
+
+/* 主内容根据侧边栏宽度偏移，保证不被覆盖 */
+.sider+.content-layout {
+    margin-left: 240px;
+    transition: margin-left 0.2s;
+}
+
+.sider.is-collapsed+.content-layout {
+    margin-left: 80px;
+}
+
 .sider-content {
-    display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 16px;
-}
-
-.menu-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 12px;
-    color: #a0a0a0;
-    font-size: 14px;
-    font-weight: 600;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-}
 
-.menu-header-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .menu-header-right {
@@ -242,12 +235,6 @@ const logout = () => {
 
 .menu-header-toggle {
     color: #a0a0a0;
-}
-
-/* 折叠时 menu-header 的样式 */
-.sider.is-collapsed .menu-header {
-    padding: 8px 6px;
-    justify-content: center;
 }
 
 .sider.is-collapsed .menu-header-title {
@@ -283,6 +270,7 @@ const logout = () => {
 }
 
 .menu-title {
+    margin-left: 5%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -350,11 +338,6 @@ const logout = () => {
     z-index: 1000;
 }
 
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
 
 .collapse-sidebar-btn {
     color: #a0a0a0;
@@ -362,6 +345,7 @@ const logout = () => {
 }
 
 .header-title {
+    margin-top: 10px;
     color: #ffffff;
     font-size: 20px;
     font-weight: 600;
