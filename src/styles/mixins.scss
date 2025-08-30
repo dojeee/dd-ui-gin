@@ -1,0 +1,14 @@
+//常用 CSS 封装（如 flex、ellipsis）
+
+// 常用样式封装
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @mixin truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

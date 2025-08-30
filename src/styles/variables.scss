@@ -1,0 +1,29 @@
+// 所有颜色、字体、间距等设计变量
+
+// 设计系统变量（Design Tokens）
+$color-bg-primary: #0d0d0d;         // 主背景
+$color-bg-sidebar: #1f2937;         // 侧边栏背景
+$color-bg-header: #1a1a1a;          // 头部背景
+$color-bg-hover: #374151;           // 悬停背景
+$color-bg-selected: #4b5563;        // 选中项背景
+
+$color-text-primary: #ffffff;       // 主文字
+$color-text-secondary: #d1d5db;     // 次要文字
+$color-text-submenu: #9ca3af;       // 子菜单标题文字
+
+$color-border: #374151;             // 边框颜色
+
+$font-size-menu: 14px;
+$font-size-submenu: 11px;
+$font-weight-submenu: 500;
+
+$menu-item-height: 40px;
+$menu-item-margin-y: 2px;
+$menu-item-margin-x: 8px;
+$menu-border-radius: 8px;
+
+$header-height: 64px;
+$sider-width: 240px;
+$sider-collapsed-width: 80px;
+
+$transition-speed: 0.2s;
