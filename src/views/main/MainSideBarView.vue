@@ -169,7 +169,7 @@ watch(collapsed, (newVal) => {
         openKeys.value = allSubMenuKeys;
     }
 });
-const allKeysOpen = ref(true);
+
 
 
 // 切换侧边栏（左右展开/收起）
