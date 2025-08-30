@@ -32,22 +32,20 @@
 
 
         <!-- 侧边栏 -->
-        <a-layout-sider v-model:collapsed="collapsed" collapsible :width="240" :collapsed-width="70"
+        <a-layout-sider v-model:collapsed="collapsed" :width="240" :collapsed-width="70"
             :class="['sider', { 'is-collapsed': collapsed }]" theme="dark">
 
             <a-menu v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" mode="inline" class="menu">
 
                 <a-view class="menu-title">
-                    <span style="color: #a0a0a0;">Menus</span>
-                    <a-button type="button" style="color: teal;">
+                    <span v-show="!collapsed" class="submenu-title menu-header-span">Menus</span>
+                    <a-button type="button" class="menu-toggle-btn" @click.stop="toggleSide">
                         <template #icon>
-                            <LeftOutlined v-if="!collapsed" @click="toggleSide" />
-                            <RightOutlined v-else @click="toggleSide" />
+                            <MenuFoldOutlined v-if="!collapsed" />
+                            <MenuUnfoldOutlined v-else />
                         </template>
                     </a-button>
                 </a-view>
-
-
 
                 <a-menu-item key="foryou">
                     <template #icon>
@@ -158,6 +156,8 @@
 
 <script setup>
 import {
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
     TeamOutlined,
     PlusOutlined,
     CompassOutlined, UsergroupAddOutlined, RiseOutlined, HistoryOutlined,
@@ -198,6 +198,19 @@ const logout = () => {
     border-right: 1px solid #2a2a2a;
     transition: all 0.2s;
     flex: 0 0 auto;
+}
+
+/* 可定制变量：统一管理侧边栏颜色/图标/字体等 */
+.sider {
+    --menu-icon-color: #e42f2f;
+    --menu-icon-size: 20px;
+    --menu-font-size: 16px;
+    --menu-text-color: #a0a0a0;
+    --submenu-title-color: #6a6a6a;
+    --submenu-font-size: 12px;
+    --menu-hover-bg: #252525;
+    --menu-selected-bg: #2a2a2a;
+    --menu-selected-color: #ffffff;
 }
 
 /* 让侧边栏从 header 底部开始，不嵌入 header 下方 */
@@ -270,42 +283,56 @@ const logout = () => {
 }
 
 .menu-title {
-    margin-left: 5%;
+    margin-left: 10%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 120px;
+    /* 控制 span 与按钮之间的间距，数值越小间距越短 */
     width: 100%;
 }
 
 .menu-toggle-btn {
-    color: #a0a0a0;
-    font-size: 14px;
+    margin-left: 10px;
+    color: var(--menu-icon-color);
+    font-size: var(--menu-icon-size);
+    padding: 4px;
+    border: none;
+    clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
+}
+
+.menu-header-span {
+    color: var(--submenu-title-color);
+    font-size: var(--submenu-font-size);
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
 .menu :deep(.ant-menu-item),
 .menu :deep(.ant-menu-submenu-title) {
-    color: #a0a0a0;
+    color: var(--menu-text-color);
     border-radius: 6px;
     margin: 4px 0 !important;
     width: 100%;
+    font-size: var(--menu-font-size);
 }
 
 .menu :deep(.ant-menu-item-selected) {
-    background-color: #2a2a2a !important;
-    color: #ffffff !important;
+    background-color: var(--menu-selected-bg) !important;
+    color: var(--menu-selected-color) !important;
 }
 
 .menu :deep(.ant-menu-item:hover),
 .menu :deep(.ant-menu-submenu-title:hover) {
-    background-color: #252525 !important;
-    color: #ffffff !important;
+    background-color: var(--menu-hover-bg) !important;
+    color: var(--menu-selected-color) !important;
 }
 
 .submenu-title {
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: var(--submenu-font-size);
     font-weight: 500;
-    color: #6a6a6a;
+    color: var(--submenu-title-color);
     letter-spacing: 0.5px;
 }
 
@@ -315,6 +342,12 @@ const logout = () => {
 
 .menu :deep(.ant-menu-submenu-arrow) {
     color: #6a6a6a;
+}
+
+/* 图标统一样式 */
+.menu :deep(.anticon) {
+    color: var(--menu-icon-color);
+    font-size: var(--menu-icon-size);
 }
 
 /* 主内容区 */
