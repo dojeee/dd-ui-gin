@@ -35,7 +35,8 @@
         <a-layout-sider v-model:collapsed="collapsed" :width="240" :collapsed-width="70"
             :class="['sider', { 'is-collapsed': collapsed }]" theme="dark">
 
-            <a-menu v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" mode="inline" class="menu">
+            <a-menu v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" :inline-collapsed="collapsed"
+                mode="inline" class="menu">
 
                 <a-view class="menu-title">
                     <span v-show="!collapsed" class="submenu-title menu-header-span">Menus</span>
@@ -47,25 +48,25 @@
                     </a-button>
                 </a-view>
 
-                <a-menu-item key="foryou">
+                <a-menu-item key="foryou" title="For You">
                     <template #icon>
                         <CompassOutlined />
                     </template>
                     <span>For You</span>
                 </a-menu-item>
-                <a-menu-item key="following">
+                <a-menu-item key="following" title="Following">
                     <template #icon>
                         <UsergroupAddOutlined />
                     </template>
                     <span>Following</span>
                 </a-menu-item>
-                <a-menu-item key="explore">
+                <a-menu-item key="explore" title="Explore">
                     <template #icon>
                         <RiseOutlined />
                     </template>
                     <span>Explore</span>
                 </a-menu-item>
-                <a-menu-item key="history">
+                <a-menu-item key="history" title="History">
                     <template #icon>
                         <HistoryOutlined />
                     </template>
@@ -77,7 +78,7 @@
                     <template #title>
                         <span class="submenu-title">Custom feeds</span>
                     </template>
-                    <a-menu-item key="addCustomFeed">
+                    <a-menu-item key="addCustomFeed" title="Custom feed">
                         <template #icon>
                             <PlusOutlined />
                         </template>
@@ -89,13 +90,13 @@
                     <template #title>
                         <span class="submenu-title">Network</span>
                     </template>
-                    <a-menu-item key="findSquads">
+                    <a-menu-item key="findSquads" title="Find Squads">
                         <template #icon>
                             <TeamOutlined />
                         </template>
                         <span>Find Squads</span>
                     </a-menu-item>
-                    <a-menu-item key="newSquad">
+                    <a-menu-item key="newSquad" title="New Squad">
                         <template #icon>
                             <PlusOutlined />
                         </template>
@@ -107,13 +108,13 @@
                     <template #title>
                         <span class="submenu-title">Bookmarks</span>
                     </template>
-                    <a-menu-item key="briefings">
+                    <a-menu-item key="briefings" title="Presidential briefings">
                         <template #icon>
                             <ReadOutlined />
                         </template>
                         <span>Presidential briefings</span>
                     </a-menu-item>
-                    <a-menu-item key="saves">
+                    <a-menu-item key="saves" title="Quick saves">
                         <template #icon>
                             <BookOutlined />
                         </template>
@@ -125,13 +126,13 @@
                     <template #title>
                         <span class="submenu-title">Discover</span>
                     </template>
-                    <a-menu-item key="tags">
+                    <a-menu-item key="tags" title="Tags">
                         <template #icon>
                             <TagOutlined />
                         </template>
                         <span>Tags</span>
                     </a-menu-item>
-                    <a-menu-item key="sources">
+                    <a-menu-item key="sources" title="Sources">
                         <template #icon>
                             <GlobalOutlined />
                         </template>
@@ -204,6 +205,7 @@ const logout = () => {
 .sider {
     --menu-icon-color: #e42f2f;
     --menu-icon-size: 20px;
+    --menu-toggle-icon-size: 5px;
     --menu-font-size: 16px;
     --menu-text-color: #a0a0a0;
     --submenu-title-color: #6a6a6a;
@@ -283,22 +285,38 @@ const logout = () => {
 }
 
 .menu-title {
-    margin-left: 10%;
+    /* 与菜单项保持相同的内边距和高度以保证对齐 */
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 120px;
-    /* 控制 span 与按钮之间的间距，数值越小间距越短 */
+    justify-content: space-between;
+    padding: 8px 12px;
+    height: 44px;
+    box-sizing: border-box;
     width: 100%;
 }
 
 .menu-toggle-btn {
-    margin-left: 10px;
+    margin-left: auto;
+    margin-right: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    min-width: 32px;
     color: var(--menu-icon-color);
-    font-size: var(--menu-icon-size);
-    padding: 4px;
+    font-size: var(--menu-toggle-icon-size);
+    padding: 2px 6px;
     border: none;
+    background: transparent;
+    cursor: pointer;
     clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
+}
+
+/* 保证折叠状态下按钮和菜单图标在同一行基线 */
+.sider .menu-title .submenu-title,
+.sider .menu :deep(.ant-menu-item) {
+    display: flex;
+    align-items: center;
 }
 
 .menu-header-span {
@@ -342,6 +360,38 @@ const logout = () => {
 
 .menu :deep(.ant-menu-submenu-arrow) {
     color: #6a6a6a;
+}
+
+/* 折叠时：隐藏父级 a-sub-menu（标题/箭头），展示其子项为图标形式 */
+.sider.is-collapsed .menu :deep(.ant-menu-submenu-title),
+.sider.is-collapsed .menu :deep(.ant-menu-submenu-arrow) {
+    display: none !important;
+}
+
+.sider.is-collapsed .menu :deep(.ant-menu-submenu) {
+    padding: 0 !important;
+}
+
+.sider.is-collapsed .menu :deep(.ant-menu-sub) {
+    display: block !important;
+}
+
+.sider.is-collapsed .menu :deep(.ant-menu-sub) .ant-menu-item {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important;
+    height: 40px;
+    margin: 4px 0 !important;
+}
+
+.sider.is-collapsed .menu :deep(.ant-menu-item) span,
+.sider.is-collapsed .menu :deep(.ant-menu-sub) .ant-menu-item span {
+    display: none !important;
+}
+
+.sider.is-collapsed .menu :deep(.anticon) {
+    font-size: var(--menu-icon-size) !important;
 }
 
 /* 图标统一样式 */
