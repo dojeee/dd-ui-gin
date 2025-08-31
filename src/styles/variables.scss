@@ -2,10 +2,10 @@
 
 // ===== 颜色系统 =====
 // 渐变背景色 - 深蓝灰色系
-$gradient-bg-primary: linear-gradient(135deg, #73ab7fb9 8%, #3979b865 70%, #0d1117 100%); // 主背景渐变
-$gradient-bg-header: linear-gradient(90deg, #7a9989 8%, #3979b869 70%, #161b22 100%); // 头部渐变
-$gradient-bg-sidebar: linear-gradient(180deg, #7a9989 8%, #3979b870 70%, #161b22 100%); // 侧边栏渐变
-$gradient-bg-content: linear-gradient(135deg, #7a9989 0%, #3979b881 60%, #1c2128 500%, #73ab7f); // 内容区渐变
+$gradient-bg-primary: linear-gradient(135deg, #73ab7fb9 8%, #3979b865 70%, #0d1117 200%); // 主背景渐变
+$gradient-bg-header: linear-gradient(90deg, #7a9989 8%, #3979b869 70%, #161b22 500%); // 头部渐变
+$gradient-bg-sidebar: linear-gradient(180deg, #7a9989 8%, #3979b870 70%, #1c2128 500%); // 侧边栏渐变
+$gradient-bg-content: linear-gradient(135deg, #7a9989 0%, #3979b881 60%, #1c2128 200%, #00ff37); // 内容区渐变
 
 // 单色背景（备用）
 $color-bg-primary: #0f1217; // 主背景
