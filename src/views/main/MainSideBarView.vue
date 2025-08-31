@@ -197,9 +197,9 @@ const logout = () => {
 
 /* 侧边栏样式 - 只导入变量配置 */
 .sidebar {
-    background: v.$color-bg-sidebar !important;
+    background: v.$gradient-bg-sidebar !important;
     box-shadow: none;
-    border-right: 1px solid v.$color-border;
+    border-right: 0px solid v.$color-border;
     transition: all v.$transition-speed v.$transition-easing;
     flex: 0 0 auto;
     

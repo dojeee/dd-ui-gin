@@ -36,13 +36,13 @@
 @use '@/styles/variables' as v;
 
 .header {
-    background: v.$color-bg-header;
+    background: v.$gradient-bg-header;
     padding: 0 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: none;
-    border-bottom: 1px solid v.$color-border;
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 0px solid v.$color-border;
     height: v.$header-height;
     position: fixed;
     left: 0;

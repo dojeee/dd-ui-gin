@@ -1,9 +1,15 @@
 // 全局设计变量 - 统一的设计系统
 
 // ===== 颜色系统 =====
-// 背景色
+// 渐变背景色 - 深蓝灰色系
+$gradient-bg-primary: linear-gradient(135deg, #73ab7fb9 8%, #3979b865 70%, #0d1117 100%);     // 主背景渐变
+$gradient-bg-header: linear-gradient(90deg, #73ab7fa0 8%, #3979b869 60%, #161b22 100%);        // 头部渐变
+$gradient-bg-sidebar: linear-gradient(180deg, #73ab7fa0 8%, #3979b870 60%, #161b22 100%);      // 侧边栏渐变
+$gradient-bg-content: linear-gradient(135deg, #73ab7f90 0%, #3979b881 60%, #1c2128 500%,#73ab7f ); // 内容区渐变
+
+// 单色背景（备用）
 $color-bg-primary: #0f1217;         // 主背景
-$color-bg-sidebar: #101217;         // 侧边栏背景 - 在这里粘贴你取到的颜色值
+$color-bg-sidebar: #101217;         // 侧边栏背景
 $color-bg-header: #101217;          // 头部背景
 $color-bg-hover: #374151;           // 悬停背景
 $color-bg-selected: #4b5563;        // 选中项背景
@@ -12,9 +18,9 @@ $color-bg-button-hover: #f0f0f0;    // 按钮悬停背景
 
 // 文字颜色
 $color-text-primary: #ffffff;       // 主文字
-$color-text-secondary: #d1d5db;     // 次要文字
-$color-text-submenu: #9ca3af;       // 子菜单标题文字
-$color-text-icon: #9ca3af;          // 图标颜色
+$color-text-secondary: #ffffff;     // 次要文字
+$color-text-submenu: #ecc8c8;       // 子菜单标题文字
+$color-text-icon: #10ffa7;          // 图标颜色
 $color-text-muted: #a0a0a0;         // 静音文字
 $color-text-dark: #0d0d0d;          // 深色文字
 
