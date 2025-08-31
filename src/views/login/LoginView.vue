@@ -40,11 +40,6 @@
               ནང་འཛུལ།
             </a-button>
           </a-form-item>
-
-          <!-- <a-typography-text type="secondary" class="register-text"
-            style="display: block; text-align: center; margin-bottom: 16px">
-            རྩིས་ཁྲ་མེད། <a href="#">ད་ལྟ་ཐོ་འགོད་བྱོས།</a>
-          </a-typography-text> -->
         </a-form>
       </div>
       <div class="terms-container">
@@ -64,7 +59,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { LockOutlined, MobileOutlined } from "@ant-design/icons-vue";
 
 import { ref } from "vue";
@@ -98,7 +93,7 @@ const userStore = useUserStore();
 // 验证码发送状态
 const sending = ref(false);
 const countdown = ref(0);
-let timer: number | undefined = undefined;
+let timer = undefined;
 
 const startCountdown = (seconds = 60) => {
   countdown.value = seconds;
@@ -109,14 +104,14 @@ const startCountdown = (seconds = 60) => {
       timer && clearInterval(timer);
       timer = undefined;
     }
-  }, 1000) as unknown as number;
+  }, 1000);
 };
 
-const validateMobile = (mobile: string) => {
+const validateMobile = (mobile) => {
   return /^1[3-9]\d{9}$/.test(mobile);
 };
 
-const handleSendCode = async (mobile: string) => {
+const handleSendCode = async (mobile) => {
   if (sending.value || countdown.value > 0) return;
   if (!validateMobile(mobile)) {
     message.warning('ཁ་པར་ཨང་གྲངས་ནོར་འདུག');
@@ -139,7 +134,7 @@ const handleSendCode = async (mobile: string) => {
   }
 };
 
-const handleSubmit = async (values: any) => {
+const handleSubmit = async (values) => {
   try {
     // 调用 store 中的登录 action
     await userStore.login({
@@ -154,24 +149,23 @@ const handleSubmit = async (values: any) => {
 };
 </script>
 
-<style scoped>
-/* 沉稳的藏式风格 */
+<style lang="scss" scoped>
+@use "@/styles/variables" as v;
+
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background:
-    radial-gradient(1000px 700px at 0% 20%, rgba(94, 234, 212, 0.85) 0%, rgba(94, 234, 212, 0) 60%),
-    linear-gradient(135deg, #8ec5fc 0%, #c4d5ef 45%, #a7f3d0 75%, #34d399 100%);
+  background: v.$gradient-bg-content;
   /* 晴朗暖色系渐变（日出暖黄 -> 柔橙 -> 天空蓝） */
   color: #2c3e50;
 }
 
 .login-form-wrapper {
   width: 450px;
-  padding: 20px;
+  max-width: 90vw;
 }
 
 .login-form-inner {
@@ -180,15 +174,15 @@ const handleSubmit = async (values: any) => {
   border-radius: 16px;
   border: 1px solid #eef0f3;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  margin-bottom: 24px;
+  margin-bottom: 14px;
 
-  /* -- Theme Variables for Unified Styling -- */
-  --primary-color: #bfba29;
-  --primary-color-hover: #ff7a1a;
-  --border-color: #e6e9ee;
-  --border-color-hover: #ffb266;
-  --focus-shadow-color: rgba(255, 138, 61, 0.15);
-  --component-border-radius: 12px;
+  /* CSS变量用于深度样式 */
+  --primary-color: #{v.$login-primary-color};
+  --primary-color-hover: #{v.$login-primary-hover};
+  --border-color: #{v.$login-border-color};
+  --border-color-hover: #{v.$login-border-hover};
+  --focus-shadow-color: #{v.$login-focus-shadow};
+  --component-border-radius: #{v.$login-border-radius};
 }
 
 .form-title {
@@ -207,18 +201,6 @@ const handleSubmit = async (values: any) => {
   margin-top: -5px;
 }
 
-.social-btn {
-  background-color: transparent !important;
-  color: #dcdcdc !important;
-  border: 1px solid #b08f5c !important;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.social-btn:hover {
-  background-color: #b08f5c !important;
-  color: #080d17 !important;
-}
-
 .terms-container {
   text-align: center;
 }
@@ -226,132 +208,117 @@ const handleSubmit = async (values: any) => {
 .terms-text {
   font-size: 12px;
   color: #5b6675;
+  
+  a {
+    color: rgb(56, 117, 246);
+    text-decoration: none;
+    margin: 0 1px;
+    font-weight: 600;
+    transition: color 0.4s ease;
+    
+    &:hover {
+      color: var(--primary-color-hover);
+    }
+  }
 }
 
-/* SMS code group: keep input width stable while button text/countdown changes */
 .sms-group {
   display: flex;
   gap: 12px;
   align-items: center;
+  
+  .sms-input {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
 }
 
-.sms-input {
-  flex: 1 1 auto;
-  min-width: 0;
-  /* allow flex children to shrink without changing layout */
-}
-
-.sms-btn {
-  width: 120px;
-  /* 固定按钮宽度，避免倒计时文字改变导致输入框宽度抖动 */
-  flex: 0 0 120px;
-}
-
-.terms-text a {
-  color: var(--primary-color);
-  text-decoration: none;
-  margin: 0 4px;
-  font-weight: 600;
-  transition: color 0.2s ease;
-}
-
-.terms-text a:hover {
-  color: var(--primary-color-hover);
-}
-
-/* Ant Design 组件深度定制 */
 :deep(.ant-input-affix-wrapper),
-:deep(.sms-input.ant-input) {
-  background: #ffffff !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--component-border-radius) !important;
-  transition: all 0.2s ease;
-}
-
-:deep(.ant-input-affix-wrapper:hover),
-:deep(.sms-input.ant-input:hover) {
-  border-color: var(--border-color-hover) !important;
-}
-
-:deep(.ant-input-affix-wrapper:focus-within),
-:deep(.sms-input.ant-input:focus) {
-  border-color: var(--primary-color) !important;
-  box-shadow: 0 0 0 2px var(--focus-shadow-color) !important;
-}
-
 :deep(.ant-input) {
-  background-color: #ffffff !important;
-  color: #2c3e50 !important;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--component-border-radius);
+  color: #2c3e50;
   font-size: 16px;
-}
-
-:deep(.ant-input::placeholder) {
-  color: #9aa4b2 !important;
-  opacity: 1;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: var(--border-color-hover);
+  }
+  
+  &:focus,
+  &:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--focus-shadow-color);
+  }
+  
+  &::placeholder {
+    color: #9aa4b2;
+    opacity: 1;
+  }
 }
 
 :deep(.ant-input-prefix .anticon) {
-  color: var(--primary-color) !important;
+  color: var(--primary-color);
 }
 
 :deep(.ant-btn-primary) {
-  background: var(--primary-color) !important;
-  border: 1px solid var(--primary-color) !important;
-  color: #ffffff !important;
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  color: #ffffff;
   font-weight: 700;
-  border-radius: var(--component-border-radius) !important;
+  border-radius: var(--component-border-radius);
   transition: all 0.2s ease;
+  
+  &:hover {
+    background: var(--primary-color-hover);
+    border-color: var(--primary-color-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(255, 138, 61, 0.3);
+  }
 }
 
-:deep(.ant-btn-primary:hover) {
-  background: var(--primary-color-hover) !important;
-  border-color: var(--primary-color-hover) !important;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(255, 138, 61, 0.3);
-}
-
-/* -- Unified style for the SMS button -- */
-:deep(.sms-btn.ant-btn) {
-  background: #ffffff !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--component-border-radius) !important;
-  color: #2c3e50 !important;
+:deep(.sms-btn) {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--component-border-radius);
+  color:gray;
   transition: all 0.2s ease;
-}
-
-:deep(.sms-btn.ant-btn:hover) {
-  border-color: var(--border-color-hover) !important;
-  color: var(--primary-color) !important;
-}
-
-:deep(.sms-btn.ant-btn:focus) {
-  border-color: var(--primary-color) !important;
-  box-shadow: 0 0 0 2px var(--focus-shadow-color) !important;
-}
-
-:deep(.sms-btn.ant-btn:disabled) {
-  background: #f5f5f5 !important;
-  border-color: #d9d9d9 !important;
-  color: rgba(0, 0, 0, 0.25) !important;
+  
+  &:hover:not(:disabled) {
+    border-color: var(--border-color-hover);
+    color: var(--primary-color);
+  }
+  
+  &:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--focus-shadow-color);
+  }
+  
+  &:disabled {
+    background: #f5f5f5;
+    border-color: #d9d9d9;
+    color: rgba(0, 0, 0, 0.25);
+  }
 }
 
 :deep(.ant-divider) {
-  border-color: #eef0f3 !important;
+  border-color: #eef0f3;
   color: #73819a;
 }
 
 .register-text {
   color: #5b6675;
-}
-
-.register-text a {
-  color: var(--primary-color);
-  text-decoration: none;
-  transition: color 0.2s ease;
-  font-weight: 700;
-}
-
-.register-text a:hover {
-  color: var(--primary-color-hover);
+  
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: var(--primary-color-hover);
+    }
+  }
 }
 </style>
