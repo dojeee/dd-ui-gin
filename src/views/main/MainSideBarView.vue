@@ -264,8 +264,7 @@ const logout = () => {
 }
 
 /* 菜单项基础样式 */
-.sidebar-menu :deep(.ant-menu-item),
-.sidebar-menu :deep(.ant-menu-submenu-title) {
+.sidebar-menu :deep(.ant-menu-item) {
     color: v.$color-text-secondary;
     border-radius: v.$menu-border-radius;
     margin: v.$menu-item-margin-y v.$menu-item-margin-x !important;
@@ -277,15 +276,41 @@ const logout = () => {
     transition: all v.$transition-speed;
 }
 
+/* 子菜单标题样式 - 不应该有选中状态 */
+.sidebar-menu :deep(.ant-menu-submenu-title) {
+    color: v.$color-text-secondary;
+    border-radius: v.$menu-border-radius;
+    margin: v.$menu-item-margin-y v.$menu-item-margin-x !important;
+    width: calc(100% - #{v.$menu-item-margin-x * 2});
+    font-size: v.$font-size-menu;
+    height: v.$menu-item-height;
+    line-height: v.$menu-item-height;
+    padding: 0 v.$menu-padding-x !important;
+    transition: all v.$transition-speed;
+    user-select: none; /* 防止文字被选中 */
+}
+
 .sidebar-menu :deep(.ant-menu-item-selected) {
     background-color: v.$color-bg-selected !important;
     color: v.$color-text-primary !important;
 }
 
-.sidebar-menu :deep(.ant-menu-item:hover),
+/* 只有菜单项才有悬停效果，子菜单标题不要选中样式 */
+.sidebar-menu :deep(.ant-menu-item:hover) {
+    background-color: v.$color-bg-hover !important;
+    color: v.$color-text-primary !important;
+}
+
 .sidebar-menu :deep(.ant-menu-submenu-title:hover) {
     background-color: v.$color-bg-hover !important;
     color: v.$color-text-primary !important;
+}
+
+/* 确保子菜单标题不会有选中状态 */
+.sidebar-menu :deep(.ant-menu-submenu-title-selected),
+.sidebar-menu :deep(.ant-menu-submenu.ant-menu-submenu-selected > .ant-menu-submenu-title) {
+    background-color: transparent !important;
+    color: v.$color-text-secondary !important;
 }
 
 /* 子菜单标题 */

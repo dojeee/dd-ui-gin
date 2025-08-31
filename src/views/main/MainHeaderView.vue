@@ -32,32 +32,30 @@
 </script>
 
 
-<style scoped>
-
-
-
+<style lang="scss" scoped>
+@use '@/styles/variables' as v;
 
 .header {
-    background: #1a1a1a;
+    background: v.$color-bg-header;
     padding: 0 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: none;
-    border-bottom: 1px solid #2a2a2a;
-    height: 64px;
+    border-bottom: 1px solid v.$color-border;
+    height: v.$header-height;
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
-    z-index: 1000;
+    z-index: v.$z-index-header;
 }
 
 .header-title {
     margin-top: 10px;
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 600;
+    color: v.$color-text-primary;
+    font-size: v.$font-size-header;
+    font-weight: v.$font-weight-semibold;
 }
 
 .header-right {
