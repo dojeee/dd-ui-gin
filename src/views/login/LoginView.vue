@@ -59,33 +59,47 @@
   </div>
 </template>
 
-<script setup>
-import { LockOutlined, MobileOutlined } from "@ant-design/icons-vue";
+<script setup lang="ts">
+import { reactive, ref, onBeforeUnmount } from 'vue';
+import { MobileOutlined } from '@ant-design/icons-vue';
+import { useUserStore } from '@/stores/userStores';
+import { message } from 'ant-design-vue';
+import type { LoginParams } from '@/types/auth';
+import type { Rule } from 'ant-design-vue/es/form';
 
-import { ref } from "vue";
-import { useUserStore } from "@/stores/userStores";
-import { message } from "ant-design-vue";
+interface FormData {
+  mobile: string;
+  verificationCode: string;
+}
 
-const form = ref({
-  mobile: "",
-  verificationCode: "",
+const form = reactive<FormData>({
+  mobile: '',
+  verificationCode: '',
 });
-const rules = {
+
+const rules: Record<keyof FormData, Rule[]> = {
   mobile: [
     {
       required: true,
-      message: "ཁ་པར་ཨང་གྲངས་གཞག་རོགས།",
+      message: 'ཁ་པར་ཨང་གྲངས་གཞག་རོགས།',
       whitespace: false,
-      trigger: "change",
-      validateTrigger: "change",
+      trigger: 'change',
+      validateTrigger: 'change',
     },
     {
       pattern: /^1[3-9]\d{9}$/,
-      message: "ཁྱེད་ཀྱི་ཁ་པར་ཨང་གྲངས་ནོར་འདུག",
-      trigger: "change",
-      validateTrigger: "change",
+      message: 'ཁྱེད་ཀྱི་ཁ་པར་ཨང་གྲངས་ནོར་འདུག',
+      trigger: 'change',
+      validateTrigger: 'change',
     },
-  ]
+  ],
+  verificationCode: [
+    {
+      required: true,
+      message: 'བདེན་དཔང་ཨང་རྟགས་གཞག་རོགས།',
+      trigger: 'change',
+    },
+  ],
 };
 
 const userStore = useUserStore();
@@ -93,25 +107,23 @@ const userStore = useUserStore();
 // 验证码发送状态
 const sending = ref(false);
 const countdown = ref(0);
-let timer = undefined;
+let timer: ReturnType<typeof setInterval> | undefined = undefined;
 
-const startCountdown = (seconds = 60) => {
+const startCountdown = (seconds = 60): void => {
   countdown.value = seconds;
-  timer && clearInterval(timer);
+  if (timer) clearInterval(timer);
   timer = setInterval(() => {
     countdown.value -= 1;
     if (countdown.value <= 0) {
-      timer && clearInterval(timer);
+      if (timer) clearInterval(timer);
       timer = undefined;
     }
   }, 1000);
 };
 
-const validateMobile = (mobile) => {
-  return /^1[3-9]\d{9}$/.test(mobile);
-};
+const validateMobile = (mobile: string): boolean => /^1[3-9]\d{9}$/.test(mobile);
 
-const handleSendCode = async (mobile) => {
+const handleSendCode = async (mobile: string): Promise<void> => {
   if (sending.value || countdown.value > 0) return;
   if (!validateMobile(mobile)) {
     message.warning('ཁ་པར་ཨང་གྲངས་ནོར་འདུག');
@@ -120,10 +132,7 @@ const handleSendCode = async (mobile) => {
 
   try {
     sending.value = true;
-    // TODO: 在这里调用真实的发送验证码 API，例如 import { sendSms } from '@/api/auth'
-    // await sendSms({ mobile: form.value.mobile });
-    // 目前用 message 占位并启动倒计时
-    await userStore.sendVerificationCode(mobile)
+    await userStore.sendVerificationCode(mobile);
     message.success('བདེན་དཔང་ཨང་རྟགས་བསྐུར་ཟིན།');
     startCountdown(60);
   } catch (err) {
@@ -134,19 +143,20 @@ const handleSendCode = async (mobile) => {
   }
 };
 
-const handleSubmit = async (values) => {
+const handleSubmit = async (values: LoginParams): Promise<void> => {
   try {
-    // 调用 store 中的登录 action
     await userStore.login({
       mobile: values.mobile,
       verificationCode: values.verificationCode,
     });
-    // 登录成功后会自动跳转，这里不需要额外处理
   } catch (error) {
-    // 错误处理已在 store 中完成，这里可以添加额外的处理逻辑
-    console.error("登录失败:", error);
+    console.error('登录失败:', error);
   }
 };
+
+onBeforeUnmount(() => {
+  if (timer) clearInterval(timer);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -208,14 +218,14 @@ const handleSubmit = async (values) => {
 .terms-text {
   font-size: 12px;
   color: #5b6675;
-  
+
   a {
     color: rgb(56, 117, 246);
     text-decoration: none;
     margin: 0 1px;
     font-weight: 600;
     transition: color 0.4s ease;
-    
+
     &:hover {
       color: var(--primary-color-hover);
     }
@@ -226,10 +236,16 @@ const handleSubmit = async (values) => {
   display: flex;
   gap: 12px;
   align-items: center;
-  
+
   .sms-input {
     flex: 1 1 auto;
     min-width: 0;
+  }
+
+  .sms-btn {
+    flex: 0 0 auto;
+    width: 120px;
+    white-space: nowrap;
   }
 }
 
@@ -241,17 +257,17 @@ const handleSubmit = async (values) => {
   color: #2c3e50;
   font-size: 16px;
   transition: all 0.2s ease;
-  
+
   &:hover {
     border-color: var(--border-color-hover);
   }
-  
+
   &:focus,
   &:focus-within {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px var(--focus-shadow-color);
   }
-  
+
   &::placeholder {
     color: #9aa4b2;
     opacity: 1;
@@ -269,7 +285,7 @@ const handleSubmit = async (values) => {
   font-weight: 700;
   border-radius: var(--component-border-radius);
   transition: all 0.2s ease;
-  
+
   &:hover {
     background: var(--primary-color-hover);
     border-color: var(--primary-color-hover);
@@ -282,19 +298,23 @@ const handleSubmit = async (values) => {
   background: #ffffff;
   border: 1px solid var(--border-color);
   border-radius: var(--component-border-radius);
-  color:gray;
+  color: #2c3e50;
   transition: all 0.2s ease;
-  
+  flex: 0 0 auto;
+  width: 120px;
+  white-space: nowrap;
+  min-width: 120px;
+
   &:hover:not(:disabled) {
     border-color: var(--border-color-hover);
     color: var(--primary-color);
   }
-  
+
   &:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px var(--focus-shadow-color);
   }
-  
+
   &:disabled {
     background: #f5f5f5;
     border-color: #d9d9d9;
@@ -309,13 +329,13 @@ const handleSubmit = async (values) => {
 
 .register-text {
   color: #5b6675;
-  
+
   a {
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 700;
     transition: color 0.2s ease;
-    
+
     &:hover {
       color: var(--primary-color-hover);
     }
