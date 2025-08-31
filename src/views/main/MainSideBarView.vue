@@ -1,13 +1,13 @@
 <template>
 
     <a-layout-sider v-model:collapsed="collapsed" :width="240" :collapsed-width="70"
-        :class="['sider', { 'is-collapsed': collapsed }]" theme="dark">
+        :class="['sidebar', { 'is-collapsed': collapsed }]" theme="dark">
 
         <a-menu v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" :inline-collapsed="collapsed"
-            mode="inline" class="menu">
+            mode="inline" class="sidebar-menu">
 
-            <a-view class="menu-title">
-                <span v-show="!collapsed" class="submenu-title menu-header-span">Menus</span>
+            <a-view class="menu-header">
+                <span v-show="!collapsed" class="menu-header-title">Menus</span>
                 <a-button type="button" class="menu-toggle-btn" @click.stop="toggleSide">
                     <template #icon>
                         <MenuFoldOutlined v-if="!collapsed" />
@@ -192,85 +192,28 @@ const logout = () => {
 
 
 
-<style scoped>
-/* 侧边栏样式 */
-.sider {
-    background: #1f2937 !important;
+<style lang="scss" scoped>
+@use '@/styles/variables' as v;
+
+/* 侧边栏样式 - 只导入变量配置 */
+.sidebar {
+    background: v.$color-bg-sidebar !important;
     box-shadow: none;
-    border-right: 1px solid #374151;
-    transition: all 0.2s;
+    border-right: 1px solid v.$color-border;
+    transition: all v.$transition-speed v.$transition-easing;
     flex: 0 0 auto;
-}
-
-/* 可定制变量：统一管理侧边栏颜色/图标/字体等 */
-.sider {
-    --menu-icon-color: #9ca3af;
-    --menu-icon-size: 18px;
-    --menu-toggle-icon-size: 16px;
-    --menu-font-size: 14px;
-    --menu-text-color: #d1d5db;
-    --submenu-title-color: #9ca3af;
-    --submenu-font-size: 11px;
-    --menu-hover-bg: #374151;
-    --menu-selected-bg: #4b5563;
-    --menu-selected-color: #ffffff;
-}
-
-/* 让侧边栏从 header 底部开始，不嵌入 header 下方 */
-.sider {
+    
+    /* 固定定位 */
     position: fixed;
-    top: 64px;
-    /* 与 header 高度一致 */
+    top: v.$header-height;
     bottom: 0;
     left: 0;
-    z-index: 900;
-    height: calc(100vh - 64px);
+    z-index: v.$z-index-sidebar;
+    height: calc(100vh - #{v.$header-height});
 }
 
-/* 主内容根据侧边栏宽度偏移，保证不被覆盖 */
-
-
-.sider-content {
-    flex-direction: column;
-    height: 100%;
-    display: flex;
-
-}
-
-.menu-header-right {
-    display: flex;
-    align-items: center;
-}
-
-.menu-header-toggle {
-    color: #a0a0a0;
-}
-
-.sider.is-collapsed .menu-header-title {
-    display: none;
-}
-
-.collapse-all-btn {
-    color: #a0a0a0;
-    font-size: 18px;
-}
-
-.new-post-btn {
-    background-color: #ffffff;
-    color: #0d0d0d;
-    border: none;
-    border-radius: 8px;
-    height: 40px;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 16px;
-}
-
-.new-post-btn:hover {
-    background-color: #f0f0f0;
-}
-
-.menu {
+/* 菜单容器 */
+.sidebar-menu {
     background: transparent;
     border: none;
     flex-grow: 1;
@@ -278,110 +221,115 @@ const logout = () => {
     overflow-x: hidden;
 }
 
-.menu-title {
-    /* 与菜单项保持相同的内边距和高度以保证对齐 */
+/* 菜单标题区域 */
+.menu-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 12px;
-    height: 44px;
+    padding: v.$spacing-sm v.$spacing-md;
+    height: calc(#{v.$menu-item-height} + #{v.$spacing-sm});
     box-sizing: border-box;
     width: 100%;
 }
 
+.menu-header-title {
+    text-transform: uppercase;
+    font-size: v.$font-size-submenu;
+    font-weight: v.$font-weight-medium;
+    color: v.$color-text-submenu;
+    letter-spacing: 0.5px;
+}
+
+/* 切换按钮 */
 .menu-toggle-btn {
     margin-left: auto;
-    margin-right: 4px;
+    margin-right: v.$spacing-xs;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 28px;
-    min-width: 28px;
-    color: var(--menu-icon-color);
-    font-size: var(--menu-toggle-icon-size);
-    padding: 4px;
+    height: v.$button-height;
+    min-width: v.$button-height;
+    color: v.$color-text-icon;
+    font-size: v.$font-size-icon-small;
+    padding: v.$spacing-xs;
     border: none;
     background: transparent;
     cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+    border-radius: v.$button-border-radius;
+    transition: background-color v.$transition-speed;
 }
 
 .menu-toggle-btn:hover {
-    background-color: var(--menu-hover-bg);
+    background-color: v.$color-bg-hover;
 }
 
-/* 保证折叠状态下按钮和菜单图标在同一行基线 */
-.sider .menu-title .submenu-title,
-.sider .menu :deep(.ant-menu-item) {
-    display: flex;
-    align-items: center;
+/* 菜单项基础样式 */
+.sidebar-menu :deep(.ant-menu-item),
+.sidebar-menu :deep(.ant-menu-submenu-title) {
+    color: v.$color-text-secondary;
+    border-radius: v.$menu-border-radius;
+    margin: v.$menu-item-margin-y v.$menu-item-margin-x !important;
+    width: calc(100% - #{v.$menu-item-margin-x * 2});
+    font-size: v.$font-size-menu;
+    height: v.$menu-item-height;
+    line-height: v.$menu-item-height;
+    padding: 0 v.$menu-padding-x !important;
+    transition: all v.$transition-speed;
 }
 
-.menu-header-span {
-    color: var(--submenu-title-color);
-    font-size: var(--submenu-font-size);
-    font-weight: 500;
-    letter-spacing: 0.5px;
+.sidebar-menu :deep(.ant-menu-item-selected) {
+    background-color: v.$color-bg-selected !important;
+    color: v.$color-text-primary !important;
 }
 
-.menu :deep(.ant-menu-item),
-.menu :deep(.ant-menu-submenu-title) {
-    color: var(--menu-text-color);
-    border-radius: 8px;
-    margin: 2px 8px !important;
-    width: calc(100% - 16px);
-    font-size: var(--menu-font-size);
-    height: 40px;
-    line-height: 40px;
-    padding: 0 12px !important;
+.sidebar-menu :deep(.ant-menu-item:hover),
+.sidebar-menu :deep(.ant-menu-submenu-title:hover) {
+    background-color: v.$color-bg-hover !important;
+    color: v.$color-text-primary !important;
 }
 
-.menu :deep(.ant-menu-item-selected) {
-    background-color: var(--menu-selected-bg) !important;
-    color: var(--menu-selected-color) !important;
-}
-
-.menu :deep(.ant-menu-item:hover),
-.menu :deep(.ant-menu-submenu-title:hover) {
-    background-color: var(--menu-hover-bg) !important;
-    color: var(--menu-selected-color) !important;
-}
-
+/* 子菜单标题 */
 .submenu-title {
     text-transform: uppercase;
-    font-size: var(--submenu-font-size);
-    font-weight: 500;
-    color: var(--submenu-title-color);
+    font-size: v.$font-size-submenu;
+    font-weight: v.$font-weight-medium;
+    color: v.$color-text-submenu;
     letter-spacing: 0.5px;
 }
 
-.menu :deep(.ant-menu-sub) {
+/* 子菜单容器 */
+.sidebar-menu :deep(.ant-menu-sub) {
     background: transparent !important;
 }
 
-.menu :deep(.ant-menu-submenu-arrow) {
-    color: #6a6a6a;
+.sidebar-menu :deep(.ant-menu-submenu-arrow) {
+    color: v.$color-text-muted;
 }
 
-/* 折叠时的样式处理 - 让所有菜单项平铺显示 */
-.sider.is-collapsed .menu :deep(.ant-menu-submenu-title) {
+/* 图标样式 */
+.sidebar-menu :deep(.anticon) {
+    color: v.$color-text-icon;
+    font-size: v.$font-size-icon;
+}
+
+/* 折叠状态样式 */
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-submenu-title) {
     display: none !important;
 }
 
-.sider.is-collapsed .menu :deep(.ant-menu-submenu-arrow) {
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-submenu-arrow) {
     display: none !important;
 }
 
 /* 让子菜单容器展开，不显示嵌套结构 */
-.sider.is-collapsed .menu :deep(.ant-menu-submenu) {
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-submenu) {
     height: auto !important;
     line-height: normal !important;
     margin: 0 !important;
     padding: 0 !important;
 }
 
-.sider.is-collapsed .menu :deep(.ant-menu-sub) {
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-sub) {
     position: static !important;
     background: transparent !important;
     box-shadow: none !important;
@@ -396,82 +344,83 @@ const logout = () => {
 }
 
 /* 统一所有菜单项样式 - 一级和二级菜单项都显示为同样的图标 */
-.sider.is-collapsed .menu :deep(.ant-menu-item),
-.sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item) {
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-item),
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item) {
     text-align: center !important;
     padding: 0 !important;
-    margin: 2px 8px !important;
-    width: calc(100% - 16px) !important;
-    height: 40px !important;
-    line-height: 40px !important;
+    margin: v.$menu-item-margin-y v.$menu-item-margin-x !important;
+    width: calc(100% - #{v.$menu-item-margin-x * 2}) !important;
+    height: v.$menu-item-height !important;
+    line-height: v.$menu-item-height !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    border-radius: 8px !important;
+    border-radius: v.$menu-border-radius !important;
     position: relative !important;
 }
 
 /* 隐藏所有文字，只保留图标 */
-.sider.is-collapsed .menu :deep(.ant-menu-item) .ant-menu-title-content,
-.sider.is-collapsed .menu :deep(.ant-menu-item) span:not(.anticon),
-.sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item) .ant-menu-title-content,
-.sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item) span:not(.anticon) {
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-item) .ant-menu-title-content,
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-item) span:not(.anticon),
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item) .ant-menu-title-content,
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item) span:not(.anticon) {
     display: none !important;
 }
 
 /* 确保所有图标显示并对齐 */
-.sider.is-collapsed .menu :deep(.anticon) {
-    font-size: 18px !important;
+.sidebar.is-collapsed .sidebar-menu :deep(.anticon) {
+    font-size: v.$font-size-icon !important;
     margin: 0 !important;
     display: inline-flex !important;
-    color: var(--menu-icon-color) !important;
+    color: v.$color-text-icon !important;
     justify-content: center !important;
     align-items: center !important;
 }
 
-.sider.is-collapsed .menu :deep(.ant-menu-item .anticon),
-.sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item .anticon) {
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-item .anticon),
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item .anticon) {
     margin-right: 0 !important;
     margin-left: 0 !important;
 }
 
 /* 确保子菜单项的悬停和选中效果 */
-.sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item:hover) {
-    background-color: var(--menu-hover-bg) !important;
-    color: var(--menu-selected-color) !important;
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item:hover) {
+    background-color: v.$color-bg-hover !important;
+    color: v.$color-text-primary !important;
 }
 
-.sider.is-collapsed .menu :deep(.ant-menu-sub .ant-menu-item-selected) {
-    background-color: var(--menu-selected-bg) !important;
-    color: var(--menu-selected-color) !important;
+.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item-selected) {
+    background-color: v.$color-bg-selected !important;
+    color: v.$color-text-primary !important;
 }
 
-/* 图标统一样式 */
-.menu :deep(.anticon) {
-    color: var(--menu-icon-color);
-    font-size: var(--menu-icon-size);
+/* 其他按钮样式 */
+.new-post-btn {
+    background-color: v.$color-text-primary;
+    color: v.$color-text-dark;
+    border: none;
+    border-radius: v.$button-border-radius-large;
+    height: v.$button-height-large;
+    font-size: v.$font-size-button;
+    font-weight: v.$font-weight-semibold;
+    margin-bottom: v.$spacing-lg;
 }
 
+.new-post-btn:hover {
+    background-color: v.$color-bg-button-hover;
+}
 
-
-.collapse-sidebar-btn {
-    color: #a0a0a0;
-    font-size: 18px;
+.feed-settings-btn {
+    background-color: v.$color-bg-button;
+    color: v.$color-text-muted;
+    border: 1px solid v.$color-border-button;
+    border-radius: v.$button-border-radius-large;
 }
 
 .header-title {
     margin-top: 10px;
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 600;
+    color: v.$color-text-primary;
+    font-size: v.$font-size-header;
+    font-weight: v.$font-weight-semibold;
 }
-
-
-.feed-settings-btn {
-    background-color: #2a2a2a;
-    color: #a0a0a0;
-    border: 1px solid #4a4a4a;
-    border-radius: 8px;
-}
-
 </style>

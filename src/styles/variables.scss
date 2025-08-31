@@ -1,29 +1,69 @@
-// 所有颜色、字体、间距等设计变量
+// 全局设计变量 - 统一的设计系统
 
-// 设计系统变量（Design Tokens）
+// ===== 颜色系统 =====
+// 背景色
 $color-bg-primary: #0d0d0d;         // 主背景
-$color-bg-sidebar: #1f2937;         // 侧边栏背景
-$color-bg-header: #1a1a1a;          // 头部背景
+$color-bg-sidebar: #0d0d0d;         // 侧边栏背景
+$color-bg-header: #0d0d0d;          // 头部背景
 $color-bg-hover: #374151;           // 悬停背景
 $color-bg-selected: #4b5563;        // 选中项背景
+$color-bg-button: #2a2a2a;          // 按钮背景
+$color-bg-button-hover: #f0f0f0;    // 按钮悬停背景
 
+// 文字颜色
 $color-text-primary: #ffffff;       // 主文字
 $color-text-secondary: #d1d5db;     // 次要文字
 $color-text-submenu: #9ca3af;       // 子菜单标题文字
+$color-text-icon: #9ca3af;          // 图标颜色
+$color-text-muted: #a0a0a0;         // 静音文字
+$color-text-dark: #0d0d0d;          // 深色文字
 
+// 边框颜色
 $color-border: #374151;             // 边框颜色
+$color-border-button: #4a4a4a;      // 按钮边框
 
+// ===== 字体系统 =====
 $font-size-menu: 14px;
 $font-size-submenu: 11px;
-$font-weight-submenu: 500;
+$font-size-button: 14px;
+$font-size-header: 20px;
+$font-size-icon: 18px;
+$font-size-icon-small: 16px;
 
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+
+// ===== 尺寸系统 =====
+// 菜单相关
 $menu-item-height: 40px;
 $menu-item-margin-y: 2px;
 $menu-item-margin-x: 8px;
 $menu-border-radius: 8px;
+$menu-padding-x: 12px;
 
+// 按钮相关
+$button-height: 28px;
+$button-height-large: 40px;
+$button-border-radius: 4px;
+$button-border-radius-large: 8px;
+
+// 布局相关
 $header-height: 64px;
 $sider-width: 240px;
-$sider-collapsed-width: 80px;
+$sider-collapsed-width: 70px;
 
+// ===== 动画系统 =====
 $transition-speed: 0.2s;
+$transition-easing: ease-in-out;
+
+// ===== Z-index 系统 =====
+$z-index-sidebar: 900;
+$z-index-header: 1000;
+
+// ===== 间距系统 =====
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 12px;
+$spacing-lg: 16px;
+$spacing-xl: 24px;
