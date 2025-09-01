@@ -5,7 +5,7 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 
 const feature = ref();
@@ -13,7 +13,4 @@ const feature = ref();
 
 
 
-<style lang="scss" scoped>
-
-
-</style>
+<style lang="scss" scoped></style>
