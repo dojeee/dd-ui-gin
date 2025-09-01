@@ -13,7 +13,7 @@ export interface UserInfo {
   avatar?: string;
 }
 
-export const useUserStore = defineStore("user", {
+export const useAuthStore = defineStore("user", {
   state: () => ({
     userInfo: null as null | UserInfo,
     token: localStorage.getItem("token") || "",

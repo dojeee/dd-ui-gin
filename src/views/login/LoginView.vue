@@ -58,7 +58,7 @@
 <script setup lang="ts">
 import { reactive, ref, onBeforeUnmount } from 'vue';
 import { MobileOutlined } from '@ant-design/icons-vue';
-import { useUserStore } from '@/stores/authStores';
+import { useAuthStore } from '@/stores/authStores';
 import { message } from 'ant-design-vue';
 import type { LoginParams } from '@/types/auth';
 import type { Rule } from 'ant-design-vue/es/form';
@@ -98,7 +98,7 @@ const rules: Record<keyof FormData, Rule[]> = {
   ],
 };
 
-const userStore = useUserStore();
+const userStore = useAuthStore();
 
 // 验证码发送状态
 const sending = ref(false);
