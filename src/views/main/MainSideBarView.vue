@@ -6,7 +6,7 @@
         <a-menu v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" :inline-collapsed="collapsed"
             mode="inline" class="sidebar-menu">
 
-            <a-view class="menu-header">
+            <div class="menu-header">
                 <span v-show="!collapsed" class="menu-header-title">Menus</span>
                 <a-button type="button" class="menu-toggle-btn" @click.stop="toggleSide">
                     <template #icon>
@@ -14,7 +14,7 @@
                         <MenuUnfoldOutlined v-else />
                     </template>
                 </a-button>
-            </a-view>
+            </div>
 
             <a-menu-item key="foryou" title="For You">
                 <template #icon>
@@ -202,7 +202,7 @@ const logout = () => {
     border-right: 0px solid v.$color-border;
     transition: all v.$transition-speed v.$transition-easing;
     flex: 0 0 auto;
-    
+
     /* 固定定位 */
     position: fixed;
     top: v.$header-height;
@@ -287,7 +287,8 @@ const logout = () => {
     line-height: v.$menu-item-height;
     padding: 0 v.$menu-padding-x !important;
     transition: all v.$transition-speed;
-    user-select: none; /* 防止文字被选中 */
+    user-select: none;
+    /* 防止文字被选中 */
 }
 
 .sidebar-menu :deep(.ant-menu-item-selected) {

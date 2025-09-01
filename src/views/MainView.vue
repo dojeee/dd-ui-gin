@@ -13,7 +13,7 @@
     </a-layout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 import MainHeaderView from './main/MainHeaderView.vue';
 import MainContentView from './main/MainContentView.vue';

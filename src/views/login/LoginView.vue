@@ -208,8 +208,7 @@ onBeforeUnmount(() => {
 
     a {
       font-size: 12px;
-      color: blue($color: #000000);
-      text-decoration: none;
+      color: blue;
       margin: 0 2px;
       font-weight: 600;
       transition: color 0.3s ease;

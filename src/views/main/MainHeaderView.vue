@@ -30,15 +30,25 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { ControlOutlined } from '@ant-design/icons-vue';
+import { useAuthStore } from '@/stores/authStores';
+import { storeToRefs } from 'pinia';
 
+
+// store
+const authStore = useAuthStore();
+// router
 const router = useRouter();
+const { token } = storeToRefs(useAuthStore());
 
-const handleTitleClick = () => {
+const handleTitleClick = async (): Promise<void> => {
     router.push('/');
 };
 
-const logout = () => {
-    // 简单演示登出：实际可调用 store 或跳转登录页
+const logout = async (): Promise<void> => {
+    if (token.value) {
+        console.log("token不为空,开始登出.")
+        await authStore.logout();
+    }
     router.push('/login');
 };
 </script>
