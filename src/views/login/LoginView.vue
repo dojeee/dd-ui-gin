@@ -3,7 +3,7 @@
     <div class="login-form-wrapper">
       <div class="login-form-inner">
         <a-typography-title :level="2" class="form-title">
-          ནང་འཛུལ།
+          Td Site
         </a-typography-title>
 
         <a-form :model="form" :rules="rules" @finish="handleSubmit">
@@ -27,7 +27,7 @@
                   ཨང་རྟགས་བསྐུར
                 </template>
                 <template v-else>
-                  {{ countdown }}
+                  <span class="countdown-number">{{ countdown }}</span>
                 </template>
               </a-button>
             </div>
@@ -36,7 +36,8 @@
 
           <a-divider></a-divider>
           <a-form-item>
-            <a-button type="primary" html-type="submit" block size="large" :loading="userStore.loading">
+            <a-button class="login-btn" type="primary" html-type="submit" block size="large"
+              :loading="userStore.loading">
               ནང་འཛུལ།
             </a-button>
           </a-form-item>
@@ -46,23 +47,18 @@
         <a-typography-text type="secondary" class="terms-text">
           ཁྱེད་ཀྱིས་ང་ཚོའི་བེད་སྤྱོད་ཀྱི་ཆ་རྐྱེན་དང་སྒེར་གྱི་སྲིད་ཇུས་ལ་མོས་མཐུན་བྱེད་ཡོད།<a
             href="#">སྤྱོད་མཁན་གྱི་ཆིངས་ཡིག།</a>
-          & <a href="#">གསང་བའི་སྲིད་ཇུས།</a>
+          དང <a href="#">གསང་བའི་སྲིད་ཇུས།</a>
         </a-typography-text>
       </div>
     </div>
 
-    <div class="logo-top-left"></div>
-
-    <div class="info-bottom-left"></div>
-
-    <div class="links-bottm-right"></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref, onBeforeUnmount } from 'vue';
 import { MobileOutlined } from '@ant-design/icons-vue';
-import { useUserStore } from '@/stores/userStores';
+import { useAuthStore } from '@/stores/authStores';
 import { message } from 'ant-design-vue';
 import type { LoginParams } from '@/types/auth';
 import type { Rule } from 'ant-design-vue/es/form';
@@ -102,7 +98,7 @@ const rules: Record<keyof FormData, Rule[]> = {
   ],
 };
 
-const userStore = useUserStore();
+const userStore = useAuthStore();
 
 // 验证码发送状态
 const sending = ref(false);
@@ -169,7 +165,6 @@ onBeforeUnmount(() => {
   width: 100vw;
   height: 100vh;
   background: v.$gradient-bg-content;
-  /* 晴朗暖色系渐变（日出暖黄 -> 柔橙 -> 天空蓝） */
   color: #2c3e50;
 }
 
@@ -179,166 +174,159 @@ onBeforeUnmount(() => {
 }
 
 .login-form-inner {
-  background: #ffffff;
   padding: 48px;
+  margin-bottom: 12px;
+  background: rgba(194, 187, 187, 0.25);
   border-radius: 16px;
-  border: 1px solid #eef0f3;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  margin-bottom: 14px;
-
-  /* CSS变量用于深度样式 */
-  --primary-color: #{v.$login-primary-color};
-  --primary-color-hover: #{v.$login-primary-hover};
-  --border-color: #{v.$login-border-color};
-  --border-color-hover: #{v.$login-border-hover};
-  --focus-shadow-color: #{v.$login-focus-shadow};
-  --component-border-radius: #{v.$login-border-radius};
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  backdrop-filter: blur(12px) saturate(150%);
 }
 
 .form-title {
   text-align: center;
-  margin-bottom: 32px;
-  color: #2c3e50 !important;
+  margin-bottom: 24px;
+  color: #1f2937 !important;
   font-weight: 700;
-  font-size: 26px !important;
-}
-
-.ant-form-item {
-  margin-bottom: 18px;
-}
-
-.login-form-inner .ant-form-item:nth-of-type(2) {
-  margin-top: -5px;
-}
-
-.terms-container {
-  text-align: center;
-}
-
-.terms-text {
-  font-size: 12px;
-  color: #5b6675;
-
-  a {
-    color: rgb(56, 117, 246);
-    text-decoration: none;
-    margin: 0 1px;
-    font-weight: 600;
-    transition: color 0.4s ease;
-
-    &:hover {
-      color: var(--primary-color-hover);
-    }
-  }
+  font-size: 46px !important;
+  font-family: var(--font-ital), system-ui, sans-serif;
 }
 
 .sms-group {
   display: flex;
   gap: 12px;
-  align-items: center;
+}
 
-  .sms-input {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
+.terms-container {
+  text-align: center;
+  font-family: var(--font-tib), system-ui, sans-serif;
 
-  .sms-btn {
-    flex: 0 0 auto;
-    width: 120px;
-    white-space: nowrap;
+  .terms-text {
+    font-family: var(--font-tib), system-ui, sans-serif;
+    font-size: 14px;
+    color: #384b65;
+
+    a {
+      font-size: 12px;
+      color: blue;
+      margin: 0 2px;
+      font-weight: 600;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: v.$login-primary-hover;
+      }
+    }
   }
 }
 
-:deep(.ant-input-affix-wrapper),
+// ========================================
+// Ant Design 组件样式覆盖（统一使用 :deep）
+// ========================================
+
+:deep(.ant-form-item) {
+  margin-bottom: 10px;
+}
+
+// Input 样式统一覆盖
+// :deep(.ant-input-affix-wrapper),
 :deep(.ant-input) {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: var(--component-border-radius);
-  color: #2c3e50;
-  font-size: 16px;
-  transition: all 0.2s ease;
+
+  border-radius: v.$login-border-radius !important;
+  // font-size: 16px;
+  transition: all 0.3s ease;
 
   &:hover {
-    border-color: var(--border-color-hover);
+    border-color: v.$login-border-hover !important;
   }
 
   &:focus,
   &:focus-within {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px var(--focus-shadow-color);
+    border-color: v.$login-primary-color !important;
+    box-shadow: 0 0 0 2px v.$login-focus-shadow !important;
   }
 
   &::placeholder {
-    color: #9aa4b2;
+    font-family: var(--font-tib), system-ui, sans-serif;
+    color: #6b7280;
     opacity: 1;
   }
 }
 
-:deep(.ant-input-prefix .anticon) {
-  color: var(--primary-color);
+// Input 内部文本颜色继承
+:deep(.ant-input) {
+  &::placeholder {
+    font-family: var(--font-tib), system-ui, sans-serif;
+    color: #6b7280;
+    opacity: 1;
+  }
 }
 
+// 前缀图标颜色
+:deep(.ant-input-prefix .anticon) {
+  color: v.$login-primary-color;
+}
+
+// 主按钮样式
 :deep(.ant-btn-primary) {
-  background: var(--primary-color);
-  border: 1px solid var(--primary-color);
+  background: v.$login-primary-color;
+  border-color: v.$login-primary-color;
   color: #ffffff;
   font-weight: 700;
-  border-radius: var(--component-border-radius);
-  transition: all 0.2s ease;
+  border-radius: v.$login-border-radius;
+  transition: all 0.3s ease;
+  font-size: large;
 
-  &:hover {
-    background: var(--primary-color-hover);
-    border-color: var(--primary-color-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(255, 138, 61, 0.3);
+  &:hover,
+  &:focus {
+    background: v.$login-primary-hover;
+    border-color: v.$login-primary-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(255, 138, 61, 0.2);
   }
 }
 
+// 短信验证码按钮
 :deep(.sms-btn) {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: var(--component-border-radius);
-  color: #2c3e50;
-  transition: all 0.2s ease;
-  flex: 0 0 auto;
+  flex-shrink: 0;
+  font-family: var(--font-tib), system-ui, sans-serif;
   width: 120px;
-  white-space: nowrap;
-  min-width: 120px;
+  color: #374151;
+  border-radius: v.$login-border-radius;
+  transition: all 0.3s ease;
 
   &:hover:not(:disabled) {
-    border-color: var(--border-color-hover);
-    color: var(--primary-color);
-  }
-
-  &:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px var(--focus-shadow-color);
+    border-color: v.$login-primary-color;
+    color: v.$login-primary-color;
   }
 
   &:disabled {
-    background: #f5f5f5;
-    border-color: #d9d9d9;
+    border-color: rgba(0, 0, 0, 0.1);
     color: rgba(0, 0, 0, 0.25);
   }
+
 }
 
+// 分割线
 :deep(.ant-divider) {
-  border-color: #eef0f3;
-  color: #73819a;
+  border-top-color: rgba(255, 255, 255, 0.4);
 }
 
-.register-text {
-  color: #5b6675;
+// 表单错误提示
+:deep(.ant-form-item-explain-error) {
+  font-family: var(--font-tib), system-ui, sans-serif;
+  margin-top: 4px;
+  color: rgb(255, 8, 8);
+  font-size: small;
+}
 
-  a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 700;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: var(--primary-color-hover);
-    }
-  }
+:deep(.countdown-number) {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1f2937;
+  margin-top: 3px;
+  padding: 0;
+  display: inline-block;
+  font-size: inherit;
 }
 </style>

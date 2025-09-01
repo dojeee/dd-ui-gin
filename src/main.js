@@ -5,6 +5,7 @@ import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
 import router from './routers/index'
 import { createPinia } from 'pinia'
+import '@/styles/fonts.scss';
 
 
 

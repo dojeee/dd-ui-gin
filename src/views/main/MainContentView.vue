@@ -1,4 +1,3 @@
-
 <template>
 
     <a-layout class="content-layout">
@@ -10,7 +9,7 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 
 const feature = ref();
@@ -39,5 +38,4 @@ const feature = ref();
     margin-left: v.$sider-width;
     transition: margin-left v.$transition-speed;
 }
-
 </style>
