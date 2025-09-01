@@ -1,4 +1,3 @@
-
 <template>
 
     <a-layout class="content-layout">
@@ -39,5 +38,4 @@ const feature = ref();
     margin-left: v.$sider-width;
     transition: margin-left v.$transition-speed;
 }
-
 </style>

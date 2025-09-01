@@ -58,7 +58,7 @@
 <script setup lang="ts">
 import { reactive, ref, onBeforeUnmount } from 'vue';
 import { MobileOutlined } from '@ant-design/icons-vue';
-import { useUserStore } from '@/stores/userStores';
+import { useUserStore } from '@/stores/authStores';
 import { message } from 'ant-design-vue';
 import type { LoginParams } from '@/types/auth';
 import type { Rule } from 'ant-design-vue/es/form';
