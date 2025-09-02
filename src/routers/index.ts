@@ -18,7 +18,7 @@ const router = createRouter({
             path: "/",
             component: MainView,
             meta: {
-                requiresAuth: true
+                requiresAuth: false
             }
         }
     ]
