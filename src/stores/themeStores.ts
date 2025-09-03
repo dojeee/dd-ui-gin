@@ -6,7 +6,7 @@ export const useThemeStore = defineStore('theme', () => {
 
   const theme = ref('light');
 
-  function setTheme(newTheme: 'light' | 'dark') {
+  function setTheme(newTheme: 'light' | 'dark' | 'color') {
     theme.value = newTheme;
   }
 

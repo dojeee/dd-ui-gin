@@ -11,25 +11,53 @@
                 Feed settings
             </a-button>
 
-            <a-dropdown :trigger="['click']" :visible="dropdownVisible" @visibleChange="handleVisibleChange">
+            <a-dropdown :trigger="['click']">
                 <div class="user-panel">
                     <a-avatar size="large" src="https://randomuser.me/api/portraits/men/1.jpg" />
                 </div>
                 <template #overlay>
-                    <a-menu>
+                    <a-menu @click="handleMenuClick">
                         <!-- 主题切换项 -->
-                        <a-menu-item key="0" :focusable="false">
-                            <div class="theme-container">
-                                <span class="theme-label">Theme</span>
-                                <a-switch v-model:checked="isDarkMode" class="theme-switch" @click.stop>
-                                    <template #checkedChildren>☀️</template>
-                                    <template #unCheckedChildren>🌙</template>
-                                </a-switch>
-                            </div>
-                        </a-menu-item>
+                        <a-sub-menu key="themeSubMenu" title="Theme">
+
+                            <a-menu-item key="theme-light">Light
+                                <template #icon>
+                                    <SmileOutlined />
+                                </template>
+                            </a-menu-item>
+
+                            <a-menu-item key="theme-dark"> Dark
+                                <template #icon>
+                                    <FrownOutlined />
+                                </template>
+                            </a-menu-item>
+
+                            <a-menu-item key="color-theme"> Color
+                                <template #icon>
+                                    <FrownOutlined />
+                                </template>
+                            </a-menu-item>
+
+                            <template #icon>
+                                <SkinOutlined />
+                            </template>
+
+                        </a-sub-menu>
+
                         <a-menu-divider />
-                        <a-menu-item key="1">Profile</a-menu-item>
-                        <a-menu-item key="3" @click="logout">Logout</a-menu-item>
+
+                        <a-menu-item key="1">Profile
+                            <template #icon>
+                                <UserOutlined />
+                            </template>
+                        </a-menu-item>
+
+                        <a-menu-item key="2" @click="logout">Logout
+                            <template #icon>
+                                <LogoutOutlined />
+                            </template>
+                        </a-menu-item>
+
                     </a-menu>
                 </template>
             </a-dropdown>
@@ -40,7 +68,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from "vue-router";
-import { ControlOutlined } from "@ant-design/icons-vue";
+import { ControlOutlined, UserOutlined, SkinOutlined, SmileOutlined, FrownOutlined, LogoutOutlined } from "@ant-design/icons-vue";
 import { useAuthStore } from "@/stores/authStores";
 import { useThemeStore } from "@/stores/themeStores";
 import { storeToRefs } from "pinia";
@@ -55,18 +83,6 @@ const { theme } = storeToRefs(themeStore);
 // router
 const router = useRouter();
 
-// 下拉菜单状态控制
-const dropdownVisible = ref<boolean>(false);
-
-// 主题切换计算属性
-const isDarkMode = computed<boolean>({
-    get() {
-        return theme.value === 'dark';
-    },
-    set(newValue: boolean) {
-        themeStore.setTheme(newValue ? 'dark' : 'light');
-    }
-});
 
 // 标题点击
 const handleTitleClick = (): void => {
@@ -81,10 +97,34 @@ const logout = async (): Promise<void> => {
     router.push("/login");
 };
 
-// 下拉菜单显示状态变化
-const handleVisibleChange = (flag: boolean) => {
-    dropdownVisible.value = flag;
-};
+
+const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
+    const { key, domEvent } = e;
+
+    switch (key) {
+        case "theme-light":
+            themeStore.setTheme("light")
+            break;
+        case "theme-dark":
+            themeStore.setTheme("dark")
+            break;
+        case "default-theme":
+            themeStore.setTheme("color")
+            break;
+        case "1":
+            router.push("/profile");
+            break;
+        case "2":
+            logout();
+            break;
+        default:
+            break;
+    }
+
+}
+
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -110,7 +150,7 @@ const handleVisibleChange = (flag: boolean) => {
     margin-top: 30px;
     color: v.$color-text-primary;
     font-size: v.$font-size-header;
-    font-weight: v.$font-weight-semibold;
+    font-weight: v.$font-weight-bold;
     font-family: "Italianno", cursive, system-ui;
     font-size: calc(var(--font-size, 46px));
     line-height: 1;
