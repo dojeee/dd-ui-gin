@@ -1,0 +1,38 @@
+import {
+    CompassOutlined,
+    UsergroupAddOutlined,
+    RiseOutlined,
+    HistoryOutlined,
+    PlusOutlined,
+    TeamOutlined,
+    ReadOutlined,
+    BookOutlined,
+    ClockCircleOutlined,
+    TagOutlined,
+    GlobalOutlined,
+    TrophyOutlined,
+    MessageOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+} from '@ant-design/icons-vue';
+
+export const iconMap = {
+    CompassOutlined,
+    UsergroupAddOutlined,
+    RiseOutlined,
+    HistoryOutlined,
+    PlusOutlined,
+    TeamOutlined,
+    ReadOutlined,
+    BookOutlined,
+    ClockCircleOutlined,
+    TagOutlined,
+    GlobalOutlined,
+    TrophyOutlined,
+    MessageOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+} as const;
+
+// 类型导出，用于类型安全
+export type IconName = keyof typeof iconMap;
