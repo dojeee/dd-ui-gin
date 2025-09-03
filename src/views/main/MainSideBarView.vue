@@ -1,14 +1,11 @@
 <template>
-
     <a-layout-sider v-model:collapsed="collapsed" :width="240" :collapsed-width="70"
         :class="['sidebar', { 'is-collapsed': collapsed }]" theme="dark">
-
-        <a-menu v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" :inline-collapsed="collapsed"
-            mode="inline" class="sidebar-menu">
-
+        <a-menu :inline-collapsed="collapsed" mode="inline" class="sidebar-menu">
+            <!-- 菜单头部 -->
             <div class="menu-header">
                 <span v-show="!collapsed" class="menu-header-title">Menus</span>
-                <a-button type="button" class="menu-toggle-btn" @click.stop="toggleSide">
+                <a-button type="text" class="menu-toggle-btn" @click.stop="toggleSide">
                     <template #icon>
                         <MenuFoldOutlined v-if="!collapsed" />
                         <MenuUnfoldOutlined v-else />
@@ -16,121 +13,31 @@
                 </a-button>
             </div>
 
-            <a-menu-item key="foryou" title="For You">
-                <template #icon>
-                    <CompassOutlined />
-                </template>
-                <span>For You</span>
-            </a-menu-item>
-            <a-menu-item key="following" title="Following">
-                <template #icon>
-                    <UsergroupAddOutlined />
-                </template>
-                <span>Following</span>
-            </a-menu-item>
-            <a-menu-item key="explore" title="Explore">
-                <template #icon>
-                    <RiseOutlined />
-                </template>
-                <span>Explore</span>
-            </a-menu-item>
-            <a-menu-item key="history" title="History">
-                <template #icon>
-                    <HistoryOutlined />
-                </template>
-                <span>History</span>
-            </a-menu-item>
+            <!-- 动态渲染菜单项 -->
+            <template v-for="menu in sideBarMenus" :key="menu.key">
+                <!-- 有 children → 渲染为 a-sub-menu -->
+                <a-sub-menu v-if="menu.children && menu.children.length > 0">
+                    <template #title>
+                        <span class="submenu-title">{{ menu.label }}</span>
+                    </template>
 
-            <!-- Collapsible Groups -->
-            <a-sub-menu key="customFeeds">
-                <template #title>
-                    <span class="submenu-title">Custom feeds</span>
-                </template>
-                <a-menu-item key="addCustomFeed" title="Custom feed">
-                    <template #icon>
-                        <PlusOutlined />
-                    </template>
-                    <span>Custom feed</span>
-                </a-menu-item>
-            </a-sub-menu>
+                    <!-- 子菜单项 -->
+                    <a-menu-item v-for="child in menu.children" :key="child.key" :title="child.title" collapsed="true">
+                        <template #icon>
+                            <component :is="iconMap[child.icon]" v-if="child.icon" />
+                        </template>
+                        <span>{{ child.label }}</span>
+                    </a-menu-item>
+                </a-sub-menu>
 
-            <a-sub-menu key="network">
-                <template #title>
-                    <span class="submenu-title">Network</span>
-                </template>
-                <a-menu-item key="findSquads" title="Find Squads">
+                <!-- 无 children → 渲染为 a-menu-item -->
+                <a-menu-item v-else :key="menu.key" :title="menu.title">
                     <template #icon>
-                        <TeamOutlined />
+                        <component :is="iconMap[menu.icon]" v-if="menu.icon" />
                     </template>
-                    <span>Find Squads</span>
+                    <span>{{ menu.label }}</span>
                 </a-menu-item>
-                <a-menu-item key="newSquad" title="New Squad">
-                    <template #icon>
-                        <PlusOutlined />
-                    </template>
-                    <span>New Squad</span>
-                </a-menu-item>
-            </a-sub-menu>
-
-            <a-sub-menu key="bookmarks">
-                <template #title>
-                    <span class="submenu-title">Bookmarks</span>
-                </template>
-                <a-menu-item key="briefings" title="Presidential briefings">
-                    <template #icon>
-                        <ReadOutlined />
-                    </template>
-                    <span>Presidential briefings</span>
-                </a-menu-item>
-                <a-menu-item key="saves" title="Quick saves">
-                    <template #icon>
-                        <BookOutlined />
-                    </template>
-                    <span>Quick saves</span>
-                </a-menu-item>
-                <a-menu-item key="readLater" title="Read it later">
-                    <template #icon>
-                        <ClockCircleOutlined />
-                    </template>
-                    <span>Read it later</span>
-                </a-menu-item>
-                <a-menu-item key="newFolder" title="New folder">
-                    <template #icon>
-                        <PlusOutlined />
-                    </template>
-                    <span>New folder</span>
-                </a-menu-item>
-            </a-sub-menu>
-
-            <a-sub-menu key="discover">
-                <template #title>
-                    <span class="submenu-title">Discover</span>
-                </template>
-                <a-menu-item key="tags" title="Tags">
-                    <template #icon>
-                        <TagOutlined />
-                    </template>
-                    <span>Tags</span>
-                </a-menu-item>
-                <a-menu-item key="sources" title="Sources">
-                    <template #icon>
-                        <GlobalOutlined />
-                    </template>
-                    <span>Sources</span>
-                </a-menu-item>
-                <a-menu-item key="leaderboard" title="Leaderboard">
-                    <template #icon>
-                        <TrophyOutlined />
-                    </template>
-                    <span>Leaderboard</span>
-                </a-menu-item>
-                <a-menu-item key="discussions" title="Discussions">
-                    <template #icon>
-                        <MessageOutlined />
-                    </template>
-                    <span>Discussions</span>
-                </a-menu-item>
-            </a-sub-menu>
+            </template>
         </a-menu>
     </a-layout-sider>
 </template>
@@ -138,56 +45,34 @@
 
 
 <script setup>
-
 import { ref, watch } from 'vue';
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    TeamOutlined,
-    PlusOutlined,
-    CompassOutlined, UsergroupAddOutlined, RiseOutlined, HistoryOutlined,
-    ReadOutlined, BookOutlined, TagOutlined, GlobalOutlined,
-    ControlOutlined, LeftOutlined, RightOutlined,
-    ClockCircleOutlined, TrophyOutlined, MessageOutlined
 } from '@ant-design/icons-vue';
 
+import useSideBarMenusStores from '@/stores/sideBarMenusStores';
+import { storeToRefs } from 'pinia';
+import { iconMap } from '@/assets/icons/SideBarIconMap';
 
-
+const sideBarMenusStores = useSideBarMenusStores();
+const { sideBarMenus } = storeToRefs(sideBarMenusStores);
 
 const collapsed = ref(false);
 const selectedKeys = ref(['foryou']);
 const allSubMenuKeys = ['customFeeds', 'network', 'bookmarks', 'discover'];
-const openKeys = ref(collapsed.value ? [] : allSubMenuKeys);
+const openKeys = ref([...allSubMenuKeys]);
 
-// 监听折叠状态变化，自动展开/收起所有子菜单
 watch(collapsed, (newVal) => {
     if (newVal) {
-        // 折叠时展开所有子菜单，让图标显示
-        openKeys.value = allSubMenuKeys;
-    } else {
-        // 展开时保持所有子菜单打开
-        openKeys.value = allSubMenuKeys;
+        selectedKeys.value = [];
     }
+    openKeys.value = newVal ? allSubMenuKeys : allSubMenuKeys;
 });
 
-
-
-// 切换侧边栏（左右展开/收起）
 const toggleSide = () => {
     collapsed.value = !collapsed.value;
-    // 确保折叠时所有子菜单都展开显示图标
-    if (collapsed.value) {
-        openKeys.value = allSubMenuKeys;
-    }
 };
-
-const logout = () => {
-    console.log('User logged out');
-    // 跳转登录页等
-};
-
-
-
 </script>
 
 
@@ -195,7 +80,6 @@ const logout = () => {
 <style lang="scss" scoped>
 @use '@/styles/variables' as v;
 
-/* 侧边栏样式 - 只导入变量配置 */
 .sidebar {
     background: v.$gradient-bg-sidebar !important;
     box-shadow: none;
