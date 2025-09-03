@@ -22,23 +22,23 @@ const useSideBarMenusStores = defineStore('sideBarMenusStores', () => {
 
 
     // state
-    let personalMenus = ref<PersonalMenuItem[]>([
-        { key: "0", icon: () => import("@/assets/icons/user.svg"), label: "profile", title: "profile" },
+    let sideBarMenus = ref<PersonalMenuItem[]>([
+        { key: "0", icon: () => { }, label: "profile", title: "profile" },
     ]);
 
 
     //actions
     function setMenus(menus: PersonalMenuItem[]) {
-        personalMenus.value.length = 0;
-        personalMenus.value.push(...menus);
+        sideBarMenus.value.length = 0;
+        sideBarMenus.value.push(...menus);
     }
 
     function addMenu(menu: PersonalMenuItem) {
-        personalMenus.value.push(menu)
+        sideBarMenus.value.push(menu)
     }
 
     return {
-        personalMenus,
+        sideBarMenus,
         setMenus,
         addMenu
     }

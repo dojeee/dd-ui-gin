@@ -54,7 +54,7 @@
 
                         <a-menu-item key="2" @click="logout">Logout
                             <template #icon>
-                                <LogoutOutlined />
+                                <LogoutOutlined :rotate="270" />
                             </template>
                         </a-menu-item>
 
