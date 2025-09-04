@@ -7,11 +7,11 @@
     theme="dark"
   >
     <a-menu
-      :inline-collapsed="collapsed"
       mode="inline"
       class="sidebar-menu"
-      v-model:selectedKeys="defaultSelectMenuKey"
+      v-model:selectedKeys="selectedMenuKey"
       v-model:openKeys="openKeys"
+      @click="handleMenuClick"
     >
       <!-- header collapsed -->
       <div class="menu-header">
@@ -28,7 +28,7 @@
       <template v-for="menu in sideBarMenus" :key="menu.key">
         <!-- 有 children → 渲染为 a-sub-menu -->
         <a-sub-menu
-          :key="menu.key"
+          :key="`sub-${menu.key}`"
           v-if="menu.children && menu.children.length > 0"
         >
           <template #title>
@@ -49,7 +49,7 @@
         </a-sub-menu>
 
         <!-- 无 children → 渲染为 a-menu-item -->
-        <a-menu-item key="menu.key" v-else :title="menu.title">
+        <a-menu-item :key="menu.key" v-else :title="menu.title">
           <template #icon>
             <component :is="iconMap[menu.icon]" v-if="menu.icon" />
           </template>
@@ -73,12 +73,15 @@ const { sideBarMenus, topLevelKeys, firstSelectedKey } =
   storeToRefs(sideBarMenusStores);
 
 const collapsed = ref(false);
-const defaultSelectMenuKey = ref([firstSelectedKey.value]);
+const selectedMenuKey = ref([]);
 const openKeys = ref([]);
 
-watch(firstSelectedKey, (newKey) => {
-  defaultSelectMenuKey.value = [newKey];
-});
+const handleMenuClick = ({ key }) => {
+  if (key) {
+    console.log(key);
+    selectedMenuKey.value = [key];
+  }
+};
 
 const toggleSide = () => {
   collapsed.value = !collapsed.value;
@@ -87,11 +90,18 @@ const toggleSide = () => {
   }
 };
 
+watch(firstSelectedKey, (newKey) => {
+  selectedMenuKey.value = [newKey];
+});
 onMounted(() => {
+  // set default open keys
   const initialOpenKeys = sideBarMenus.value
     .filter((menu) => menu.children && menu.children.length > 0)
     .map((menu) => menu.key);
   openKeys.value = initialOpenKeys;
+
+  // set default selected menu
+  selectedMenuKey.value = [firstSelectedKey.value];
 });
 </script>
 
