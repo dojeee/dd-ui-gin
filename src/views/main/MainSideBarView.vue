@@ -13,7 +13,7 @@
       v-model:selectedKeys="defaultSelectMenuKey"
       v-model:openKeys="openKeys"
     >
-      <!-- 菜单头部 -->
+      <!-- header collapsed -->
       <div class="menu-header">
         <span v-show="!collapsed" class="menu-header-title">Menus</span>
         <a-button type="text" class="menu-toggle-btn" @click.stop="toggleSide">
@@ -49,7 +49,7 @@
         </a-sub-menu>
 
         <!-- 无 children → 渲染为 a-menu-item -->
-        <a-menu-item v-else :key="menu.key" :title="menu.title">
+        <a-menu-item key="menu.key" v-else :title="menu.title">
           <template #icon>
             <component :is="iconMap[menu.icon]" v-if="menu.icon" />
           </template>
@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue";
 import useSideBarMenusStores from "@/stores/sideBarMenusStores";
 import { storeToRefs } from "pinia";
@@ -74,11 +74,7 @@ const { sideBarMenus, topLevelKeys, firstSelectedKey } =
 
 const collapsed = ref(false);
 const defaultSelectMenuKey = ref([firstSelectedKey.value]);
-
-const initialOpenKeys = sideBarMenus.value
-  .filter((menu) => menu.children && menu.children.length > 0)
-  .map((menu) => menu.key);
-const openKeys = ref(initialOpenKeys);
+const openKeys = ref([]);
 
 watch(firstSelectedKey, (newKey) => {
   defaultSelectMenuKey.value = [newKey];
@@ -86,7 +82,17 @@ watch(firstSelectedKey, (newKey) => {
 
 const toggleSide = () => {
   collapsed.value = !collapsed.value;
+  if (collapsed.value) {
+    openKeys.value = [];
+  }
 };
+
+onMounted(() => {
+  const initialOpenKeys = sideBarMenus.value
+    .filter((menu) => menu.children && menu.children.length > 0)
+    .map((menu) => menu.key);
+  openKeys.value = initialOpenKeys;
+});
 </script>
 
 <style lang="scss" scoped>
