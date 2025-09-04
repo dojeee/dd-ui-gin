@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import type { IconName } from '@/assets/icons/SideBarIconMap';
 
 interface PersonalMenuItem {
@@ -144,10 +144,23 @@ export const useSideBarMenusStores = defineStore('sideBarMenus', () => {
         sideBarMenus.value.push(menu);
     }
 
+    const firstSelectedKey = computed(() => {
+        return sideBarMenus.value[0].key;
+    });
+    
+    const topLevelKeys = computed(() => {
+        const a = sideBarMenus.value.map(item => item.key);
+        console.log(a);
+        return sideBarMenus.value.map(item => item.key);
+    });
+
     return {
         sideBarMenus,
+        topLevelKeys,
+        firstSelectedKey,
         setMenus,
         addMenu,
+        
     };
 });
 
