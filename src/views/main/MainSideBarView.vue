@@ -78,7 +78,6 @@ const openKeys = ref([]);
 
 const handleMenuClick = ({ key }) => {
   if (key) {
-    console.log(key);
     selectedMenuKey.value = [key];
   }
 };

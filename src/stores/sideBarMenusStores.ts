@@ -149,8 +149,6 @@ export const useSideBarMenusStores = defineStore('sideBarMenus', () => {
     });
     
     const topLevelKeys = computed(() => {
-        const a = sideBarMenus.value.map(item => item.key);
-        console.log(a);
         return sideBarMenus.value.map(item => item.key);
     });
 
