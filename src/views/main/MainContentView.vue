@@ -1,41 +1,148 @@
 <template>
-
-    <a-layout class="content-layout">
-        <a-layout-content class="main-content">
-            <router-view />
+  <a-layout class="content-layout">
+    <a-layout-content class="main-content">
+      <a-layout :style="{ marginLeft: '200px' }">
+        <a-layout-header :style="{ padding: 0 }" />
+        <a-layout-content
+          :style="{ margin: '24px 16px 0', overflow: 'initial' }"
+        >
+          <div
+            :style="{
+              padding: '24px',
+              textAlign: 'center',
+            }"
+          >
+            ...
+            <br />
+            Really
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            long
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            ...
+            <br />
+            content
+          </div>
         </a-layout-content>
-    </a-layout>
-
+        <a-layout-footer :style="{ textAlign: 'center' }">
+          Ant Design ©2018 Created by Ant UED
+        </a-layout-footer>
+      </a-layout>
+      <router-view />
+    </a-layout-content>
+  </a-layout>
 </template>
 
-
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const feature = ref();
 </script>
 
-
-
 <style lang="scss" scoped>
-@use '@/styles/variables' as v;
+@use "@/styles/variables" as v;
 
 /* 内容区域 */
 .content-layout {
-    background: v.$gradient-bg-content;
-    min-height: 100vh;
+  background: v.$gradient-bg-content;
+  min-height: 100vh;
 }
 
 .main-content {
-    background: v.$gradient-bg-content;
-    padding: 88px 24px 24px 24px;
-    /* 顶部留出 header 空间 */
-    color: v.$color-text-primary;
-    min-height: calc(100vh - 88px);
+  background: v.$gradient-bg-content;
+  padding: 88px 24px 24px 24px;
+  /* 顶部留出 header 空间 */
+  color: v.$color-text-primary;
+  min-height: calc(100vh - 88px);
 }
 
-.sider+.content-layout {
-    margin-left: v.$sider-width;
-    transition: margin-left v.$transition-speed;
+.sider + .content-layout {
+  margin-left: v.$sider-width;
+  transition: margin-left v.$transition-speed;
 }
 </style>
