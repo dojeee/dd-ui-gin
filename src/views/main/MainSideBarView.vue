@@ -1,7 +1,7 @@
 <template>
   <a-layout-sider
     v-model:collapsed="collapsed"
-    :width="240"
+    :width="230"
     :collapsed-width="70"
     :class="['sidebar-container', { 'is-collapsed': collapsed }]"
     theme="dark"
@@ -114,7 +114,6 @@ onMounted(() => {
 
 .sidebar-container {
   position: v.$sidebar-position;
-  width: v.$sidebar-width;
   height: calc(100vh - #{v.$sidebar-top});
   top: v.$sidebar-top;
   bottom: v.$sidebar-bottom;
@@ -133,17 +132,17 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: v.$spacing-sm v.$spacing-xl;
+  padding: v.$spacing-sm v.$spacing-md;
   height: calc(#{v.$menu-item-height} + #{v.$spacing-sm});
   box-sizing: border-box;
   width: 100%;
-  flex-shrink: 0; // 防止被压缩
+  flex-shrink: 0;
+  border-right: 1px solid v.$color-border;
 }
 
 /* 菜单容器 */
 .sidebar-menu {
   background: transparent;
-  border: none;
   flex: 1;
   min-height: 0;
   overflow-y: auto;
@@ -166,20 +165,16 @@ onMounted(() => {
 
 /* 切换按钮 */
 .menu-toggle-btn {
-  margin-left: auto;
-  margin-right: v.$spacing-xs;
+  height: auto;
+  left: 7px;
+  justify-content: center;
+  color: v.$color-text-icon;
+  font-size: v.$font-size-icon;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: v.$button-height;
-  min-width: v.$button-height;
-  color: v.$color-text-icon;
-  font-size: v.$font-size-icon-small;
-  padding: v.$spacing-xs;
-  border: none;
   background: transparent;
   cursor: pointer;
-  border-radius: v.$button-border-radius;
   transition: background-color v.$transition-speed;
 }
 

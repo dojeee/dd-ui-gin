@@ -25,7 +25,7 @@ $color-text-muted: #a0a0a0; // 静音文字
 $color-text-dark: #0d0d0d; // 深色文字
 
 // 边框颜色
-$color-border: #374151; // 边框颜色
+$color-border: #2b2e35; // 边框颜色
 $color-border-button: #4a4a4a; // 按钮边框
 
 // ===== 字体系统 =====
@@ -67,7 +67,7 @@ $sidebar-top : 64px;
 $sidebar-bottom: 0px;
 $sidebar-collapsed-width: 70px;
 $sidebar-collapsed-height: 100vh;
-$sidebar-transition-speed: 0.2s;
+$sidebar-transition-speed: 0.3s;
 $sidebar-transition-easing: ease-in-out;
 $sidebbar-bg-color: linear-gradient(180deg, #7a9989 8%, #3979b870 70%, #1c2128 500%);
 
