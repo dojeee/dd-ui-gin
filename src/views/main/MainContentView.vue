@@ -1,5 +1,5 @@
 <template>
-  <a-layout-content :style="{ margin: '24px 16px 0', overflow: 'initial' }">
+  <a-layout-content class="content-container">
     <div :style="{ padding: '24px', textAlign: 'center' }">
       <h2>this is content header</h2>
       ...
@@ -112,8 +112,8 @@ const feature = ref();
 @use "@/styles/variables" as v;
 
 /* 内容区域 */
-.content-layout {
-  background: v.$gradient-bg-content;
-  min-height: 100vh;
+.content-container {
+  margin: "24px 16px 0";
+  overflow: initial;
 }
 </style>
