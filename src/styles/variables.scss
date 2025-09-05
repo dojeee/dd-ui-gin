@@ -2,10 +2,34 @@
 
 // ===== 颜色系统 =====
 // 渐变背景色 - 深蓝灰色系
-$gradient-bg-primary: linear-gradient(135deg, #73ab7fb9 8%, #3979b865 70%, #0d1117 200%); // 主背景渐变
-$gradient-bg-header: linear-gradient(90deg, #7a9989 8%, #3979b869 70%, #161b22 500%); // 头部渐变
-$gradient-bg-sidebar: linear-gradient(180deg, #7a9989 8%, #3979b870 70%, #1c2128 500%); // 侧边栏渐变
-$gradient-bg-content: linear-gradient(135deg, #7a9989 0%, #3979b881 60%, #1c2128 200%, #00ff37); // 内容区渐变
+$gradient-bg-primary: linear-gradient(
+  135deg,
+  rgba(115, 171, 127, 1) 8%,   // #73ab7f -> 完全不透明
+  rgba(57, 121, 184, 1) 70%,   // #3979b8 -> 完全不透明
+  rgba(13, 17, 23, 1) 200%     // #0d1117 -> 完全不透明
+); // 主背景渐变
+
+$gradient-bg-header: linear-gradient(
+  90deg,
+  rgb(6, 147, 46,1) 0%,      // 左侧开始：浅绿色，完全不透明
+  rgb(74, 82, 148,1) 60%,       // 中间：蓝色，完全不透明
+  rgba(47, 106, 75, 1) 100%       // 右侧结束：深绿，完全不透明
+);
+
+$gradient-bg-sidebar: linear-gradient(
+  180deg,
+  rgb(6, 147, 46,1) 0%,    // 浅绿色，完全不透明
+  rgb(74, 82, 148,1) 60%,     // 蓝色，完全不透明
+  rgba(47, 106, 75, 1) 100%     // 深绿，完全不透明
+); // 侧边栏渐变
+
+$gradient-bg-content: linear-gradient(
+  135deg,
+  rgba(122, 153, 137, 1) 0%,    // 浅绿色，完全不透明
+  rgba(57, 121, 184, 1) 60%,    // 蓝色，完全不透明
+  rgba(28, 33, 40, 1) 200%,     // 深灰黑，完全不透明
+  rgba(0, 255, 55, 1) 100%      // 鲜艳的绿色，完全不透明
+); 
 
 // 单色背景（备用）
 $color-bg-primary: #0f1217; // 主背景

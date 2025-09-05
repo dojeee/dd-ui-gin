@@ -31,20 +31,4 @@ import MainFooterView from "./main/MainFooterView.vue";
 .main-layout {
   min-height: 100vh;
 }
-
-.header {
-  background: v.$gradient-bg-header;
-  padding: 0 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.1);
-  border-bottom: 0px solid v.$color-border;
-  height: v.$header-height;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: v.$z-index-header;
-}
 </style>
