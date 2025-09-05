@@ -32,7 +32,7 @@
           :title="menu.title"
         >
           <template #title>
-            <span class="submenu-title">{{ menu.label }}</span>
+            <span>{{ menu.label }}</span>
           </template>
 
           <!-- 子菜单项 -->
@@ -149,9 +149,9 @@ onMounted(() => {
   &::-webkit-scrollbar {
     display: none;
   }
-  /* For IE, Edge and Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .menu-header-title {
@@ -162,7 +162,6 @@ onMounted(() => {
   letter-spacing: 0.5px;
 }
 
-/* 切换按钮 */
 .menu-toggle-btn {
   height: auto;
   left: 7px;
@@ -174,15 +173,13 @@ onMounted(() => {
   justify-content: center;
   background: transparent;
   cursor: pointer;
-  // transition: background-color v.$transition-speed;
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color v.$transition-speed step-end;
 }
 
 .menu-toggle-btn:hover {
   background-color: v.$color-bg-hover;
 }
 
-/* 菜单项基础样式 */
 .sidebar-menu :deep(.ant-menu-item) {
   color: v.$color-text-secondary;
   border-radius: v.$menu-border-radius;
@@ -193,7 +190,7 @@ onMounted(() => {
 
 /* 子菜单标题样式 - 不应该有选中状态 */
 .sidebar-menu :deep(.ant-menu-submenu-title) {
-  color: v.$color-text-secondary;
+  color: v.$color-text-submenu;
   margin: v.$menu-item-margin-y v.$menu-item-margin-x !important;
   width: calc(100% - #{v.$menu-item-margin-x * 2});
   padding: 0 v.$menu-padding-x !important;
@@ -216,15 +213,6 @@ onMounted(() => {
   color: v.$color-text-primary !important;
 }
 
-/* 子菜单标题 */
-.submenu-title {
-  text-transform: uppercase;
-  font-size: v.$font-size-submenu;
-  font-weight: v.$font-weight-medium;
-  color: v.$color-text-submenu;
-  letter-spacing: 0.5px;
-}
-
 .sidebar-menu :deep(.ant-menu-submenu-arrow) {
   color: v.$color-text-muted;
 }
@@ -235,17 +223,13 @@ onMounted(() => {
   font-size: v.$font-size-icon;
 }
 
-/* 折叠状态样式 */
-.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-submenu-title) {
-  text-align: center !important;
-}
-
 .sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-submenu-arrow) {
   display: none !important;
 }
 
 .sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-sub) {
   display: block !important;
+  transition: none !important;
 }
 
 /* 统一所有菜单项样式 - 一级和二级菜单项都显示为同样的图标 */
