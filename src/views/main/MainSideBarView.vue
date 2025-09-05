@@ -3,7 +3,7 @@
     v-model:collapsed="collapsed"
     :width="240"
     :collapsed-width="70"
-    :class="['sidebar', { 'is-collapsed': collapsed }]"
+    :class="['sidebar-container', { 'is-collapsed': collapsed }]"
     theme="dark"
   >
     <a-menu
@@ -113,7 +113,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 @use "@/styles/variables" as v;
 
-.sidebar {
+.sidebar-container {
 
   position: v.$sidebar-position;
   width: v.$sidebar-width;
@@ -251,23 +251,23 @@ onMounted(() => {
 }
 
 /* 折叠状态样式 */
-.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-submenu-title) {
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-submenu-title) {
   display: none !important;
 }
 
-.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-submenu-arrow) {
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-submenu-arrow) {
   display: none !important;
 }
 
 /* 让子菜单容器展开，不显示嵌套结构 */
-.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-submenu) {
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-submenu) {
   height: auto !important;
   line-height: normal !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-sub) {
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-sub) {
   position: static !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -282,8 +282,8 @@ onMounted(() => {
 }
 
 /* 统一所有菜单项样式 - 一级和二级菜单项都显示为同样的图标 */
-.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-item),
-.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item) {
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-item),
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item) {
   text-align: center !important;
   padding: 0 !important;
   margin: v.$menu-item-margin-y v.$menu-item-margin-x !important;
@@ -298,16 +298,16 @@ onMounted(() => {
 }
 
 /* 隐藏所有文字，只保留图标 */
-.sidebar.is-collapsed
+.sidebar-container.is-collapsed
   .sidebar-menu
   :deep(.ant-menu-item)
   .ant-menu-title-content,
-.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-item) span:not(.anticon),
-.sidebar.is-collapsed
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-item) span:not(.anticon),
+.sidebar-container.is-collapsed
   .sidebar-menu
   :deep(.ant-menu-sub .ant-menu-item)
   .ant-menu-title-content,
-.sidebar.is-collapsed
+.sidebar-container.is-collapsed
   .sidebar-menu
   :deep(.ant-menu-sub .ant-menu-item)
   span:not(.anticon) {
@@ -315,7 +315,7 @@ onMounted(() => {
 }
 
 /* 确保所有图标显示并对齐 */
-.sidebar.is-collapsed .sidebar-menu :deep(.anticon) {
+.sidebar-container.is-collapsed .sidebar-menu :deep(.anticon) {
   font-size: v.$font-size-icon !important;
   margin: 0 !important;
   display: inline-flex !important;
@@ -324,8 +324,8 @@ onMounted(() => {
   align-items: center !important;
 }
 
-.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-item .anticon),
-.sidebar.is-collapsed
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-item .anticon),
+.sidebar-container.is-collapsed
   .sidebar-menu
   :deep(.ant-menu-sub .ant-menu-item .anticon) {
   margin-right: 0 !important;
@@ -333,12 +333,12 @@ onMounted(() => {
 }
 
 /* 确保子菜单项的悬停和选中效果 */
-.sidebar.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item:hover) {
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item:hover) {
   background-color: v.$color-bg-hover !important;
   color: v.$color-text-primary !important;
 }
 
-.sidebar.is-collapsed
+.sidebar-container.is-collapsed
   .sidebar-menu
   :deep(.ant-menu-sub .ant-menu-item-selected) {
   background-color: v.$color-bg-selected !important;
