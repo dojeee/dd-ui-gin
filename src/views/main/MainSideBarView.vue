@@ -28,8 +28,9 @@
       <template v-for="menu in sideBarMenus" :key="menu.key">
         <!-- 有 children → 渲染为 a-sub-menu -->
         <a-sub-menu
-          :key="`sub-${menu.key}`"
           v-if="menu.children && menu.children.length > 0"
+          :key="menu.key"
+          :title="menu.title"
         >
           <template #title>
             <span class="submenu-title">{{ menu.label }}</span>
@@ -49,7 +50,11 @@
         </a-sub-menu>
 
         <!-- 无 children → 渲染为 a-menu-item -->
-        <a-menu-item :key="menu.key" v-else :title="menu.title">
+        <a-menu-item
+          v-if="!menu.children || menu.children.length === 0"
+          :key="menu.key"
+          :title="menu.title"
+        >
           <template #icon>
             <component :is="iconMap[menu.icon]" v-if="menu.icon" />
           </template>
