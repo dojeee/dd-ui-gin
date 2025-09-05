@@ -144,6 +144,7 @@ const feature = ref();
 /* 内容区域 */
 .content-container {
   margin: "24px 16px 0";
-  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 </style>
