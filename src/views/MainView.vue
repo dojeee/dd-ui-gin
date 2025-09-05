@@ -4,24 +4,18 @@
     <MainHeaderView />
 
     <a-layout :style="{ marginTop: '64px' }">
-
-        <!-- 侧边栏 -->
+      <!-- 侧边栏 -->
       <MainSideBarView />
 
-        
-      <a-layout :style="{ marginLeft: '240px' }">
+      <a-layout>
         <!-- 主内容区 -->
         <MainContentView />
 
         <!-- 页脚 -->
         <MainFooterView />
-
       </a-layout>
-
-      
     </a-layout>
     <!-- 内容区域 -->
-    
   </a-layout>
 </template>
 
@@ -29,7 +23,7 @@
 import MainHeaderView from "./main/MainHeaderView.vue";
 import MainContentView from "./main/MainContentView.vue";
 import MainSideBarView from "./main/MainSideBarView.vue";
-import MainFooterView from "./main/MainFooterView.vue"
+import MainFooterView from "./main/MainFooterView.vue";
 </script>
 
 <style lang="scss" scoped>

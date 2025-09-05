@@ -69,7 +69,7 @@ $sidebar-collapsed-width: 70px;
 $sidebar-collapsed-height: 100vh;
 $sidebar-transition-speed: 0.2s;
 $sidebar-transition-easing: ease-in-out;
-$sidebbar-bg-color: $gradient-bg-sidebar;
+$sidebbar-bg-color: linear-gradient(180deg, #7a9989 8%, #3979b870 70%, #1c2128 500%);
 
 // ===== 动画系统 =====
 $transition-speed: 0.2s;

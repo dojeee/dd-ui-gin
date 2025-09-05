@@ -6,6 +6,18 @@
     :class="['sidebar-container', { 'is-collapsed': collapsed }]"
     theme="dark"
   >
+    <!-- header collapsed -->
+    <div class="menu-header">
+      <span v-show="!collapsed" class="menu-header-title">Menus</span>
+      <a-button type="text" class="menu-toggle-btn" @click.stop="toggleSide">
+        <template #icon>
+          <MenuFoldOutlined v-if="!collapsed" />
+          <MenuUnfoldOutlined v-else />
+        </template>
+      </a-button>
+    </div>
+
+    <!-- menu list -->
     <a-menu
       mode="inline"
       class="sidebar-menu"
@@ -13,18 +25,6 @@
       v-model:openKeys="openKeys"
       @click="handleMenuClick"
     >
-      <!-- header collapsed -->
-      <div class="menu-header">
-        <span v-show="!collapsed" class="menu-header-title">Menus</span>
-        <a-button type="text" class="menu-toggle-btn" @click.stop="toggleSide">
-          <template #icon>
-            <MenuFoldOutlined v-if="!collapsed" />
-            <MenuUnfoldOutlined v-else />
-          </template>
-        </a-button>
-      </div>
-
-      <!-- 动态渲染菜单项 -->
       <template v-for="menu in sideBarMenus" :key="menu.key">
         <!-- 有 children → 渲染为 a-sub-menu -->
         <a-sub-menu
@@ -84,7 +84,6 @@ const openKeys = ref([]);
 const handleMenuClick = ({ key }) => {
   if (key) {
     selectedMenuKey.value = [key];
-
   }
 };
 
@@ -114,22 +113,19 @@ onMounted(() => {
 @use "@/styles/variables" as v;
 
 .sidebar-container {
-
   position: v.$sidebar-position;
   width: v.$sidebar-width;
-  height: v.$sidebar-height;
+  height: calc(100vh - #{v.$sidebar-top});
   top: v.$sidebar-top;
   bottom: v.$sidebar-bottom;
-  background-color: v.$sidebbar-bg-color;
+  background-color: v.$gradient-bg-sidebar;
 }
 
-/* 菜单容器 */
-.sidebar-menu {
-  background: transparent;
-  border: none;
-  flex-grow: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
+/* 关键：对 Ant Design 内部的包装容器应用 flex 布局 */
+.sidebar-container :deep(.ant-layout-sider-children) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 /* 菜单标题区域 */
@@ -137,10 +133,27 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: v.$spacing-sm v.$spacing-md;
+  padding: v.$spacing-sm v.$spacing-xl;
   height: calc(#{v.$menu-item-height} + #{v.$spacing-sm});
   box-sizing: border-box;
   width: 100%;
+  flex-shrink: 0; // 防止被压缩
+}
+
+/* 菜单容器 */
+.sidebar-menu {
+  background: transparent;
+  border: none;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* For IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .menu-header-title {
@@ -283,7 +296,9 @@ onMounted(() => {
 
 /* 统一所有菜单项样式 - 一级和二级菜单项都显示为同样的图标 */
 .sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-item),
-.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item) {
+.sidebar-container.is-collapsed
+  .sidebar-menu
+  :deep(.ant-menu-sub .ant-menu-item) {
   text-align: center !important;
   padding: 0 !important;
   margin: v.$menu-item-margin-y v.$menu-item-margin-x !important;
@@ -302,7 +317,10 @@ onMounted(() => {
   .sidebar-menu
   :deep(.ant-menu-item)
   .ant-menu-title-content,
-.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-item) span:not(.anticon),
+.sidebar-container.is-collapsed
+  .sidebar-menu
+  :deep(.ant-menu-item)
+  span:not(.anticon),
 .sidebar-container.is-collapsed
   .sidebar-menu
   :deep(.ant-menu-sub .ant-menu-item)
@@ -333,7 +351,9 @@ onMounted(() => {
 }
 
 /* 确保子菜单项的悬停和选中效果 */
-.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item:hover) {
+.sidebar-container.is-collapsed
+  .sidebar-menu
+  :deep(.ant-menu-sub .ant-menu-item:hover) {
   background-color: v.$color-bg-hover !important;
   color: v.$color-text-primary !important;
 }
