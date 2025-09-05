@@ -84,6 +84,7 @@ const openKeys = ref([]);
 const handleMenuClick = ({ key }) => {
   if (key) {
     selectedMenuKey.value = [key];
+
   }
 };
 
@@ -113,19 +114,13 @@ onMounted(() => {
 @use "@/styles/variables" as v;
 
 .sidebar {
-  background: v.$gradient-bg-sidebar !important;
-  box-shadow: none;
-  border-right: 0px solid v.$color-border;
-  transition: all v.$transition-speed v.$transition-easing;
-  flex: 0 0 auto;
 
-  /* 固定定位 */
-  position: fixed;
-  top: v.$header-height;
-  bottom: 0;
-  left: 0;
-  z-index: v.$z-index-sidebar;
-  height: calc(100vh - #{v.$header-height});
+  position: v.$sidebar-position;
+  width: v.$sidebar-width;
+  height: v.$sidebar-height;
+  top: v.$sidebar-top;
+  bottom: v.$sidebar-bottom;
+  background-color: v.$sidebbar-bg-color;
 }
 
 /* 菜单容器 */
