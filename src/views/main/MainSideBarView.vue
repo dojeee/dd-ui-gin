@@ -6,17 +6,6 @@
     :class="['sidebar-container', { 'is-collapsed': collapsed }]"
     theme="dark"
   >
-    <!-- header collapsed -->
-    <div class="menu-header">
-      <span v-show="!collapsed" class="menu-header-title">Menus</span>
-      <a-button type="text" class="menu-toggle-btn" @click.stop="toggleSide">
-        <template #icon>
-          <MenuFoldOutlined v-if="!collapsed" />
-          <MenuUnfoldOutlined v-else />
-        </template>
-      </a-button>
-    </div>
-
     <!-- menu list -->
     <a-menu
       mode="inline"
@@ -25,6 +14,16 @@
       v-model:openKeys="openKeys"
       @click="handleMenuClick"
     >
+      <!-- header collapsed -->
+      <div class="menu-header">
+        <span v-show="!collapsed" class="menu-header-title">Menus</span>
+        <a-button type="text" class="menu-toggle-btn" @click.stop="toggleSide">
+          <template #icon>
+            <MenuFoldOutlined v-if="!collapsed" />
+            <MenuUnfoldOutlined v-else />
+          </template>
+        </a-button>
+      </div>
       <template v-for="menu in sideBarMenus" :key="menu.key">
         <!-- 有 children → 渲染为 a-sub-menu -->
         <a-sub-menu
@@ -117,7 +116,7 @@ onMounted(() => {
   height: calc(100vh - #{v.$sidebar-top});
   top: v.$sidebar-top;
   bottom: v.$sidebar-bottom;
-  background-color: v.$gradient-bg-sidebar;
+  background: v.$gradient-bg-sidebar !important;
 }
 
 /* 关键：对 Ant Design 内部的包装容器应用 flex 布局 */
@@ -137,7 +136,6 @@ onMounted(() => {
   box-sizing: border-box;
   width: 100%;
   flex-shrink: 0;
-  border-right: 1px solid v.$color-border;
 }
 
 /* 菜单容器 */
