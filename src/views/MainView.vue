@@ -36,20 +36,7 @@ import MainFooterView from "./main/MainFooterView.vue";
   width: 100%;
 }
 .content-area {
-  overflow-y: auto; /* Allow content to scroll if it exceeds height */
-  padding: 24px; /* Example padding, adjust as needed */
-  background-color: var(--background-color-base);
-  color: var(--text-color-primary);
-  transition: background-color v.$global-transition-duration ease-in-out,
-    color v.$global-transition-duration ease-in-out;
+  overflow-y: auto;
+  min-height: 100vh;
 }
-</style><a-layout class="main-layout">
-  <MainHeaderView />
-  <a-layout class="content-container">  <-- 这个layout是容器
-    <MainSideBarView />                <-- Sider 在这个容器里
-    <a-layout>                         <-- 另一个 layout 嵌套
-      <MainContentView />
-      <MainFooterView />
-    </a-layout>
-  </a-layout>
-</template>
+</style>
