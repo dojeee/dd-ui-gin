@@ -7,21 +7,16 @@
 </template>
 
 <script setup>
-
-import { theme as antTheme } from 'ant-design-vue';
-import { useThemeStore } from './stores/themeStores';
-import { computed } from 'vue';
-import { storeToRefs } from 'pinia';
-
+import { theme as antTheme } from "ant-design-vue";
+import { useThemeStore } from "./stores/themeStores";
+import { computed, watchEffect } from "vue";
+import { storeToRefs } from "pinia";
 
 const themeStore = useThemeStore();
 const { theme } = storeToRefs(themeStore);
 
-
-
 const currentTheme = computed(() => {
-
-  if (theme.value === 'dark') {
+  if (theme.value === "dark") {
     return {
       algorithm: antTheme.darkAlgorithm,
     };
@@ -30,11 +25,12 @@ const currentTheme = computed(() => {
     algorithm: antTheme.defaultAlgorithm,
   };
 });
+
+// Add this watcher to dynamically update the data-theme attribute on the root element
+watchEffect(() => {
+  document.documentElement.setAttribute("data-theme", theme.value);
+});
 </script>
-
-
-
-
 
 <style scoped>
 .app {
