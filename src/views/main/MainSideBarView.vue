@@ -4,7 +4,6 @@
     :width="230"
     :collapsed-width="70"
     :class="['sidebar-container', { 'is-collapsed': collapsed }]"
-    theme="dark"
   >
     <!-- menu list -->
     <a-menu
@@ -109,14 +108,15 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@use "@/styles/variables" as v;
+@use "@/styles/design-tokens" as v;
 
 .sidebar-container {
   position: v.$sidebar-position;
   height: calc(100vh - #{v.$sidebar-top});
   top: v.$sidebar-top;
   bottom: v.$sidebar-bottom;
-  background: v.$gradient-bg-sidebar !important;
+  background: var(--sidebar-bg) !important;
+  transition: background 0.3s ease-in-out;
 }
 
 /* 关键：对 Ant Design 内部的包装容器应用 flex 布局 */
@@ -152,13 +152,14 @@ onMounted(() => {
 
   -ms-overflow-style: none;
   scrollbar-width: none;
+  border-right: 0 !important; /* Remove Ant Design's default border */
 }
 
 .menu-header-title {
   text-transform: uppercase;
   font-size: v.$font-size-submenu;
   font-weight: v.$font-weight-medium;
-  color: v.$color-text-submenu;
+  color: var(--sidebar-text-color-submenu);
   letter-spacing: 0.5px;
 }
 
@@ -166,22 +167,22 @@ onMounted(() => {
   height: auto;
   left: 7px;
   justify-content: center;
-  color: v.$color-text-icon;
+  color: var(--sidebar-icon-color);
   font-size: v.$font-size-icon;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   cursor: pointer;
-  transition: background-color v.$transition-speed step-end;
+  transition: background-color v.$transition-speed ease;
 }
 
 .menu-toggle-btn:hover {
-  background-color: v.$color-bg-hover;
+  background-color: var(--sidebar-item-hover-bg);
 }
 
 .sidebar-menu :deep(.ant-menu-item) {
-  color: v.$color-text-secondary;
+  color: var(--sidebar-text-color);
   border-radius: v.$menu-border-radius;
   line-height: v.$menu-item-height;
   padding: 0 v.$menu-padding-x !important;
@@ -190,7 +191,7 @@ onMounted(() => {
 
 /* 子菜单标题样式 - 不应该有选中状态 */
 .sidebar-menu :deep(.ant-menu-submenu-title) {
-  color: v.$color-text-submenu;
+  color: var(--sidebar-text-color-submenu);
   margin: v.$menu-item-margin-y v.$menu-item-margin-x !important;
   width: calc(100% - #{v.$menu-item-margin-x * 2});
   padding: 0 v.$menu-padding-x !important;
@@ -198,28 +199,30 @@ onMounted(() => {
 }
 
 .sidebar-menu :deep(.ant-menu-item-selected) {
-  background-color: v.$color-bg-selected !important;
-  color: v.$color-text-primary !important;
+  background-color: var(--sidebar-item-selected-bg) !important;
+  color: var(--sidebar-text-color) !important;
 }
 
 /* 只有菜单项才有悬停效果，子菜单标题不要选中样式 */
-.sidebar-menu :deep(.ant-menu-item:hover) {
-  background-color: v.$color-bg-hover !important;
-  color: v.$color-text-primary !important;
+.sidebar-menu :deep(.ant-menu-item:not(.ant-menu-item-selected):hover) {
+  background-color: var(--sidebar-item-hover-bg) !important;
+  color: var(--sidebar-text-color) !important;
 }
-
+.sidebar-menu :deep(.ant-menu-sub) {
+  background-color: var(--sidebar-submenus-bg) !important;
+}
 .sidebar-menu :deep(.ant-menu-submenu-title:hover) {
-  background-color: v.$color-bg-hover !important;
-  color: v.$color-text-primary !important;
+  background-color: var(--sidebar-item-hover-bg) !important;
+  color: var(--sidebar-text-color) !important;
 }
 
 .sidebar-menu :deep(.ant-menu-submenu-arrow) {
-  color: v.$color-text-muted;
+  color: var(--sidebar-text-color-submenu);
 }
 
 /* 图标样式 */
 .sidebar-menu :deep(.anticon) {
-  color: v.$color-text-icon;
+  color: var(--sidebar-icon-color);
   font-size: v.$font-size-icon;
 }
 
