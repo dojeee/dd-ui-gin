@@ -94,14 +94,7 @@
       <br />
       ...
       <br />
-      ...
-      <br />
-      ...
-      <br />
-      ...
-      <br />
-      ...
-      <br />
+
       <router-view />
       ...
       <br />
@@ -139,12 +132,15 @@ const feature = ref();
 </script>
 
 <style lang="scss" scoped>
-@use "@/styles/variables" as v;
+@use "@/styles/design-tokens" as v;
 
 /* 内容区域 */
 .content-container {
-  margin: "24px 16px 0";
-  overflow-y: scroll;
+  // margin: 24px 16px 0;
+  overflow-y: auto;
   scrollbar-width: none;
+  background-color: red;
+  color: var(--text-color-primary);
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 </style>

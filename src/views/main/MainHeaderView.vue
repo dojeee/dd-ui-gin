@@ -124,7 +124,7 @@ const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
     case "theme-dark":
       themeStore.setTheme("dark");
       break;
-    case "default-theme":
+    case "color-theme":
       themeStore.setTheme("color");
       break;
     case "1":
@@ -140,10 +140,13 @@ const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
 </script>
 
 <style lang="scss" scoped>
-@use "@/styles/variables" as v;
+@use "@/styles/design-tokens" as v;
 
 .header-container {
-  background: v.$gradient-bg-header;
+  background: var(--header-gradient-bg);
+}
+
+.header-container.ant-layout-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -152,17 +155,15 @@ const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
   right: 0;
   top: 0;
   z-index: v.$z-index-header;
-  position: "fixed";
-  width: "100%";
+  width: 100%;
 }
 
 .header-title {
   margin-top: 30px;
-  color: v.$color-text-primary;
-  font-size: v.$font-size-header;
-  font-weight: v.$font-weight-bold;
+  color: var(--text-color-primary);
+  font-size: 46px; /* Use a fixed value for simplicity */
+  font-weight: 700;
   font-family: "Italianno", cursive, system-ui;
-  font-size: calc(var(--font-size, 46px));
   line-height: 1;
   cursor: pointer;
   transition: transform 0.12s ease, color 0.12s ease;
@@ -170,11 +171,13 @@ const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
 
 .header-title:focus {
   outline: none;
-  transform: translateY(-1px);
+  transform: translateY(-3px);
+  font-size: 46px;
 }
 
 .header-title:hover {
-  transform: translateY(-2px);
+  transform: translateX(2px);
+  font-size: 48px;
 }
 
 .header-right {
@@ -201,7 +204,7 @@ const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
 
 .theme-label {
   font-size: 14px;
-  color: v.$color-text-secondary;
+  color: var(--text-color-secondary);
   font-weight: 500;
 }
 
