@@ -1,0 +1,32 @@
+:root[data-theme="dark"] {
+  /* default */
+  --primary-color: #2a65a9;
+  --background-color-base: #141414;
+  --background-color-component: #1d1d1d;
+  --text-color-primary: rgba(255, 255, 255, 0.85);
+  --text-color-secondary: rgba(255, 255, 255, 0.65);
+  --text-color-placeholder: rgba(255, 255, 255, 0.45);
+  --border-color-base: #424242;
+
+  /* Header dark style */
+  --header-gradient-bg: #0f1217;
+
+  /* Sidebar dark style */
+  --sidebar-bg: #0f1217;
+  --sidebar-text-color: rgba(255, 255, 255, 0.65);
+  --sidebar-text-color-submenu: rgba(255, 255, 255, 0.45);
+  --sidebar-icon-color: #cdecae;
+  --sidebar-submenus-bg: #0f1217;
+  --sidebar-item-hover-bg: #414040;
+  --sidebar-item-selected-bg: #575a5c;
+
+  /* Login dark style */
+  --login-bg: #0f1217;
+  --login-form-bg: rgba(45, 55, 72, 0.5);
+  --login-form-border: rgba(255, 255, 255, 0.1);
+  --login-text-primary: #e2e8f0;
+  --login-text-secondary: #a0aec0;
+  --login-primary-color: #4299e1;
+  --login-primary-hover: #2b6cb0;
+  --login-focus-shadow: rgba(66, 153, 225, 0.2);
+}

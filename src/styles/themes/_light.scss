@@ -1,0 +1,32 @@
+:root[data-theme="light"] {
+  /* default */
+  --primary-color: #409eff;
+  --background-color-base: #f0f2f5;
+  --background-color-component: #ffffff;
+  --text-color-primary: #303133;
+  --text-color-secondary: #606266;
+  --text-color-placeholder: #c0c4cc;
+  --border-color-base: #dcdfe6;
+
+  /* Header light style */
+  --header-gradient-bg: #ffffff;
+
+  /* Sidebar light style */
+  --sidebar-bg: #ffffff;
+  --sidebar-text-color: #303133;
+  --sidebar-text-color-submenu: #606266;
+  --sidebar-icon-color: #409eff;
+  --sidebar-submenus-bg: #ffffff;
+  --sidebar-item-hover-bg: #d7dade;
+  --sidebar-item-selected-bg: #c4e6f6;
+
+  /* Login light style */
+  --login-bg: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+  --login-form-bg: rgba(255, 255, 255, 0.3);
+  --login-form-border: rgba(255, 255, 255, 0.5);
+  --login-text-primary: #1f2937;
+  --login-text-secondary: #384b65;
+  --login-primary-color: #3b82f6;
+  --login-primary-hover: #2563eb;
+  --login-focus-shadow: rgba(59, 130, 246, 0.2);
+}

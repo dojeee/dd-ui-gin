@@ -1,0 +1,75 @@
+// 全局设计变量 - 统一的设计系统
+
+// ===== 字体系统 =====
+$font-size-menu: 14px;
+$font-size-submenu: 11px;
+$font-size-button: 14px;
+$font-size-header: 20px;
+$font-size-icon: 18px;
+$font-size-icon-small: 16px;
+
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 800;
+
+// ===== 尺寸系统 =====
+// 菜单相关
+$menu-item-height: 40px;
+$menu-item-margin-y: 2px;
+$menu-item-margin-x: 8px;
+$menu-border-radius: 8px;
+$menu-padding-x: 10px;
+
+// 按钮相关
+$button-height: 28px;
+$button-height-large: 40px;
+$button-border-radius: 4px;
+$button-border-radius-large: 8px;
+
+// 布局相关
+$header-height: 64px;
+
+// sidebar
+$sidebar-position: fixed;
+$sidebar-width: 20px;
+$sidebar-height: 100vh;
+$sidebar-top: 64px;
+$sidebar-bottom: 0px;
+$sidebar-collapsed-width: 70px;
+$sidebar-collapsed-height: 100vh;
+$sidebar-transition-speed: 0.3s;
+$sidebar-transition-easing: ease-in-out;
+
+$transition-speed: 0.3s;
+
+$transition-speed: 0.3s;
+// Define a global transition duration for consistency
+$global-transition-duration: 0.3s;
+
+$transition-easing: ease-in-out;
+
+// Define a global transition duration for consistency
+$global-transition-duration: 0.3s;
+
+// ===== Z-index 系统 =====
+$z-index-sidebar: 900;
+$z-index-header: 1000;
+
+// ===== 间距系统 =====
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 12px;
+$spacing-lg: 16px;
+$spacing-xl: 24px;
+
+// ===== 登录页面主题变量 =====
+// Note: These login variables are color-related and should ideally be moved
+// to the CSS variables system if the login page needs to support themes.
+// For now, they are kept here for simplicity if the login page has a fixed theme.
+$login-primary-color: #bfba29;
+$login-primary-hover: #ff7a1a;
+$login-border-color: #e6e9ee;
+$login-border-hover: #ffb266;
+$login-focus-shadow: rgba(255, 138, 61, 0.15);
+$login-border-radius: 12px;

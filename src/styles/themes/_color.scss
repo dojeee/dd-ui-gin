@@ -1,0 +1,48 @@
+:root,
+:root[data-theme="color"] {
+  /* default */
+  --primary-color: #1890ff;
+  --background-color-base: #f0f2f5;
+  --background-color-component: #ffffff;
+  --text-color-primary: #333;
+  --text-color-secondary: #555;
+  --text-color-placeholder: #999;
+  --border-color-base: #e0e0e0;
+
+  /* Header color style */
+  --header-gradient-bg: linear-gradient(
+    90deg,
+    rgb(6, 147, 46) 0%,
+    rgb(74, 82, 148) 60%,
+    rgba(47, 106, 75) 100%
+  );
+
+  /* Sidebar color style */
+  --sidebar-bg: linear-gradient(
+    180deg,
+    rgb(6, 147, 46) 0%,
+    rgb(74, 82, 148) 60%,
+    rgba(47, 106, 75) 100%
+  );
+  --sidebar-text-color: #ffffff;
+  --sidebar-text-color-submenu: #c7a7a7;
+  --sidebar-icon-color: #10ffa7;
+  --sidebar-submenus-bg: none;
+  --sidebar-item-hover-bg: #374151;
+  --sidebar-item-selected-bg: #4b5563;
+
+  /* Login color style */
+  --login-bg: linear-gradient(
+    135deg,
+    rgba(122, 153, 137, 1) 0%,
+    rgba(57, 121, 184, 1) 60%,
+    rgba(28, 33, 40, 1) 200%
+  );
+  --login-form-bg: rgba(194, 187, 187, 0.25);
+  --login-form-border: rgba(255, 255, 255, 0.3);
+  --login-text-primary: #1f2937;
+  --login-text-secondary: #384b65;
+  --login-primary-color: #bfba29;
+  --login-primary-hover: #ff7a1a;
+  --login-focus-shadow: rgba(255, 138, 61, 0.15);
+}
