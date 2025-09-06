@@ -142,7 +142,7 @@ const feature = ref();
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: var(--background-color-base);
+  background-color: var(--content-bg);
   color: var(--text-color-primary);
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 

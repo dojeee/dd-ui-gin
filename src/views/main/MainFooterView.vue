@@ -14,7 +14,7 @@ const feature = ref();
 .footer-container {
   width: 100%;
   text-align: center;
-  background-color: var(--background-color-component);
+  background-color: var(--footer-bg) !important;
   color: var(--text-color-secondary);
   padding: 16px 0;
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
