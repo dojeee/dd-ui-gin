@@ -1,3 +1,5 @@
-// ✅ 新写法（推荐）
+// 全局样式入口文件
+@use '@/styles/reset';
 @use '@/styles/variables';
 @use '@/styles/mixins';
+@use '@/styles/fonts';

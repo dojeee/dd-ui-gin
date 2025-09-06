@@ -30,13 +30,19 @@ import MainFooterView from "./main/MainFooterView.vue";
 @use "@/styles/design-tokens" as v;
 
 .main-layout {
-  max-width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
+
 .content-container {
-  width: 100%;
+  height: calc(100vh - #{v.$header-height});
+  display: flex;
 }
+
 .content-area {
-  overflow-y: auto;
-  min-height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 </style>

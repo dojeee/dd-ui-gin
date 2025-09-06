@@ -1,0 +1,5 @@
+// 全局变量文件 - 导入所有设计令牌和主题
+@forward 'design-tokens';
+@forward 'themes/color';
+@forward 'themes/light';
+@forward 'themes/dark';
