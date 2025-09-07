@@ -310,7 +310,7 @@ onBeforeUnmount(() => {
   flex-shrink: 0;
   font-family: var(--font-tib), system-ui, sans-serif;
   width: 120px;
-  color: var(--login-text-primary);
+  color: var(--login-text-secondary);
   border-radius: v.$login-border-radius;
   transition: all 0.3s ease;
 
