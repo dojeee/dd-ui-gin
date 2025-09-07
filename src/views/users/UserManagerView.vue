@@ -1,7 +1,7 @@
 <template>
-  <h2>用户管理</h2>
+  <h2>User manager page</h2>
 </template>
 
 <script setup lang="ts"></script>
 
-<style></style>
+<style lang="scss" scoped></style>

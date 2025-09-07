@@ -69,6 +69,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue";
 import useSideBarMenusStores from "@/stores/sideBarMenusStores";
 import { storeToRefs } from "pinia";
 import { iconMap } from "@/assets/icons/SideBarIconMap";
+import { useRouter } from "vue-router";
 
 // menu store
 const sideBarMenusStores = useSideBarMenusStores();
@@ -79,9 +80,20 @@ const collapsed = ref(false);
 const selectedMenuKey = ref([]);
 const openKeys = ref([]);
 
+const ruoter = useRouter();
+
 const handleMenuClick = ({ key }) => {
   if (key) {
     selectedMenuKey.value = [key];
+  }
+
+  console.log("menus is: ", key);
+  switch (key) {
+    case "usersManager":
+      ruoter.push("/user");
+      break;
+    default:
+      break;
   }
 };
 
