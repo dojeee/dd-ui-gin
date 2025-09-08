@@ -70,6 +70,7 @@ import useSideBarMenusStores from "@/stores/sideBarMenusStores";
 import { storeToRefs } from "pinia";
 import { iconMap } from "@/assets/icons/SideBarIconMap";
 import { useRouter } from "vue-router";
+import router from "@/routers";
 
 // menu store
 const sideBarMenusStores = useSideBarMenusStores();
@@ -90,7 +91,10 @@ const handleMenuClick = ({ key }) => {
   console.log("menus is: ", key);
   switch (key) {
     case "usersManager":
-      ruoter.push("/user");
+      ruoter.push("user");
+      break;
+    case "roleManager":
+      router.push("role");
       break;
     default:
       break;
