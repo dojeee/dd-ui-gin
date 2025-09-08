@@ -37,6 +37,7 @@ import MainFooterView from "./main/MainFooterView.vue";
 .content-container {
   height: calc(100vh - #{v.$header-height});
   display: flex;
+  max-width: 100%;
 }
 
 .content-area {
