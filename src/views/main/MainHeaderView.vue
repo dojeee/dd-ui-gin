@@ -150,12 +150,8 @@ const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: v.$z-index-header;
-  width: 100%;
+  height: v.$header-height;
+  padding: 0 v.$spacing-lg;
 }
 
 .header-title {

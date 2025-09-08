@@ -5,10 +5,11 @@
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
+    "jsxImportSource": "vue",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "types": ["vite/client"],
+    "types": ["vite/client", "vue/jsx"],
     "paths": {
       "@/*": ["./src/*"]
     },

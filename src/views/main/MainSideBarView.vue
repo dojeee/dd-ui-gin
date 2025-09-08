@@ -127,10 +127,6 @@ onMounted(() => {
 @use "@/styles/design-tokens" as v;
 
 .sidebar-container {
-  position: v.$sidebar-position;
-  height: calc(100vh - #{v.$sidebar-top});
-  top: v.$sidebar-top;
-  bottom: v.$sidebar-bottom;
   background: var(--sidebar-bg) !important;
   transition: background 0.3s ease-in-out;
 }
