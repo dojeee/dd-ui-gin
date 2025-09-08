@@ -146,6 +146,12 @@ export const useSideBarMenusStores = defineStore("sideBarMenus", () => {
           label: "User manager",
           title: "User manager",
         },
+        {
+          key: "roleManager",
+          icon: "UserOutlined",
+          label: "Role manager",
+          title: "R manager",
+        },
       ],
     },
   ]);
