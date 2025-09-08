@@ -20,7 +20,7 @@ const router = createRouter({
       component: MainView,
       meta: {
         requiresAuth: false,
-        title: "首页",
+        title: "Home",
         icon: "HomeOutlined",
       },
       children: [
@@ -29,7 +29,7 @@ const router = createRouter({
           name: "UserManager",
           component: UserManagerView,
           meta: {
-            title: "用户管理",
+            title: "UserManager",
             icon: "UserOutlined",
             requiresAuth: false,
           },
@@ -39,7 +39,7 @@ const router = createRouter({
           name:"RoleManager",
           component: RoleManagerView,
           meta: {
-            title: "角色管理",
+            title: "Role Manager",
             icon: "TeamOutlined",
             requiresAuth: false,
           },
