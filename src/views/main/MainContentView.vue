@@ -1,37 +1,27 @@
 <template>
   <a-layout-content class="page-container">
-    <!-- 自定义页面头部 -->
-    <div class="pc-header">
-      <!-- 左侧：面包屑 + 返回按钮 -->
-      <div class="pc-header-left">
-        <!-- 返回按钮（可选） -->
-        <a-button
-          v-if="canGoBack"
-          type="text"
-          size="small"
-          class="pc-back-btn"
-          @click="handleBack"
-        >
-          <LeftOutlined />
-        </a-button>
-
-        <!-- 面包屑 -->
+    <!-- 使用 a-page-header 实现头部 -->
+    <a-page-header
+      :class="['pc-header', 'ant-page-header-overwrite']"
+      :back-icon="canGoBack ? h(LeftOutlined) : undefined"
+      @back="handleBack"
+      :title="null"
+    >
+      <!-- 自定义面包屑 -->
+      <template #breadcrumb>
         <a-breadcrumb class="pc-breadcrumb">
           <a-breadcrumb-item
             v-for="(item, index) in breadcrumbItems"
             :key="index"
-            :separator="'/'"
+            :separator="'>'"
           >
-            <span
-              class="pc-breadcrumb-item"
-              :class="{ 'is-current': item.isLast }"
-            >
               <!-- 图标 -->
               <component
                 v-if="item.icon && getIconComponent(item.icon)"
                 :is="getIconComponent(item.icon)"
                 class="pc-breadcrumb-icon"
               />
+              
               <!-- 链接 or 文字 -->
               <router-link
                 v-if="!item.isLast"
@@ -41,26 +31,27 @@
                 {{ item.title }}
               </router-link>
               <span v-else class="pc-breadcrumb-text">{{ item.title }}</span>
-            </span>
           </a-breadcrumb-item>
         </a-breadcrumb>
-      </div>
+      </template>
 
-      <!-- 中间：标题 -->
-      <div class="pc-title-area">
+      <!-- 自定义标题和描述 -->
+      <template #title>
         <div class="pc-title-wrapper">
           <h1 class="pc-title">{{ currentPage.title }}</h1>
           <p v-if="currentPage.description" class="pc-description">
             {{ currentPage.description }}
           </p>
         </div>
-      </div>
+      </template>
 
-      <!-- 右侧：操作区 -->
-      <div v-if="$slots['page-actions']" class="pc-actions">
-        <slot name="page-actions"></slot>
-      </div>
-    </div>
+      <!-- 右侧操作区 -->
+      <template #extra>
+        <div class="pc-actions">
+          <slot name="page-actions"></slot>
+        </div>
+      </template>
+    </a-page-header>
 
     <!-- 主体内容 -->
     <div class="pc-content-wrapper">
@@ -76,17 +67,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { useRoute, useRouter, RouteLocationMatched } from "vue-router";
+import { computed, h } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { iconMap } from "@/assets/icons/SideBarIconMap";
-import LeftOutlined from "@ant-design/icons-vue/LeftOutlined"; // 引入返回图标
+import LeftOutlined from "@ant-design/icons-vue/LeftOutlined";
+import APageHeader from "ant-design-vue/lib/page-header";
+
+// 如果使用按需引入，需要确保样式被加载
+import "ant-design-vue/lib/page-header/style/index"; // 引入 a-page-header 样式
 
 const route = useRoute();
 const router = useRouter();
 
 // 当前激活的路由（有 meta.title 的）
 const matchedRoutes = computed(() =>
-  route.matched.filter((item: RouteLocationMatched) => item.meta?.title)
+  route.matched.filter((item) => item.meta?.title)
 );
 
 // 当前页面元数据
@@ -108,14 +103,13 @@ const handleBack = () => {
   router.go(-1);
 };
 
-// 面包屑数据
+// 面包屑数据（用于渲染 UI）
 interface BreadcrumbItem {
   title: string;
   icon: string;
   path: string;
   isLast: boolean;
 }
-
 const breadcrumbItems = computed<BreadcrumbItem[]>(() => {
   return matchedRoutes.value.map((item, index) => ({
     title: (item.meta.title as string) || "",
@@ -130,8 +124,9 @@ const getIconComponent = (iconName: string) => {
   return (iconMap as Record<string, unknown>)[iconName] || null;
 };
 
-// 缓存视图（示例，实际应从 store 获取）
-const cachedViews = ref<string[]>(["Dashboard", "UserList"]); // 示例：缓存首页、用户列表
+
+// 缓存视图
+const cachedViews = ["Dashboard", "UserList"]; // 示例：可从 store 动态获取
 </script>
 
 <style lang="scss" scoped>
@@ -151,63 +146,47 @@ $content-bg: var(--content-bg, #f5f7fa);
   overflow: hidden;
 }
 
-/* 自定义头部 */
-.pc-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+/* 覆盖 a-page-header 样式 */
+:deep(.ant-page-header) {
   padding: 24px;
   border-bottom: 1px solid $page-header-border;
   background-color: $page-header-bg;
+}
+
+:deep(.ant-page-header-breadcrumb) {
+  margin-bottom: 4px;
+}
+
+:deep(.ant-page-header-title) {
+  padding: 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: $text-primary;
+}
+
+:deep(.ant-page-header-extra) {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+:deep(.ant-page-header-heading) {
   flex-wrap: wrap;
+  gap: 16px;
 
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
   }
 }
 
-.pc-header-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  min-width: 0;
-  flex: 1;
+/* 自定义面包屑样式 */
+.pc-breadcrumb {
+  
 
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-}
-
-.pc-back-btn {
-  color: $text-secondary;
-  font-size: 16px;
-}
-
-/* 面包屑样式穿透 */
-:deep(.pc-breadcrumb) {
-  .ant-breadcrumb-link {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .pc-breadcrumb-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-
-    &.is-current {
-      font-weight: 500;
-      color: $text-primary;
-    }
-  }
+  
 
   .pc-breadcrumb-icon {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--sidebar-icon-color, #8c8c8c);
   }
 
@@ -227,30 +206,19 @@ $content-bg: var(--content-bg, #f5f7fa);
   }
 }
 
-.pc-title-area {
-  flex: 2;
-  min-width: 0;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-}
-
 .pc-title-wrapper {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
 }
 
 .pc-title {
-  float: left;
-  // margin: 0;
-  // font-size: 18px;
-  // font-weight: 500;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
   color: $text-primary;
-  // white-space: nowrap;
-  // overflow: hidden;
-  // text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pc-description {
@@ -263,14 +231,8 @@ $content-bg: var(--content-bg, #f5f7fa);
   display: flex;
   gap: 8px;
   white-space: nowrap;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    justify-content: flex-end;
-  }
 }
 
-/* 内容区域 */
 .pc-content-wrapper {
   flex: 1;
   overflow-y: auto;
@@ -287,7 +249,7 @@ $content-bg: var(--content-bg, #f5f7fa);
   padding: 24px;
 }
 
-/* 滚动条 */
+/* 滚动条样式 */
 .pc-content-wrapper {
   &::-webkit-scrollbar {
     width: 6px;
