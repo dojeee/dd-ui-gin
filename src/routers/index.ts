@@ -35,15 +35,15 @@ const router = createRouter({
           },
         },
         {
-          path:"role",
-          name:"RoleManager",
+          path: "role",
+          name: "RoleManager",
           component: RoleManagerView,
           meta: {
             title: "Role Manager",
             icon: "TeamOutlined",
             requiresAuth: false,
           },
-        }
+        },
       ],
     },
   ],
