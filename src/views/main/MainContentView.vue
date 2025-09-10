@@ -142,14 +142,12 @@ $content-bg: var(--content-bg);
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: $content-bg;
+  background-color: var(--content-bg);
   overflow: hidden;
 }
 
 /* 覆盖 a-page-header 样式 */
 :deep(.ant-page-header) {
-  // padding: 10px;
-  border-bottom: 1px solid $page-header-border;
   background-color:var(--content-bg);
 }
 
@@ -170,9 +168,8 @@ $content-bg: var(--content-bg);
 }
 
 :deep(.ant-page-header-heading) {
-  // flex-wrap: wrap;
-  // gap: 16px;
-
+  flex-wrap: wrap;
+  gap: 10px;
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
@@ -203,7 +200,6 @@ $content-bg: var(--content-bg);
 }
 
 .pc-title-wrapper {
-  margin-top: 10px;
   display: flex;
   flex-direction: column;
 }
@@ -234,8 +230,7 @@ $content-bg: var(--content-bg);
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 24px;
-  background-color: $content-bg;
+  padding: 14px;
 }
 
 .pc-content {
@@ -243,7 +238,7 @@ $content-bg: var(--content-bg);
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  padding: 24px;
+  padding: 14px;
 }
 
 /* 滚动条样式 */
