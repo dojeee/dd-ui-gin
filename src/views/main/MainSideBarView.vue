@@ -1,18 +1,9 @@
 <template>
-  <a-layout-sider
-    v-model:collapsed="collapsed"
-    :width="230"
-    :collapsed-width="70"
-    :class="['sidebar-container', { 'is-collapsed': collapsed }]"
-  >
+  <a-layout-sider v-model:collapsed="collapsed" :width="230" :collapsed-width="70"
+    :class="['sidebar-container', { 'is-collapsed': collapsed }]">
     <!-- menu list -->
-    <a-menu
-      mode="inline"
-      class="sidebar-menu"
-      v-model:selectedKeys="selectedMenuKey"
-      v-model:openKeys="openKeys"
-      @click="handleMenuClick"
-    >
+    <a-menu mode="inline" class="sidebar-menu" v-model:selectedKeys="selectedMenuKey" v-model:openKeys="openKeys"
+      @click="handleMenuClick">
       <!-- header collapsed -->
       <div class="menu-header">
         <span v-show="!collapsed" class="menu-header-title">Menus</span>
@@ -25,21 +16,13 @@
       </div>
       <template v-for="menu in sideBarMenus" :key="menu.key">
         <!-- 有 children → 渲染为 a-sub-menu -->
-        <a-sub-menu
-          v-if="menu.children && menu.children.length > 0"
-          :key="menu.key"
-          :title="menu.title"
-        >
+        <a-sub-menu v-if="menu.children && menu.children.length > 0" :key="menu.key" :title="menu.title">
           <template #title>
             <span>{{ menu.label }}</span>
           </template>
 
           <!-- 子菜单项 -->
-          <a-menu-item
-            v-for="child in menu.children"
-            :key="child.key"
-            :title="child.title"
-          >
+          <a-menu-item v-for="child in menu.children" :key="child.key" :title="child.title">
             <template #icon>
               <component :is="iconMap[child.icon]" v-if="child.icon" />
             </template>
@@ -48,11 +31,7 @@
         </a-sub-menu>
 
         <!-- 无 children → 渲染为 a-menu-item -->
-        <a-menu-item
-          v-if="!menu.children || menu.children.length === 0"
-          :key="menu.key"
-          :title="menu.title"
-        >
+        <a-menu-item v-if="!menu.children || menu.children.length === 0" :key="menu.key" :title="menu.title">
           <template #icon>
             <component :is="iconMap[menu.icon]" v-if="menu.icon" />
           </template>
@@ -129,6 +108,7 @@ onMounted(() => {
 .sidebar-container {
   background: var(--sidebar-bg) !important;
   transition: background 0.3s ease-in-out;
+  border-right: 0.8px solid var(--sidebar-right-border-color);
 }
 
 /* 关键：对 Ant Design 内部的包装容器应用 flex 布局 */
@@ -158,13 +138,15 @@ onMounted(() => {
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
+
   &::-webkit-scrollbar {
     display: none;
   }
 
   -ms-overflow-style: none;
   scrollbar-width: none;
-  border-right: 0 !important; /* Remove Ant Design's default border */
+  border-right: 0 !important;
+  /* Remove Ant Design's default border */
 }
 
 .menu-header-title {
@@ -220,9 +202,11 @@ onMounted(() => {
   background-color: var(--sidebar-item-hover-bg) !important;
   color: var(--sidebar-text-color) !important;
 }
+
 .sidebar-menu :deep(.ant-menu-sub) {
   background-color: var(--sidebar-submenus-bg) !important;
 }
+
 .sidebar-menu :deep(.ant-menu-submenu-title:hover) {
   background-color: var(--sidebar-item-hover-bg) !important;
   color: var(--sidebar-text-color) !important;
@@ -249,29 +233,15 @@ onMounted(() => {
 
 /* 统一所有菜单项样式 - 一级和二级菜单项都显示为同样的图标 */
 .sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-item),
-.sidebar-container.is-collapsed
-  .sidebar-menu
-  :deep(.ant-menu-sub .ant-menu-item) {
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item) {
   text-align: center !important;
 }
 
 /* 隐藏所有文字，只保留图标 */
-.sidebar-container.is-collapsed
-  .sidebar-menu
-  :deep(.ant-menu-item)
-  .ant-menu-title-content,
-.sidebar-container.is-collapsed
-  .sidebar-menu
-  :deep(.ant-menu-item)
-  span:not(.anticon),
-.sidebar-container.is-collapsed
-  .sidebar-menu
-  :deep(.ant-menu-sub .ant-menu-item)
-  .ant-menu-title-content,
-.sidebar-container.is-collapsed
-  .sidebar-menu
-  :deep(.ant-menu-sub .ant-menu-item)
-  span:not(.anticon) {
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-item) .ant-menu-title-content,
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-item) span:not(.anticon),
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item) .ant-menu-title-content,
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-sub .ant-menu-item) span:not(.anticon) {
   display: none !important;
 }
 </style>

@@ -130,19 +130,20 @@ const cachedViews = ["Dashboard", "UserList"]; // 示例：可从 store 动态�
 </script>
 
 <style lang="scss" scoped>
-$page-header-bg: #fff;
-$page-header-border: #d9d9d9;
-$text-primary: var(--text-color-primary, #262626);
-$text-secondary: var(--text-color-secondary, #595959);
-$primary-color: var(--primary-color, #1890ff);
-$content-bg: var(--content-bg, #f5f7fa);
+
+@use "@/styles/design-tokens" as v;
+$page-header-border: var(--border-color-base);
+$text-primary: var(--text-color-primary);
+$text-secondary: var(--text-color-secondary);
+$primary-color: var(--primary-color);
+$content-bg: var(--content-bg);
 
 .page-container {
   display: flex;
   flex-direction: column;
   height: 100%;
   background-color: $content-bg;
-  color: $text-primary;
+  color: var(--text-color-primary);
   overflow: hidden;
 }
 
@@ -150,7 +151,7 @@ $content-bg: var(--content-bg, #f5f7fa);
 :deep(.ant-page-header) {
   padding: 24px;
   border-bottom: 1px solid $page-header-border;
-  background-color: $page-header-bg;
+  background-color:var(--content-bg);
 }
 
 :deep(.ant-page-header-breadcrumb) {

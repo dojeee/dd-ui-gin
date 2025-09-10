@@ -144,6 +144,7 @@ const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
 
 .header-container {
   background: var(--header-gradient-bg);
+  border-bottom: 1px solid var(--border-color-base);
 }
 
 .header-container.ant-layout-header {
