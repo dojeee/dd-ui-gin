@@ -7,7 +7,7 @@
   --text-color-primary: #d5d5d5;
   --text-color-secondary: #555;
   --text-color-placeholder: #999;
-  --border-color-base: #e0e0e0;
+  --border-color-base: #828282;
 
   /* Header color style */
   --header-gradient-bg: linear-gradient(
@@ -16,6 +16,7 @@
     rgb(74, 82, 148) 60%,
     rgba(47, 106, 75) 100%
   );
+  --header-bottom-border-color: #828282;
 
   /* Sidebar color style */
   --sidebar-bg: linear-gradient(
@@ -25,6 +26,7 @@
     rgba(47, 106, 75) 100%
   );
   --sidebar-text-color: #ffffff;
+  --sidebar-right-border-color: #828282;
   --sidebar-text-color-submenu: #c7a7a7;
   --sidebar-icon-color: #10ffa7;
   --sidebar-submenus-bg: none;
