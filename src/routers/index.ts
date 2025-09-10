@@ -5,6 +5,9 @@ import { useAuthStore } from "@/stores/authStores";
 import { message } from "ant-design-vue";
 import UserManagerView from "@/views/users/UserManagerView.vue";
 import RoleManagerView from "@/views/users/RoleManagerView.vue";
+
+
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -29,7 +32,7 @@ const router = createRouter({
           name: "UserManager",
           component: UserManagerView,
           meta: {
-            title: "UserManager",
+            title: "User Manager",
             icon: "UserOutlined",
             requiresAuth: false,
           },

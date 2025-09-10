@@ -13,7 +13,6 @@
           <a-breadcrumb-item
             v-for="(item, index) in breadcrumbItems"
             :key="index"
-            :separator="'>'"
           >
               <!-- 图标 -->
               <component
@@ -70,7 +69,6 @@
 import { computed, h } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { iconMap } from "@/assets/icons/SideBarIconMap";
-import LeftOutlined from "@ant-design/icons-vue/LeftOutlined";
 import APageHeader from "ant-design-vue/lib/page-header";
 
 // 如果使用按需引入，需要确保样式被加载
@@ -110,6 +108,8 @@ interface BreadcrumbItem {
   path: string;
   isLast: boolean;
 }
+
+// 面包屑数据（用于渲染 UI）
 const breadcrumbItems = computed<BreadcrumbItem[]>(() => {
   return matchedRoutes.value.map((item, index) => ({
     title: (item.meta.title as string) || "",
@@ -143,13 +143,12 @@ $content-bg: var(--content-bg);
   flex-direction: column;
   height: 100%;
   background-color: $content-bg;
-  color: var(--text-color-primary);
   overflow: hidden;
 }
 
 /* 覆盖 a-page-header 样式 */
 :deep(.ant-page-header) {
-  padding: 24px;
+  // padding: 10px;
   border-bottom: 1px solid $page-header-border;
   background-color:var(--content-bg);
 }
@@ -171,8 +170,8 @@ $content-bg: var(--content-bg);
 }
 
 :deep(.ant-page-header-heading) {
-  flex-wrap: wrap;
-  gap: 16px;
+  // flex-wrap: wrap;
+  // gap: 16px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -182,10 +181,6 @@ $content-bg: var(--content-bg);
 
 /* 自定义面包屑样式 */
 .pc-breadcrumb {
-  
-
-  
-
   .pc-breadcrumb-icon {
     font-size: 15px;
     color: var(--sidebar-icon-color, #8c8c8c);
@@ -208,6 +203,7 @@ $content-bg: var(--content-bg);
 }
 
 .pc-title-wrapper {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
 }
@@ -268,5 +264,10 @@ $content-bg: var(--content-bg);
   &::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.25);
   }
+}
+
+
+:deep(.ant-page-header-back) {
+  display: none !important;
 }
 </style>
