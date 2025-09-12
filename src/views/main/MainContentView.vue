@@ -152,12 +152,12 @@ $content-bg: var(--content-bg);
 }
 
 :deep(.ant-page-header-breadcrumb) {
-  margin-bottom: 4px;
+  margin-bottom: v.$spacing-breadcrumb-margin;
 }
 
 :deep(.ant-page-header-title) {
   padding: 0;
-  font-size: 18px;
+  font-size: v.$font-size-title;
   font-weight: 500;
   color: $text-primary;
 }
@@ -169,7 +169,7 @@ $content-bg: var(--content-bg);
 
 :deep(.ant-page-header-heading) {
   flex-wrap: wrap;
-  gap: 10px;
+  gap: v.$spacing-heading-gap;
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
@@ -179,14 +179,14 @@ $content-bg: var(--content-bg);
 /* 自定义面包屑样式 */
 .pc-breadcrumb {
   .pc-breadcrumb-icon {
-    font-size: 15px;
-    color: var(--sidebar-icon-color, #8c8c8c);
+    font-size: v.$font-size-breadcrumb-icon;
+    color: var(--breadcrumb-icon-color);
   }
 
   .pc-breadcrumb-link {
     color: $text-secondary;
     text-decoration: none;
-    transition: color 0.3s;
+    transition: color v.$transition-speed;
 
     &:hover {
       color: $primary-color;
@@ -206,7 +206,7 @@ $content-bg: var(--content-bg);
 
 .pc-title {
   margin: 0;
-  font-size: 18px;
+  font-size: v.$font-size-title;
   font-weight: 500;
   color: $text-primary;
   white-space: nowrap;
@@ -215,14 +215,14 @@ $content-bg: var(--content-bg);
 }
 
 .pc-description {
-  margin: 4px 0 0;
-  font-size: 14px;
+  margin: v.$spacing-breadcrumb-margin 0 0;
+  font-size: v.$font-size-description;
   color: $text-secondary;
 }
 
 .pc-actions {
   display: flex;
-  gap: 8px;
+  gap: v.$spacing-actions-gap;
   white-space: nowrap;
 }
 
@@ -230,21 +230,21 @@ $content-bg: var(--content-bg);
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 14px;
+  padding: v.$content-padding;
 }
 
 .pc-content {
   min-height: 100%;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  padding: 14px;
+  background: var(--content-bg);
+  border-radius: v.$content-border-radius;
+  box-shadow: v.$content-box-shadow;
+  padding: v.$content-padding;
 }
 
 /* 滚动条样式 */
 .pc-content-wrapper {
   &::-webkit-scrollbar {
-    width: 6px;
+    width: v.$scrollbar-width;
   }
 
   &::-webkit-scrollbar-track {
@@ -252,12 +252,12 @@ $content-bg: var(--content-bg);
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.15);
-    border-radius: 3px;
+    background-color: var(--scrollbar-thumb-color);
+    border-radius: v.$scrollbar-thumb-border-radius;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: var(--scrollbar-thumb-hover-color);
   }
 }
 
