@@ -14,22 +14,22 @@
             v-for="(item, index) in breadcrumbItems"
             :key="index"
           >
-              <!-- 图标 -->
-              <component
-                v-if="item.icon && getIconComponent(item.icon)"
-                :is="getIconComponent(item.icon)"
-                class="pc-breadcrumb-icon"
-              />
-              
-              <!-- 链接 or 文字 -->
-              <router-link
-                v-if="!item.isLast"
-                :to="item.path"
-                class="pc-breadcrumb-link"
-              >
-                {{ item.title }}
-              </router-link>
-              <span v-else class="pc-breadcrumb-text">{{ item.title }}</span>
+            <!-- 图标 -->
+            <component
+              v-if="item.icon && getIconComponent(item.icon)"
+              :is="getIconComponent(item.icon)"
+              class="pc-breadcrumb-icon"
+            />
+
+            <!-- 链接 or 文字 -->
+            <router-link
+              v-if="!item.isLast"
+              :to="item.path"
+              class="pc-breadcrumb-link"
+            >
+              {{ item.title }}
+            </router-link>
+            <span v-else class="pc-breadcrumb-text">{{ item.title }}</span>
           </a-breadcrumb-item>
         </a-breadcrumb>
       </template>
@@ -69,10 +69,7 @@
 import { computed, h } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { iconMap } from "@/assets/icons/SideBarIconMap";
-import APageHeader from "ant-design-vue/lib/page-header";
-
-// 如果使用按需引入，需要确保样式被加载
-import "ant-design-vue/lib/page-header/style/index"; // 引入 a-page-header 样式
+import { LeftOutlined } from "@ant-design/icons-vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -124,13 +121,11 @@ const getIconComponent = (iconName: string) => {
   return (iconMap as Record<string, unknown>)[iconName] || null;
 };
 
-
 // 缓存视图
 const cachedViews = ["Dashboard", "UserList"]; // 示例：可从 store 动态获取
 </script>
 
 <style lang="scss" scoped>
-
 @use "@/styles/design-tokens" as v;
 $page-header-border: var(--border-color-base);
 $text-primary: var(--text-color-primary);
@@ -148,7 +143,7 @@ $content-bg: var(--content-bg);
 
 /* 覆盖 a-page-header 样式 */
 :deep(.ant-page-header) {
-  background-color:var(--content-bg);
+  background-color: var(--content-bg);
 }
 
 :deep(.ant-page-header-breadcrumb) {
@@ -260,7 +255,6 @@ $content-bg: var(--content-bg);
     background-color: var(--scrollbar-thumb-hover-color);
   }
 }
-
 
 :deep(.ant-page-header-back) {
   display: none !important;

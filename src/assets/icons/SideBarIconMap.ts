@@ -16,7 +16,8 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
   HomeOutlined,
-  AppstoreOutlined 
+  AppstoreOutlined,
+  LeftOutlined,
 } from "@ant-design/icons-vue";
 
 export const iconMap = {
@@ -37,7 +38,8 @@ export const iconMap = {
   MenuUnfoldOutlined,
   UserOutlined,
   HomeOutlined,
-  AppstoreOutlined 
+  AppstoreOutlined,
+  LeftOutlined,
 } as const;
 
 // 类型导出，用于类型安全
