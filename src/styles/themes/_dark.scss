@@ -8,7 +8,6 @@
   --text-color-placeholder: rgba(255, 255, 255, 0.45);
   --border-color-base: #424242;
 
-  
   /* Header dark style */
   --header-gradient-bg: #0f1217;
   --header-bottom-border-color: #424242;
@@ -23,13 +22,17 @@
   --sidebar-item-hover-bg: #414040;
   --sidebar-item-selected-bg: #575a5c;
 
-  /* Footer dark style */
-  --content-bg: rgb(16, 18, 23);
+  /* Content component colors */
+  --content-bg: #1d1d1d;
+  --shadow-color-light: rgba(0, 0, 0, 0.3);
+  --scrollbar-thumb-color: rgba(255, 255, 255, 0.2);
+  --scrollbar-thumb-hover-color: rgba(255, 255, 255, 0.3);
+  --breadcrumb-icon-color: #cdecae;
 
   /* Footer dark style */
   --footer-bg: #2c2d30;
 
-  /* Login dark style */
+  /* Login component colors */
   --login-bg: #0f1217;
   --login-form-bg: rgba(45, 55, 72, 0.5);
   --login-form-border: rgba(255, 255, 255, 0.1);

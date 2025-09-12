@@ -12,7 +12,6 @@
   --header-gradient-bg: #ffffff;
   --header-bottom-border-color: #cfcfcf;
 
-
   /* Sidebar light style */
   --sidebar-bg: #ffffff;
   --sidebar-right-border-color: #cfcfcf;
@@ -23,13 +22,17 @@
   --sidebar-item-hover-bg: #d7dade;
   --sidebar-item-selected-bg: #c4e6f6;
 
-  /* Footer light style */
-  --content-bg: #e9e9e9;
+  /* Content component colors */
+  --content-bg: #ffffff;
+  --shadow-color-light: rgba(0, 0, 0, 0.08);
+  --scrollbar-thumb-color: rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb-hover-color: rgba(0, 0, 0, 0.3);
+  --breadcrumb-icon-color: #0267ff;
 
   /* Footer light style */
   --footer-bg: #dbdbdb;
 
-  /* Login light style */
+  /* Login component colors */
   --login-bg: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
   --login-form-bg: rgba(255, 255, 255, 0.3);
   --login-form-border: rgba(255, 255, 255, 0.5);
