@@ -60,35 +60,61 @@
 
   <!-- result list -->
   <div class="search-result-list">
-
-    <!-- 用户表格 -->
     <a-table
-      :dataSource="userList"
       :columns="columns"
-      :pagination="false"
-      row-key="id"
-      bordered
-    />
+      :dataSource="userList"
+      :pagination="true"
+      @resizeColumn="handleResizeColumn"
+      
+    >
+      <!-- table header -->
+      <template #headerCell="{ column }">
+        <template v-if="column.key === 'id'"">
+          
+          <span><SmileOutlined /> ID</span>
+        </template>
+      </template>
 
+      <!-- table cell -->
+      <template #bodyCell="{ column,record}">
 
-    <a-pagination 
-    :total="100"
+        <!-- user name cell -->
+        <template v-if="column.key === 'userName'">
+            <a href="#">{{ record.userName }}</a>
+        </template>
+
+        <!-- action cell -->
+        <template v-else-if="column.key === 'action'">
+              <span>
+                <a>Edit</a>
+                <a-divider type="vertical" />
+                <a>Delete</a> 
+                <a-divider type="vertical" />
+                <a class="ant-dropdown-link"> More actions <DownOutlined /></a>
+             </span>
+        </template>
+
+        
+      </template>
+      <template >
+
+      </template>
+    </a-table>
     
-    
-    />
-
-
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
-
+import { reactive, ref, onMounted } from "vue";
+import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue';
 interface SearchFormType {
   userName: string;
   mobile: string;
   status: string;
 }
+onMounted(() => {
+  fetchUsers();
+});
 
 const searchForm = reactive<SearchFormType>({
   userName: "",
@@ -106,9 +132,15 @@ const handlerSearchPage = () => {
   console.log(searchForm);
 };
 
+// 👇 分页状态
+const pagination = reactive({
+  current: 1,
+  pageSize: 10,
+  total: 0,
+});
 
-const userList = reactive([]);
-
+// 👇 当前页用户列表
+const userList = ref<any[]>([]);
 
 const mockUsers = Array.from({ length: 50 }, (_, i) => ({
   id: i + 1,
@@ -119,7 +151,6 @@ const mockUsers = Array.from({ length: 50 }, (_, i) => ({
   createTime: new Date(Date.now() - i * 86400000).toISOString().split("T")[0],
 }));
 
-
 const columns = [
   { title: "ID", dataIndex: "id", key: "id", width: 80 },
   { title: "User Name", dataIndex: "userName", key: "userName" },
@@ -129,23 +160,52 @@ const columns = [
     title: "Status",
     dataIndex: "status",
     key: "status",
-    customRender: ({ value }) => (value === "enabled" ? "✅ Enabled" : "❌ Disabled"),
+
+    customRender: ({ value }) =>
+      value === "enabled" ? "✅ Enabled" : "❌ Disabled",
   },
   {
     title: "Create Time",
     dataIndex: "createTime",
     key: "createTime",
   },
+  {title: "Action", dataIndex: "action", key: "action"},
 ];
 
+// 👇 过滤并分页数据
+const fetchUsers = () => {
+  let filtered = mockUsers.filter((user) => {
+    return (
+      (!searchForm.userName || user.userName.includes(searchForm.userName)) &&
+      (!searchForm.mobile || user.mobile.includes(searchForm.mobile)) &&
+      (!searchForm.status || user.status === searchForm.status)
+    );
+  });
 
+  pagination.total = filtered.length;
+
+  // 分页
+  const start = (pagination.current - 1) * pagination.pageSize;
+  const end = start + pagination.pageSize;
+  userList.value = filtered.slice(start, end);
+};
+
+// 👇 页码变化
+const handlePageChange = (page: number) => {
+  pagination.current = page;
+  fetchUsers();
+};
+
+function handleResizeColumn(w, col) {
+  col.width = w;
+}
 </script>
 
 <style lang="scss" scoped>
 .search-form-container {
-  background-color: var(--content-);
+  background-color: var(--content-bg);
 }
 .search-result-list {
-  background-color: red;
+  background-color: var(--content-bg);
 }
 </style>
