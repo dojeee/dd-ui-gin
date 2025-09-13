@@ -45,7 +45,7 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue";
-import useSideBarMenusStores from "@/stores/sideBarMenusStores";
+import { useSideBarMenusStores } from "@/stores/sideBarMenusStores";
 import { storeToRefs } from "pinia";
 import { iconMap } from "@/assets/icons/SideBarIconMap";
 import { useRouter } from "vue-router";

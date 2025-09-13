@@ -180,5 +180,3 @@ export const useSideBarMenusStores = defineStore("sideBarMenus", () => {
     addMenu,
   };
 });
-
-export default useSideBarMenusStores;
