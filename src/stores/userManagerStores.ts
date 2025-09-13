@@ -33,7 +33,15 @@ export const useUserManagerStores = defineStore("userManager", () => {
       maxWidth: 200,
       resizable: true,
     },
-    { title: "Mobile", dataIndex: "mobile", key: "mobile", resizable: true },
+    {
+      title: "Mobile",
+      dataIndex: "mobile",
+      key: "mobile",
+      width: 120,
+      minWidth: 100,
+      maxWidth: 200,
+      resizable: true,
+    },
     {
       title: "Status",
       dataIndex: "userState",
@@ -63,7 +71,15 @@ export const useUserManagerStores = defineStore("userManager", () => {
       maxWidth: 200,
       resizable: true,
     },
-    { title: "Action", key: "action", width: 120, minWidth: 100, maxWidth: 200, resizable: true },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      width: 120,
+      minWidth: 100,
+      maxWidth: 200,
+      resizable: true,
+    },
   ]);
 
   // Actions
@@ -77,12 +93,15 @@ export const useUserManagerStores = defineStore("userManager", () => {
       };
 
       // 清理空参数，确保只发送有效值
-      const requestParams = Object.entries(rawParams).reduce((acc, [key, value]) => {
-        if (value !== '' && value !== null && value !== undefined) {
-          acc[key] = value;
-        }
-        return acc;
-      }, {} as Record<string, any>);
+      const requestParams = Object.entries(rawParams).reduce(
+        (acc, [key, value]) => {
+          if (value !== "" && value !== null && value !== undefined) {
+            acc[key] = value;
+          }
+          return acc;
+        },
+        {} as Record<string, any>
+      );
 
       const response = await queryUsersByPageApi(requestParams);
       const result = response.data; // API data is in response.data

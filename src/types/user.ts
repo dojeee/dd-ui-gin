@@ -1,4 +1,4 @@
-interface User {
+export interface User {
     userId: number;
     userName: string;
     mobile: string;
@@ -9,14 +9,14 @@ interface User {
     updatedBy: string;
   }
   
-  interface Pagination {
+  export interface Pagination {
     current: number;
     pageSize: number;
     total: number;
   }
   
   // 查询参数接口
-  interface SearchParams {
+  export interface SearchParams {
     userName?: string;
     mobile?: string;
     userState?: 0 | 1 | "";
