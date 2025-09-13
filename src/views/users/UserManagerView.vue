@@ -36,14 +36,8 @@
 
   <!-- 结果列表 -->
   <div class="search-result-list">
-    <a-table
-      :columns="columns"
-      :dataSource="userList"
-      :pagination="pagination"
-      :loading="loading"
-      :row-key="(record) => record.userId"
-      @change="handleTableChange"
-    >
+    <a-table :columns="columns" :dataSource="userList" :pagination="pagination" :loading="loading"
+      :row-key="(record) => record.userId" @change="handleTableChange" @resize-column="handleResizeColumn">
       <template #headerCell="{ column }">
         <template v-if="column.key === 'userId'">
           <span>
@@ -78,9 +72,10 @@ import { useUserManagerStores } from "@/stores/userManagerStores";
 import { storeToRefs } from "pinia";
 import type { TablePaginationConfig } from 'ant-design-vue';
 
+
 // 1. 初始化 Store 并保持响应性
 const userManagerStore = useUserManagerStores();
-const { userList, pagination, columns, loading } = storeToRefs(userManagerStore);
+const { userList, columns, pagination, loading } = storeToRefs(userManagerStore);
 const { fetchUsers, setPage } = userManagerStore;
 
 // 2. 本地搜索表单状态
@@ -98,6 +93,12 @@ onMounted(() => {
 // 4. 事件处理器调用 Store Actions
 const handlerSearchPage = () => {
   pagination.value.current = 1; // 搜索时重置到第一页
+
+
+  console.log("---------------")
+  console.log(searchForm)
+  console.log("---------------")
+
   fetchUsers(searchForm);
 };
 
@@ -116,9 +117,9 @@ const handleTableChange = (pager: TablePaginationConfig) => {
 };
 
 // 列宽调整
-// function handleResizeColumn(w: number, col: { width: number }) {
-//   col.width = w;
-// }
+function handleResizeColumn(w: number, col: { width: number }) {
+  col.width = w;
+}
 </script>
 
 <style lang="scss" scoped>

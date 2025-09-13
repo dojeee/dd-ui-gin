@@ -84,6 +84,10 @@ export const useUserManagerStores = defineStore("userManager", () => {
 
   // Actions
   async function fetchUsers(searchParams: SearchParams = {}) {
+
+    console.log("------------------");
+    console.log(searchParams);
+    console.log("------------------");
     loading.value = true;
     try {
       const rawParams: Record<string, any> = {
@@ -91,6 +95,10 @@ export const useUserManagerStores = defineStore("userManager", () => {
         pageSize: pagination.pageSize,
         ...searchParams,
       };
+
+      console.log("------------------");
+      console.log(rawParams);
+      console.log("------------------");
 
       // 清理空参数，确保只发送有效值
       const requestParams = Object.entries(rawParams).reduce(
@@ -128,6 +136,11 @@ export const useUserManagerStores = defineStore("userManager", () => {
     if (size) {
       pagination.pageSize = size;
     }
+
+
+    console.log("------------------");
+    console.log(pagination);
+    console.log("------------------");
     fetchUsers(); // Fetch data for the new page
   }
 
