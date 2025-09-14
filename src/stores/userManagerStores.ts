@@ -1,17 +1,24 @@
 import { defineStore } from "pinia";
 import { reactive, ref } from "vue";
 import { queryUsersByPageApi } from "@/api/user";
-import { message, TableColumnsType } from "ant-design-vue";
+import {
+  message,
+  TableColumnsType,
+  TablePaginationConfig,
+} from "ant-design-vue";
 import { User, Pagination, SearchParams } from "@/types/user";
 
 export const useUserManagerStores = defineStore("userManager", () => {
   // State
   const userList = ref<User[]>([]);
   const loading = ref(false);
-  const pagination = reactive<Pagination>({
+  const pagination = reactive<TablePaginationConfig>({
     current: 1,
     pageSize: 10,
     total: 0,
+    showSizeChanger: true,
+    showTotal: (total) => `Total ${total} items`,
+    pageSizeOptions: ["10", "20", "50", "100"],
   });
 
   const columns = ref<TableColumnsType>([
