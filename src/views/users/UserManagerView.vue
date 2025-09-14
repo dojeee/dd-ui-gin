@@ -5,12 +5,20 @@
       <a-row :gutter="{ xs: 8, sm: 16, md: 24 }" align="bottom">
         <a-col :span="6" :offset="1">
           <a-form-item label="User Name">
-            <a-input v-model:value="searchForm.userName" placeholder="user name" @pressEnter="handlerSearchPage" />
+            <a-input
+              v-model:value="searchForm.userName"
+              placeholder="user name"
+              @pressEnter="debounceedSearch"
+            />
           </a-form-item>
         </a-col>
         <a-col :span="6">
           <a-form-item label="Mobile">
-            <a-input v-model:value="searchForm.mobile" placeholder="mobile" @pressEnter="handlerSearchPage" />
+            <a-input
+              v-model:value="searchForm.mobile"
+              placeholder="mobile"
+              @pressEnter="debounceedSearch"
+            />
           </a-form-item>
         </a-col>
         <a-col :span="4">
@@ -25,8 +33,12 @@
         <a-col :span="3" :offset="2">
           <a-form-item>
             <div style="display: flex; justify-content: flex-end; gap: 8px">
-              <a-button type="primary" @click="handlerSearchPage">Search</a-button>
-              <a-button style="margin-left: 8px" @click="handleReset">Reset</a-button>
+              <a-button type="primary" @click="handlerSearchPage"
+                >Search</a-button
+              >
+              <a-button style="margin-left: 8px" @click="handleReset"
+                >Reset</a-button
+              >
             </div>
           </a-form-item>
         </a-col>
@@ -36,13 +48,18 @@
 
   <!-- 结果列表 -->
   <div class="search-result-list">
-    <a-table :columns="columns" :dataSource="userList" :pagination="pagination" :loading="loading"
-      :row-key="(record) => record.userId" @change="handleTableChange" @resize-column="handleResizeColumn">
+    <a-table
+      :columns="columns"
+      :dataSource="userList"
+      :pagination="pagination"
+      :loading="loading"
+      :row-key="(record: User) => record.userId"
+      @change="handleTableChange"
+      @resize-column="handleResizeColumn"
+    >
       <template #headerCell="{ column }">
         <template v-if="column.key === 'userId'">
-          <span>
-            <SmileOutlined /> User ID
-          </span>
+          <span> <SmileOutlined /> User ID </span>
         </template>
       </template>
       <template #bodyCell="{ column, record }">
@@ -55,7 +72,8 @@
             <a-divider type="vertical" />
             <a>Delete</a>
             <a-divider type="vertical" />
-            <a class="ant-dropdown-link">More actions
+            <a class="ant-dropdown-link"
+              >More actions
               <DownOutlined />
             </a>
           </span>
@@ -67,15 +85,17 @@
 
 <script setup lang="ts">
 import { reactive, onMounted } from "vue";
-import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue';
+import { SmileOutlined, DownOutlined } from "@ant-design/icons-vue";
 import { useUserManagerStores } from "@/stores/userManagerStores";
 import { storeToRefs } from "pinia";
-import type { TablePaginationConfig } from 'ant-design-vue';
-
+import type { TablePaginationConfig } from "ant-design-vue";
+import { debounce } from "lodash-es";
+import type { User } from "@/types/user";
 
 // 1. 初始化 Store 并保持响应性
 const userManagerStore = useUserManagerStores();
-const { userList, columns, pagination, loading } = storeToRefs(userManagerStore);
+const { userList, columns, pagination, loading } =
+  storeToRefs(userManagerStore);
 const { fetchUsers, setPage } = userManagerStore;
 
 // 2. 本地搜索表单状态
@@ -93,14 +113,12 @@ onMounted(() => {
 // 4. 事件处理器调用 Store Actions
 const handlerSearchPage = () => {
   pagination.value.current = 1; // 搜索时重置到第一页
-
-
-  console.log("---------------")
-  console.log(searchForm)
-  console.log("---------------")
-
   fetchUsers(searchForm);
 };
+
+const debounceedSearch = debounce(() => {
+  handlerSearchPage();
+}, 300);
 
 const handleReset = () => {
   searchForm.userName = "";
