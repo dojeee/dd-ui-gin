@@ -84,21 +84,13 @@ export const useUserManagerStores = defineStore("userManager", () => {
 
   // Actions
   async function fetchUsers(searchParams: SearchParams = {}) {
-
-    console.log("------------------");
-    console.log(searchParams);
-    console.log("------------------");
     loading.value = true;
     try {
       const rawParams: Record<string, any> = {
-        pageNum: pagination.current,
+        pageNumber: pagination.current,
         pageSize: pagination.pageSize,
         ...searchParams,
       };
-
-      console.log("------------------");
-      console.log(rawParams);
-      console.log("------------------");
 
       // 清理空参数，确保只发送有效值
       const requestParams = Object.entries(rawParams).reduce(
@@ -112,16 +104,14 @@ export const useUserManagerStores = defineStore("userManager", () => {
       );
 
       const response = await queryUsersByPageApi(requestParams);
-      const result = response.data; // API data is in response.data
-
-      if (result.code === 200 && result.data) {
-        userList.value = result.data.items;
-        pagination.total = result.data.total;
-        // 确保与 API 响应的字段名一致
-        pagination.current = result.data.pageNum || result.data.pageNumber;
-        pagination.pageSize = result.data.pageSize;
+      if (response.code === 200 && response.data) {
+        const result = response.data;
+        userList.value = result.items;
+        pagination.total = result.total;
+        pagination.current = result.pageNumber;
+        pagination.pageSize = result.pageSize;
       } else {
-        message.error(result.msg || "Failed to fetch user list.");
+        message.error(response.msg || "Failed to fetch user list.");
       }
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -136,11 +126,6 @@ export const useUserManagerStores = defineStore("userManager", () => {
     if (size) {
       pagination.pageSize = size;
     }
-
-
-    console.log("------------------");
-    console.log(pagination);
-    console.log("------------------");
     fetchUsers(); // Fetch data for the new page
   }
 
