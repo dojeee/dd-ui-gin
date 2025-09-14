@@ -36,7 +36,11 @@
         <a-col :span="3" :offset="2">
           <a-form-item>
             <div style="display: flex; justify-content: flex-end; gap: 8px">
-              <a-button type="primary" @click="handlerSearchPage"
+              <a-button
+                type="primary"
+                @click="handlerSearchPage"
+                :loading="loading"
+                :disabled="loading"
                 >Search</a-button
               >
               <a-button style="margin-left: 8px" @click="handleReset"
@@ -87,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, onBeforeUnmount } from "vue";
 import { SmileOutlined, DownOutlined } from "@ant-design/icons-vue";
 import { useUserManagerStores } from "@/stores/userManagerStores";
 import { storeToRefs } from "pinia";
@@ -134,6 +138,10 @@ const handleTableChange = (pager: TablePaginationConfig) => {
 function handleResizeColumn(w: number, col: { width: number }) {
   col.width = w;
 }
+
+onBeforeUnmount(() => {
+  debounceedSearch.cancel();
+});
 </script>
 
 <style lang="scss" scoped>

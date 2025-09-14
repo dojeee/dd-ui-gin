@@ -27,6 +27,9 @@ export const useUserManagerStores = defineStore("userManager", () => {
     pageSizeOptions: ["10", "20", "50", "100"],
   });
 
+  const renderUserState = ({ text: userState }: { text: 0 | 1 }) =>
+    userState === 1 ? "✅ Enabled" : "❌ Disabled";
+
   const columns = ref<TableColumnsType>([
     {
       title: "User ID",
@@ -67,8 +70,7 @@ export const useUserManagerStores = defineStore("userManager", () => {
       minWidth: 100,
       maxWidth: 200,
       resizable: true,
-      customRender: ({ text: userState }: { text: 0 | 1 }) =>
-        userState === 1 ? "✅ Enabled" : "❌ Disabled",
+      customRender: renderUserState,
     },
     {
       title: "Created By",
