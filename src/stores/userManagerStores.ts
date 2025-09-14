@@ -141,8 +141,6 @@ export const useUserManagerStores = defineStore("userManager", () => {
         const result = response.data;
         userList.value = result.items;
         pagination.total = result.total;
-        pagination.current = result.pageNumber;
-        pagination.pageSize = result.pageSize;
       } else {
         message.error(response.msg || "Failed to fetch user list.");
       }
