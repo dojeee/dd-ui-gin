@@ -6,9 +6,15 @@ import {
   TableColumnsType,
   TablePaginationConfig,
 } from "ant-design-vue";
-import { User, Pagination, SearchParams } from "@/types/user";
+import { User, UserPageSearchParams } from "@/types/user";
 
 export const useUserManagerStores = defineStore("userManager", () => {
+  const searchParams = reactive<UserPageSearchParams>({
+    userName: "",
+    mobile: "",
+    userState: "" as 0 | 1 | "",
+  });
+
   // State
   const userList = ref<User[]>([]);
   const loading = ref(false);
@@ -117,7 +123,7 @@ export const useUserManagerStores = defineStore("userManager", () => {
   ]);
 
   // Actions
-  async function fetchUsers(searchParams: SearchParams = {}) {
+  async function fetchUsers(searchParams: UserPageSearchParams = {}) {
     loading.value = true;
     try {
       const rawParams: Record<string, any> = {
@@ -163,6 +169,7 @@ export const useUserManagerStores = defineStore("userManager", () => {
 
   return {
     // State
+    searchParams,
     userList,
     pagination,
     columns,

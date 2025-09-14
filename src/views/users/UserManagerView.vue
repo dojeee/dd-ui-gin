@@ -6,7 +6,7 @@
         <a-col :span="6" :offset="1">
           <a-form-item label="User Name">
             <a-input
-              v-model:value="searchForm.userName"
+              v-model:value="searchParams.userName"
               placeholder="user name"
               @pressEnter="debounceedSearch"
             />
@@ -15,7 +15,7 @@
         <a-col :span="6">
           <a-form-item label="Mobile">
             <a-input
-              v-model:value="searchForm.mobile"
+              v-model:value="searchParams.mobile"
               placeholder="mobile"
               @pressEnter="debounceedSearch"
             />
@@ -23,7 +23,10 @@
         </a-col>
         <a-col :span="4">
           <a-form-item label="Status">
-            <a-select v-model:value="searchForm.userState" placeholder="status">
+            <a-select
+              v-model:value="searchParams.userState"
+              placeholder="status"
+            >
               <a-select-option value="">All</a-select-option>
               <a-select-option :value="1">Enabled</a-select-option>
               <a-select-option :value="0">Disabled</a-select-option>
@@ -96,14 +99,7 @@ import type { User } from "@/types/user";
 const userManagerStore = useUserManagerStores();
 const { userList, columns, pagination, loading } =
   storeToRefs(userManagerStore);
-const { fetchUsers, setPage } = userManagerStore;
-
-// 2. 本地搜索表单状态
-const searchForm = reactive({
-  userName: "",
-  mobile: "",
-  userState: "" as 0 | 1 | "",
-});
+const { fetchUsers, setPage, searchParams } = userManagerStore;
 
 // 3. 组件挂载时加载数据
 onMounted(() => {
@@ -113,7 +109,7 @@ onMounted(() => {
 // 4. 事件处理器调用 Store Actions
 const handlerSearchPage = () => {
   pagination.value.current = 1; // 搜索时重置到第一页
-  fetchUsers(searchForm);
+  fetchUsers(searchParams);
 };
 
 const debounceedSearch = debounce(() => {
@@ -121,16 +117,16 @@ const debounceedSearch = debounce(() => {
 }, 300);
 
 const handleReset = () => {
-  searchForm.userName = "";
-  searchForm.mobile = "";
-  searchForm.userState = "";
+  searchParams.userName = "";
+  searchParams.mobile = "";
+  searchParams.userState = "";
   handlerSearchPage();
 };
 
 const handleTableChange = (pager: TablePaginationConfig) => {
-  // 确保页码和页面大小是数字类型
-  const page = pager.current || pagination.value.current;
-  const size = Number(pager.pageSize) || pagination.value.pageSize;
+  // 使用 ?? 操作符确保 page 和 size 始终是 number 类型
+  const page = pager.current ?? 1;
+  const size = pager.pageSize ?? pagination.value.pageSize;
   setPage(page, size);
 };
 
