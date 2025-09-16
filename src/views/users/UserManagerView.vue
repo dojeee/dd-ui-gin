@@ -1,7 +1,7 @@
 <template>
   <div class="user-manager-container">
     <!-- 搜索表单 -->
-    <div class="user-manager-form-container">
+    <div class="search-form-container">
       <a-form>
         <a-row :gutter="{ xs: 8, sm: 16, md: 24 }" align="bottom">
           <a-col :span="6" :offset="1">
@@ -175,7 +175,7 @@ onBeforeUnmount(() => {
   flex-direction: column;
 }
 
-.user-manager-form-container {
+.search-form-container {
   background-color: var(--content-bg);
   border-radius: v.$radius-md;
 }
