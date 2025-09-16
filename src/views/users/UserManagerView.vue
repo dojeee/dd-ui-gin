@@ -1,110 +1,114 @@
 <template>
-  <!-- 搜索表单 -->
   <div class="user-manager-container">
-    <a-form>
-      <a-row :gutter="{ xs: 8, sm: 16, md: 24 }" align="bottom">
-        <a-col :span="6" :offset="1">
-          <a-form-item label="User Name">
-            <a-input
-              v-model:value="searchParams.userName"
-              placeholder="user name"
-              @pressEnter="debounceedSearch"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col :span="6">
-          <a-form-item label="Mobile">
-            <a-input
-              v-model:value="searchParams.mobile"
-              placeholder="mobile"
-              @pressEnter="debounceedSearch"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col :span="4">
-          <a-form-item label="Status">
-            <a-select
-              v-model:value="searchParams.userState"
-              placeholder="status"
-            >
-              <a-select-option value="">All</a-select-option>
-              <a-select-option :value="1">Enabled</a-select-option>
-              <a-select-option :value="0">Disabled</a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
-        <a-col :span="3" :offset="2">
-          <a-form-item>
-            <div style="display: flex; justify-content: flex-end; gap: 8px">
-              <a-button
-                type="primary"
-                @click="handlerSearchPage"
-                :loading="loading"
-                :disabled="loading"
-                >Search</a-button
+    <!-- 搜索表单 -->
+    <div class="user-manager-form-container">
+      <a-form>
+        <a-row :gutter="{ xs: 8, sm: 16, md: 24 }" align="bottom">
+          <a-col :span="6" :offset="1">
+            <a-form-item label="User Name">
+              <a-input
+                v-model:value="searchParams.userName"
+                placeholder="user name"
+                @pressEnter="debounceedSearch"
+              />
+            </a-form-item>
+          </a-col>
+          <a-col :span="6">
+            <a-form-item label="Mobile">
+              <a-input
+                v-model:value="searchParams.mobile"
+                placeholder="mobile"
+                @pressEnter="debounceedSearch"
+              />
+            </a-form-item>
+          </a-col>
+          <a-col :span="4">
+            <a-form-item label="Status">
+              <a-select
+                v-model:value="searchParams.userState"
+                placeholder="status"
               >
-              <a-button style="margin-left: 8px" @click="handleReset"
-                >Reset</a-button
-              >
-            </div>
-          </a-form-item>
-        </a-col>
-      </a-row>
-    </a-form>
-  </div>
-
-  <!-- 结果列表 -->
-  <div class="search-result-list">
-    <!-- operator space -->
-    <div class="result-top-operator-container">
-      <!-- left section -->
-      <div class="left-section">
-        <span>User List</span>
-      </div>
-
-      <!-- right section -->
-      <div class="right-section">
-        <a-button type="primary" size="5" class="right-btn">New user</a-button>
-        <a-button type="primary">
-          <template #icon>
-            <DownloadOutlined />
-          </template>
-        </a-button>
-      </div>
+                <a-select-option value="">All</a-select-option>
+                <a-select-option :value="1">Enabled</a-select-option>
+                <a-select-option :value="0">Disabled</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :span="3" :offset="2">
+            <a-form-item>
+              <div class="search-reset-button-container">
+                <a-button
+                  type="primary"
+                  @click="handlerSearchPage"
+                  :loading="loading"
+                  :disabled="loading"
+                  >Search</a-button
+                >
+                <a-button style="margin-left: 8px" @click="handleReset"
+                  >Reset</a-button
+                >
+              </div>
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </a-form>
     </div>
 
-    <a-table
-      :columns="columns"
-      :dataSource="userList"
-      :pagination="pagination"
-      :loading="loading"
-      :row-key="(record: User) => record.userId"
-      @change="handleTableChange"
-      @resize-column="handleResizeColumn"
-    >
-      <template #headerCell="{ column }">
-        <template v-if="column.key === 'userId'">
-          <span> <SmileOutlined /> User ID </span>
+    <!-- 结果列表 -->
+    <div class="search-result-list">
+      <!-- operator space -->
+      <div class="result-top-operator-container">
+        <!-- left section -->
+        <div class="left-section">
+          <span>User List</span>
+        </div>
+
+        <!-- right section -->
+        <div class="right-section">
+          <a-button type="primary" size="5" class="right-btn"
+            >New user</a-button
+          >
+          <a-button type="primary">
+            <template #icon>
+              <DownloadOutlined />
+            </template>
+          </a-button>
+        </div>
+      </div>
+
+      <a-table
+        :columns="columns"
+        :dataSource="userList"
+        :pagination="pagination"
+        :loading="loading"
+        :row-key="(record: User) => record.userId"
+        @change="handleTableChange"
+        @resize-column="handleResizeColumn"
+      >
+        <template #headerCell="{ column }">
+          <template v-if="column.key === 'userId'">
+            <span> <SmileOutlined /> User ID </span>
+          </template>
         </template>
-      </template>
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'userName'">
-          <a href="#">{{ record.userName }}</a>
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'userName'">
+            <a href="#">{{ record.userName }}</a>
+          </template>
+          <template v-else-if="column.key === 'action'">
+            <span>
+              <a>Edit</a>
+              <a-divider type="vertical" />
+              <a>Delete</a>
+              <a-divider type="vertical" />
+              <a class="ant-dropdown-link"
+                >More actions
+                <DownOutlined />
+              </a>
+            </span>
+          </template>
         </template>
-        <template v-else-if="column.key === 'action'">
-          <span>
-            <a>Edit</a>
-            <a-divider type="vertical" />
-            <a>Delete</a>
-            <a-divider type="vertical" />
-            <a class="ant-dropdown-link"
-              >More actions
-              <DownOutlined />
-            </a>
-          </span>
-        </template>
-      </template>
-    </a-table>
+      </a-table>
+    </div>
   </div>
 </template>
 
@@ -167,9 +171,12 @@ onBeforeUnmount(() => {
 @use "@/styles/design-tokens" as v;
 
 .user-manager-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-manager-form-container {
   background-color: var(--content-bg);
-  padding: v.$spacing-xl v.$spacing-lg 0;
-  margin-bottom: v.$spacing-md;
   border-radius: v.$radius-md;
 }
 
@@ -208,5 +215,9 @@ onBeforeUnmount(() => {
       }
     }
   }
+}
+
+.search-reset-button-container {
+  display: flex;
 }
 </style>
