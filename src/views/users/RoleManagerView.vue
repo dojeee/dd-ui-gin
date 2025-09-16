@@ -50,7 +50,17 @@
     </div>
 
     <!-- result div -->
-    <div class="search-result-list"></div>
+    <div class="search-result-list">
+      <!-- operator space -->
+      <div class="result-top-operator-container">
+        <div class="left-section">
+          <span>Role List</span>
+        </div>
+        <div class="right-section">
+          <a-button type="primary" class="right-button">New Role</a-button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -91,5 +101,37 @@ const handleReset = () => {
 .search-reset-button-container {
   display: flex;
   gap: v.$spacing-sm;
+}
+
+.result-top-operator-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: v.$spacing-sm;
+  padding: v.$spacing-sm v.$spacing-md;
+  background-color: var(--content-bg);
+  border-radius: v.$radius-sm;
+  flex-shrink: 0;
+
+  .left-section {
+    font-size: v.$font-size-xs;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .right-section {
+    display: flex;
+    gap: v.$spacing-sm;
+    flex-shrink: 0;
+
+    .right-button {
+      border-radius: v.$radius-md;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      &:hover {
+        border-color: var(--primary-color);
+      }
+    }
+  }
 }
 </style>
