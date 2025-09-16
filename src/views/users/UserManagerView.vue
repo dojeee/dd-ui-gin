@@ -1,6 +1,6 @@
 <template>
   <!-- 搜索表单 -->
-  <div class="search-form-container">
+  <div class="user-manager-container">
     <a-form>
       <a-row :gutter="{ xs: 8, sm: 16, md: 24 }" align="bottom">
         <a-col :span="6" :offset="1">
@@ -166,7 +166,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 @use "@/styles/design-tokens" as v;
 
-.search-form-container {
+.user-manager-container {
   background-color: var(--content-bg);
   padding: v.$spacing-xl v.$spacing-lg 0;
   margin-bottom: v.$spacing-md;
