@@ -55,6 +55,24 @@
 
   <!-- 结果列表 -->
   <div class="search-result-list">
+    <!-- operator space -->
+    <div class="result-top-operator-container">
+      <!-- left section -->
+      <div class="left-section">
+        <span>User List</span>
+      </div>
+
+      <!-- right section -->
+      <div class="right-section">
+        <a-button type="primary" size="5" class="right-btn">New user</a-button>
+        <a-button type="primary">
+          <template #icon>
+            <DownloadOutlined />
+          </template>
+        </a-button>
+      </div>
+    </div>
+
     <a-table
       :columns="columns"
       :dataSource="userList"
@@ -98,6 +116,7 @@ import { storeToRefs } from "pinia";
 import type { TablePaginationConfig } from "ant-design-vue";
 import { debounce } from "lodash-es";
 import type { User } from "@/types/user";
+import { DownloadOutlined } from "@ant-design/icons-vue";
 
 // 1. 初始化 Store 并保持响应性
 const userManagerStore = useUserManagerStores();
@@ -145,16 +164,49 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/styles/design-tokens" as v;
+
 .search-form-container {
   background-color: var(--content-bg);
-  padding: 24px 16px 0;
-  margin-bottom: 16px;
-  border-radius: 8px;
+  padding: v.$spacing-xl v.$spacing-lg 0;
+  margin-bottom: v.$spacing-md;
+  border-radius: v.$radius-md;
 }
 
 .search-result-list {
   background-color: var(--content-bg);
-  padding: 16px;
-  border-radius: 8px;
+  padding: v.$spacing-md;
+}
+
+.result-top-operator-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: v.$spacing-sm;
+  padding: v.$spacing-sm v.$spacing-md;
+  background-color: var(--content-bg);
+  border-radius: v.$radius-sm;
+  flex-shrink: 0;
+
+  .left-section {
+    font-size: v.$font-size-xs;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .right-section {
+    display: flex;
+    gap: v.$spacing-sm; /* 按钮之间的间距 */
+    flex-shrink: 0; /* 防止被挤压 */
+
+    .right-btn {
+      border-radius: v.$radius-md;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      &:hover {
+        border-color: var(--primary-color);
+      }
+    }
+  }
 }
 </style>
