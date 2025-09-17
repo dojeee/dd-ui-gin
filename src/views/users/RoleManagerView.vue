@@ -60,6 +60,44 @@
           <a-button type="primary" class="right-button">New Role</a-button>
         </div>
       </div>
+
+      <!-- result table -->
+      <a-table
+        :columns=""
+        :dataSource=""
+        :pagination=""
+        :loading=""
+        :row-key=""
+        @change=""
+        @resize-column=""
+      >
+
+      <!-- result header -->
+        <template #headerCell="{ column }">
+          <template v-if="">
+            <span> <SmileOutlined /> User ID </span>
+          </template>
+        </template>
+
+        <!-- result body -->
+        <template #bodyCell="{}">
+          <template v-if="">
+            <a href="#">{{}}</a>
+          </template>
+          <template v-else-if="">
+            <span>
+              <a>Edit</a>
+              <a-divider type="" />
+              <a>Delete</a>
+              <a-divider type="" />
+              <a class=""
+                >More actions
+                <DownOutlined />
+              </a>
+            </span>
+          </template>
+        </template>
+      </a-table>
     </div>
   </div>
 </template>

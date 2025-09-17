@@ -39,12 +39,10 @@
               <div class="search-reset-button-container">
                 <a-button
                   type="primary"
-                  @click="handlerSearchPage"
-                  :loading="loading"
-                  :disabled="loading"
+                  @click=""
                   >Search</a-button
                 >
-                <a-button style="margin-left: 8px" @click="handleReset"
+                <a-button style="margin-left: 8px" @click=""
                   >Reset</a-button
                 >
               </div>
