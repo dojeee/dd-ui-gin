@@ -71,8 +71,7 @@
         @change=""
         @resize-column=""
       >
-
-      <!-- result header -->
+        <!-- result header -->
         <template #headerCell="{ column }">
           <template v-if="">
             <span> <SmileOutlined /> User ID </span>
@@ -103,12 +102,11 @@
 </template>
 <script setup lang="ts">
 import { h, ref } from "vue";
+import { useRoleManagerStores } from "@/stores/roleManagerStores";
+import { storeToRefs } from "pinia";
 
-const searchParams = ref({
-  roleName: "",
-  roleId: "",
-  status: "",
-});
+const useRoleManagerStore = useRoleManagerStores();
+const { searchParams } = storeToRefs(useRoleManagerStore);
 
 const handlerSearchPage = () => {
   console.log("clicked search");
@@ -118,7 +116,7 @@ const handleReset = () => {
   console.log("clicked reset");
   searchParams.value.roleName = "";
   searchParams.value.roleId = "";
-  searchParams.value.status = "All";
+  searchParams.value.status = "";
 };
 </script>
 
