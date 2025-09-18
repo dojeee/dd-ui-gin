@@ -37,14 +37,8 @@
           <a-col :span="3" :offset="2">
             <a-form-item>
               <div class="search-reset-button-container">
-                <a-button
-                  type="primary"
-                  @click=""
-                  >Search</a-button
-                >
-                <a-button style="margin-left: 8px" @click=""
-                  >Reset</a-button
-                >
+                <a-button type="primary" @click="">Search</a-button>
+                <a-button @click="handleReset">Reset</a-button>
               </div>
             </a-form-item>
           </a-col>
@@ -122,9 +116,9 @@ import { DownloadOutlined } from "@ant-design/icons-vue";
 
 // 1. 初始化 Store 并保持响应性
 const userManagerStore = useUserManagerStores();
-const { userList, columns, pagination, loading } =
+const { userList, columns, pagination, loading, searchParams } =
   storeToRefs(userManagerStore);
-const { fetchUsers, setPage, searchParams } = userManagerStore;
+const { fetchUsers, setPage } = userManagerStore;
 
 // 3. 组件挂载时加载数据
 onMounted(() => {
@@ -134,7 +128,7 @@ onMounted(() => {
 // 4. 事件处理器调用 Store Actions
 const handlerSearchPage = () => {
   pagination.value.current = 1; // 搜索时重置到第一页
-  fetchUsers(searchParams);
+  fetchUsers(searchParams.value);
 };
 
 const debounceedSearch = debounce(() => {
@@ -142,9 +136,9 @@ const debounceedSearch = debounce(() => {
 }, 300);
 
 const handleReset = () => {
-  searchParams.userName = "";
-  searchParams.mobile = "";
-  searchParams.userState = "";
+  searchParams.value.userName = "";
+  searchParams.value.mobile = "";
+  searchParams.value.userState = "";
   handlerSearchPage();
 };
 
@@ -201,13 +195,16 @@ onBeforeUnmount(() => {
 
   .right-section {
     display: flex;
-    gap: v.$spacing-sm; /* 按钮之间的间距 */
-    flex-shrink: 0; /* 防止被挤压 */
+    gap: v.$spacing-sm;
+    /* 按钮之间的间距 */
+    flex-shrink: 0;
+    /* 防止被挤压 */
 
     .right-btn {
       border-radius: v.$radius-md;
       border: 1px solid var(--border-color);
       transition: all 0.3s ease;
+
       &:hover {
         border-color: var(--primary-color);
       }

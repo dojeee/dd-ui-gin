@@ -9,6 +9,7 @@ import {
 import { User, UserPageSearchParams } from "@/types/user";
 
 export const useUserManagerStores = defineStore("userManager", () => {
+  
   const searchParams = reactive<UserPageSearchParams>({
     userName: "",
     mobile: "",
