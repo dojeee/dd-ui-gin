@@ -63,8 +63,8 @@
 
       <!-- result table -->
       <a-table
-        :columns=""
-        :dataSource=""
+        :columns="columns"
+        :dataSource="roleList"
         :pagination=""
         :loading=""
         :row-key=""
@@ -106,7 +106,7 @@ import { useRoleManagerStores } from "@/stores/roleManagerStores";
 import { storeToRefs } from "pinia";
 
 const useRoleManagerStore = useRoleManagerStores();
-const { searchParams } = storeToRefs(useRoleManagerStore);
+const { searchParams, columns, roleList } = storeToRefs(useRoleManagerStore);
 
 const handlerSearchPage = () => {
   console.log("clicked search");
