@@ -1,13 +1,16 @@
 import { defineStore } from "pinia";
 
 import { ref, reactive } from "vue";
-import { RoleManagerPageSearchParams } from "@/types/role";
+import { RolePageSearchParams } from "@/types/role";
 import { TableColumnsType, TablePaginationConfig } from "ant-design-vue";
 import { Role } from "@/types/role";
+import { queryRolesByPageApi } from "@/api/role";
+import { message } from "ant-design-vue";
 
+//store
 export const useRoleManagerStores = defineStore("roleManager", () => {
   // state
-  const searchParams = reactive<RoleManagerPageSearchParams>({
+  const searchParams = reactive<RolePageSearchParams>({
     roleId: "",
     roleName: "",
     status: "" as 0 | 1 | "",
@@ -125,6 +128,40 @@ export const useRoleManagerStores = defineStore("roleManager", () => {
       pagination.pageSize = size;
     }
   }
+
+  async function fetchRoles(searchParams: RolePageSearchParams = {}) {
+    loading.value = true;
+    try {
+      const rawParams: Record<string, any> = {
+        pageNumber: pagination.current,
+        pageSize: pagination.pageSize,
+        ...searchParams,
+      };
+
+      const requestParams = Object.entries(rawParams).reduce(
+        (acc, [key, value]) => {
+          if (value !== "" && value !== null && value !== undefined) {
+            acc[key] = value;
+          }
+          return acc;
+        },
+        {} as Record<string, any>
+      );
+
+      const response = await queryRolesByPageApi(requestParams);
+      if (response.code === 200 && response.data) {
+        const result = response.data;
+        roleList.value = result.items;
+        pagination.total = result.total;
+      } else {
+        message.error(response.msg || "Failed to fetch role list.");
+      }
+    } catch (error) {
+      console.error("Error fetching roles:", error);
+    } finally {
+      loading.value = false;
+    }
+  }
   return {
     //State
     searchParams,
@@ -134,5 +171,6 @@ export const useRoleManagerStores = defineStore("roleManager", () => {
     pagination,
     // Actions
     setPage,
+    fetchRoles,
   };
 });

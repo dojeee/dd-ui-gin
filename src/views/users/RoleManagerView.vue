@@ -10,6 +10,7 @@
               <a-input
                 v-model:value="searchParams.roleId"
                 placeholder="role id"
+                @pressEnter="debounceedSearch"
               />
             </a-form-item>
           </a-col>
@@ -20,6 +21,7 @@
               <a-input
                 v-model:value="searchParams.roleName"
                 placeholder="role name"
+                @pressEnter="debounceedSearch"
               />
             </a-form-item>
           </a-col>
@@ -103,18 +105,28 @@
   </div>
 </template>
 <script setup lang="ts">
-import { h, ref } from "vue";
+import { h, ref, onMounted, onBeforeUnmount } from "vue";
 import { useRoleManagerStores } from "@/stores/roleManagerStores";
 import { storeToRefs } from "pinia";
 import { Role } from "@/types/role";
 import { TablePaginationConfig } from "ant-design-vue";
+import { debounce } from "lodash-es";
+import { DownOutlined } from "@ant-design/icons-vue";
+
 const useRoleManagerStore = useRoleManagerStores();
 const { searchParams, columns, roleList, loading, pagination } =
   storeToRefs(useRoleManagerStore);
-const { setPage } = useRoleManagerStore;
+const { setPage, fetchRoles } = useRoleManagerStore;
+
 const handlerSearchPage = () => {
   console.log("clicked search");
+  pagination.value.current = 1;
+  fetchRoles(searchParams.value);
 };
+
+const debounceedSearch = debounce(() => {
+  handlerSearchPage();
+}, 300);
 
 const handleReset = () => {
   console.log("clicked reset");
@@ -132,6 +144,14 @@ const handleTableChange = (pager: TablePaginationConfig) => {
 function handleResizeColumn(w: number, col: { width: number }) {
   col.width = w;
 }
+
+onMounted(() => {
+  fetchRoles();
+});
+
+onBeforeUnmount(() => {
+  debounceedSearch.cancel();
+});
 </script>
 
 <style lang="scss" scoped>
