@@ -11,8 +11,9 @@ export interface Role {
   createTime: string;
   updateTime: string;
 }
-export interface RoleManagerPageSearchParams {
+export interface RolePageSearchParams {
   roleId?: string;
   roleName?: string;
+  roleCode?: string;
   status?: 0 | 1 | "";
 }
