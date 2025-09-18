@@ -65,25 +65,27 @@
       <a-table
         :columns="columns"
         :dataSource="roleList"
-        :pagination=""
-        :loading=""
-        :row-key=""
-        @change=""
-        @resize-column=""
+        :pagination="pagination"
+        :loading="loading"
+        :row-key="(record: Role) => record.roleId"
+        @change="handleTableChange"
+        @resize-column="handleResizeColumn"
       >
         <!-- result header -->
         <template #headerCell="{ column }">
-          <template v-if="">
-            <span> <SmileOutlined /> User ID </span>
+          <template v-if="column.key === 'roleId'">
+            <span> Role ID </span>
           </template>
         </template>
 
         <!-- result body -->
-        <template #bodyCell="{}">
-          <template v-if="">
-            <a href="#">{{}}</a>
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'roleName'">
+            <a href="#">{{ record.roleName }}</a>
           </template>
-          <template v-else-if="">
+
+          <!-- actions -->
+          <template v-else-if="column.key === 'action'">
             <span>
               <a>Edit</a>
               <a-divider type="" />
@@ -104,10 +106,12 @@
 import { h, ref } from "vue";
 import { useRoleManagerStores } from "@/stores/roleManagerStores";
 import { storeToRefs } from "pinia";
-
+import { Role } from "@/types/role";
+import { TablePaginationConfig } from "ant-design-vue";
 const useRoleManagerStore = useRoleManagerStores();
-const { searchParams, columns, roleList } = storeToRefs(useRoleManagerStore);
-
+const { searchParams, columns, roleList, loading, pagination } =
+  storeToRefs(useRoleManagerStore);
+const { setPage } = useRoleManagerStore;
 const handlerSearchPage = () => {
   console.log("clicked search");
 };
@@ -118,6 +122,16 @@ const handleReset = () => {
   searchParams.value.roleId = "";
   searchParams.value.status = "";
 };
+
+const handleTableChange = (pager: TablePaginationConfig) => {
+  const page = pager.current ?? 1;
+  const size = pager.pageSize ?? pagination.value.pageSize;
+  setPage(page, size);
+};
+
+function handleResizeColumn(w: number, col: { width: number }) {
+  col.width = w;
+}
 </script>
 
 <style lang="scss" scoped>

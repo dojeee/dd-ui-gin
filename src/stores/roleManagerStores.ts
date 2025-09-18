@@ -2,9 +2,11 @@ import { defineStore } from "pinia";
 
 import { ref, reactive } from "vue";
 import { RoleManagerPageSearchParams } from "@/types/role";
-import { TableColumnsType } from "ant-design-vue";
+import { TableColumnsType, TablePaginationConfig } from "ant-design-vue";
 import { Role } from "@/types/role";
+
 export const useRoleManagerStores = defineStore("roleManager", () => {
+  // state
   const searchParams = reactive<RoleManagerPageSearchParams>({
     roleId: "",
     roleName: "",
@@ -106,9 +108,31 @@ export const useRoleManagerStores = defineStore("roleManager", () => {
 
   const roleList = ref<Role[]>([]);
 
+  const loading = ref(false);
+  const pagination = reactive<TablePaginationConfig>({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+    showSizeChanger: true,
+    showTotal: (total) => `Total ${total} items`,
+    pageSizeOptions: ["10", "20", "50", "100"],
+  });
+
+  // actions
+  function setPage(page: number, size?: number) {
+    pagination.current = page;
+    if (size) {
+      pagination.pageSize = size;
+    }
+  }
   return {
+    //State
     searchParams,
     columns,
     roleList,
+    loading,
+    pagination,
+    // Actions
+    setPage,
   };
 });
