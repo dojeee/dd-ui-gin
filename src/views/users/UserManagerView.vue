@@ -37,7 +37,9 @@
           <a-col :span="3" :offset="2">
             <a-form-item>
               <div class="search-reset-button-container">
-                <a-button type="primary" @click="">Search</a-button>
+                <a-button type="primary" @click="handlerSearchPage"
+                  >Search</a-button
+                >
                 <a-button @click="handleReset">Reset</a-button>
               </div>
             </a-form-item>
@@ -214,5 +216,6 @@ onBeforeUnmount(() => {
 
 .search-reset-button-container {
   display: flex;
+  gap: v.$spacing-sm;
 }
 </style>
