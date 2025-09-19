@@ -3,10 +3,8 @@ import LoginView from "@/views/login/LoginView.vue";
 import MainView from "@/views/MainView.vue";
 import { useAuthStore } from "@/stores/authStores";
 import { message } from "ant-design-vue";
-import UserManagerView from "@/views/users/UserManagerView.vue";
-import RoleManagerView from "@/views/users/RoleManagerView.vue";
-
-
+import UserManagerView from "@/views/managers/user_manager/UserManagerView.vue";
+import RoleManagerView from "@/views/managers/role_manager/RoleManagerView.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
