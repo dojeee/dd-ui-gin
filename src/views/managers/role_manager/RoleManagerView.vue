@@ -5,7 +5,7 @@
       <a-form>
         <a-row :gutter="{ xs: 8, sm: 16, md: 24 }" align="bottom">
           <!-- role id -->
-          <a-col :span="6" :offset="1">
+          <a-col :span="4" :offset="1">
             <a-form-item label="Role Id">
               <a-input
                 v-model:value="searchParams.roleId"
@@ -16,7 +16,7 @@
           </a-col>
 
           <!-- role name -->
-          <a-col :span="6">
+          <a-col :span="4">
             <a-form-item label="Role Name">
               <a-input
                 v-model:value="searchParams.roleName"
@@ -27,7 +27,7 @@
           </a-col>
 
           <!-- role status -->
-          <a-col :span="4">
+          <a-col :span="3">
             <a-form-item label="Status" v-model:value="searchParams.status">
               <a-select>
                 <a-select-option value="">All</a-select-option>

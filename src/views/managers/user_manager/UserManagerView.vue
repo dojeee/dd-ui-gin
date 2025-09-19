@@ -4,7 +4,7 @@
     <div class="search-form-container">
       <a-form>
         <a-row :gutter="{ xs: 8, sm: 16, md: 24 }" align="bottom">
-          <a-col :span="6" :offset="1">
+          <a-col :span="4" :offset="1">
             <a-form-item label="User Name">
               <a-input
                 v-model:value="searchParams.userName"
@@ -13,7 +13,7 @@
               />
             </a-form-item>
           </a-col>
-          <a-col :span="6">
+          <a-col :span="4">
             <a-form-item label="Mobile">
               <a-input
                 v-model:value="searchParams.mobile"
@@ -22,7 +22,7 @@
               />
             </a-form-item>
           </a-col>
-          <a-col :span="4">
+          <a-col :span="3">
             <a-form-item label="Status">
               <a-select
                 v-model:value="searchParams.userState"
