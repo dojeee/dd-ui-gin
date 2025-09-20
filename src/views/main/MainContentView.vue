@@ -54,12 +54,14 @@
     </a-page-header>
 
     <!-- 主体内容 -->
-    <div class="pc-content">
-      <router-view v-slot="{ Component, route }">
-        <keep-alive :include="cachedViews">
-          <component :is="Component" :key="route.name" />
-        </keep-alive>
-      </router-view>
+    <div class="pc-content-wrapper">
+      <div class="pc-content">
+        <router-view v-slot="{ Component, route }">
+          <keep-alive :include="cachedViews">
+            <component :is="Component" :key="route.name" />
+          </keep-alive>
+        </router-view>
+      </div>
     </div>
   </a-layout-content>
 </template>
@@ -222,7 +224,30 @@ $content-bg: var(--content-bg);
   white-space: nowrap;
 }
 
+/* 滚动条样式 */
+.pc-content-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: v.$scrollbar-width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color);
+    border-radius: v.$scrollbar-thumb-border-radius;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumb-hover-color);
+  }
+}
 .pc-content {
+  flex: 1;
   min-height: 100%;
   background: var(--content-bg);
   padding: v.$content-padding;
