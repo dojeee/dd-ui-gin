@@ -169,7 +169,7 @@ $content-bg: var(--content-bg);
 }
 
 .page-header {
-  background-color: var(--background-color-base);
+  background-color: var(--content-page-header-bg);
   border-bottom: 1px solid var(--border-color-base);
 }
 /* 自定义面包屑样式 */
