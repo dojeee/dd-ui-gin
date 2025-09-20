@@ -2,10 +2,18 @@
   <div class="role-manager-container">
     <!-- form div -->
     <div class="search-form-container">
-      <a-form>
-        <a-row :gutter="{ xs: 8, sm: 16, md: 24 }" align="bottom">
+      <a-form
+        :model="searchParams"
+        @submit.prevent="handlerSearchPage"
+        class="search-form"
+      >
+        <a-row
+          :gutter="{ xs: 8, sm: 16, md: 24 }"
+          align="middle"
+          class="search-form-row"
+        >
           <!-- role id -->
-          <a-col :span="4" :offset="1">
+          <a-col :span="4" offset="1">
             <a-form-item label="Role Id">
               <a-input
                 v-model:value="searchParams.roleId"
@@ -16,7 +24,7 @@
           </a-col>
 
           <!-- role name -->
-          <a-col :span="4">
+          <a-col :span="5">
             <a-form-item label="Role Name">
               <a-input
                 v-model:value="searchParams.roleName"
@@ -27,7 +35,7 @@
           </a-col>
 
           <!-- role status -->
-          <a-col :span="3">
+          <a-col :span="4">
             <a-form-item label="Status" v-model:value="searchParams.status">
               <a-select>
                 <a-select-option value="">All</a-select-option>
@@ -37,14 +45,14 @@
             </a-form-item>
           </a-col>
 
-          <a-col :span="3" :offset="2">
+          <a-col :span="4" :offset="2">
             <a-form-item>
-              <div class="search-reset-button-container">
+              <a-space size="large">
                 <a-button type="primary" @click="handlerSearchPage"
                   >Search</a-button
                 >
                 <a-button @click="handleReset">Reset</a-button>
-              </div>
+              </a-space>
             </a-form-item>
           </a-col>
         </a-row>
@@ -159,32 +167,33 @@ onBeforeUnmount(() => {
 .role-manager-container {
   display: flex;
   flex-direction: column;
-}
-.search-form-container {
-  background-color: var(--background-color-base);
-  border-radius: v.$radius-sm;
-}
-.search-result-list {
-  background-color: var(--content-bg);
-}
-.search-reset-button-container {
-  display: flex;
   gap: v.$spacing-sm;
 }
 
-.result-top-operator-container {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: v.$spacing-sm v.$spacing-md;
+.search-form-container {
   background-color: var(--background-color-base);
+  border-radius: v.$content-border-radius;
+}
+
+.search-form-row {
+  padding-top: v.$spacing-xm;
+}
+
+.search-result-list {
+  background-color: var(--background-color-base);
+  border-radius: v.$content-border-radius;
+}
+
+.result-top-operator-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: v.$spacing-sm v.$spacing-md;
   flex-shrink: 0;
 
   .left-section {
     font-size: v.$font-size-xs;
     flex: 1;
-    min-width: 0;
   }
 
   .right-section {
