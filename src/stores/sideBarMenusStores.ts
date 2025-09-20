@@ -135,10 +135,10 @@ export const useSideBarMenusStores = defineStore("sideBarMenus", () => {
       ],
     },
     {
-      key: "userList",
+      key: "managers",
       icon: undefined,
-      label: "User list",
-      title: "User list",
+      label: "Managers",
+      title: "Managers",
       children: [
         {
           key: "usersManager",
@@ -150,7 +150,13 @@ export const useSideBarMenusStores = defineStore("sideBarMenus", () => {
           key: "roleManager",
           icon: "UserOutlined",
           label: "Role manager",
-          title: "R manager",
+          title: "Role manager",
+        },
+        {
+          key: "permissionManager",
+          icon: "UserOutlined",
+          label: "Permission manager",
+          title: "Permission manager",
         },
       ],
     },

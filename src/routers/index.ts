@@ -45,6 +45,19 @@ const router = createRouter({
             requiresAuth: false,
           },
         },
+        {
+          path: "permission",
+          name: "PermissionManager",
+          component: () =>
+            import(
+              "@/views/managers/permission_manager/PermissionManagerView.vue"
+            ),
+          meta: {
+            title: "Permission Manager",
+            icon: "LockOutlined",
+            requiresAuth: false,
+          },
+        },
       ],
     },
   ],
