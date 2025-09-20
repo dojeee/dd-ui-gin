@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="permission-manager-container">
     <!-- -->
   </div>
 </template>
@@ -10,4 +10,9 @@ import { ref } from "vue";
 const feature = ref();
 </script>
 
-<style lang="postcss" scoped></style>
+<style lang="postcss" scoped>
+.permission-manager-container {
+  display: flex;
+  flex-direction: column;
+}
+</style>

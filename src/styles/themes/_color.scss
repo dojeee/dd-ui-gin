@@ -2,7 +2,7 @@
 :root[data-theme="color"] {
   /* default */
   --primary-color: #1890ff;
-  --background-color-base: rgb(95, 95, 95);
+  --background-color-base: rgb(255, 255, 255);
   --background-color-component: #ffffff;
   --text-color-primary: #d5d5d5;
   --text-color-secondary: #555;
@@ -33,9 +33,8 @@
   --sidebar-item-hover-bg: #3a4658;
   --sidebar-item-selected-bg: #363d47;
 
-
   /* Content component colors */
-  --content-bg: #393430;
+  --content-bg: #35373d;
   --shadow-color-light: rgba(0, 0, 0, 0.2);
   --scrollbar-thumb-color: rgba(16, 255, 167, 0.3);
   --scrollbar-thumb-hover-color: rgba(16, 255, 167, 0.5);
@@ -43,7 +42,6 @@
 
   /* Footer color style */
   --footer-bg: rgb(55, 43, 37);
-
 
   /* Login component colors */
   --login-bg: linear-gradient(

@@ -161,12 +161,11 @@ onBeforeUnmount(() => {
   flex-direction: column;
 }
 .search-form-container {
-  background-color: var(--content-bg);
-  padding: auto;
+  background-color: var(--background-color-base);
+  border-radius: v.$radius-sm;
 }
 .search-result-list {
   background-color: var(--content-bg);
-  padding: v.$spacing-md;
 }
 .search-reset-button-container {
   display: flex;
@@ -174,13 +173,12 @@ onBeforeUnmount(() => {
 }
 
 .result-top-operator-container {
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
   width: 100%;
-  gap: v.$spacing-sm;
   padding: v.$spacing-sm v.$spacing-md;
-  background-color: var(--content-bg);
-  border-radius: v.$radius-sm;
+  background-color: var(--background-color-base);
   flex-shrink: 0;
 
   .left-section {
