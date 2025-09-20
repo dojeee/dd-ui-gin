@@ -1,11 +1,12 @@
 <template>
-  <a-layout-content class="page-container">
+  <a-layout-content class="content-container">
     <!-- 使用 a-page-header 实现头部 -->
     <a-page-header
       :class="['pc-header', 'ant-page-header-overwrite']"
       :back-icon="canGoBack ? h(LeftOutlined) : undefined"
       @back="handleBack"
       :title="null"
+      class="page-header"
     >
       <!-- 自定义面包屑 -->
       <template #breadcrumb>
@@ -53,14 +54,12 @@
     </a-page-header>
 
     <!-- 主体内容 -->
-    <div class="pc-content-wrapper">
-      <div class="pc-content">
-        <router-view v-slot="{ Component, route }">
-          <keep-alive :include="cachedViews">
-            <component :is="Component" :key="route.name" />
-          </keep-alive>
-        </router-view>
-      </div>
+    <div class="pc-content">
+      <router-view v-slot="{ Component, route }">
+        <keep-alive :include="cachedViews">
+          <component :is="Component" :key="route.name" />
+        </keep-alive>
+      </router-view>
     </div>
   </a-layout-content>
 </template>
@@ -133,12 +132,10 @@ $text-secondary: var(--text-color-secondary);
 $primary-color: var(--primary-color);
 $content-bg: var(--content-bg);
 
-.page-container {
+.content-container {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: var(--content-bg);
-  overflow: hidden;
 }
 
 /* 覆盖 a-page-header 样式 */
@@ -171,6 +168,10 @@ $content-bg: var(--content-bg);
   }
 }
 
+.page-header {
+  background-color: var(--background-color-base);
+  border-bottom: 1px solid var(--border-color-base);
+}
 /* 自定义面包屑样式 */
 .pc-breadcrumb {
   .pc-breadcrumb-icon {
@@ -221,39 +222,13 @@ $content-bg: var(--content-bg);
   white-space: nowrap;
 }
 
-.pc-content-wrapper {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: v.$content-padding;
-}
-
 .pc-content {
   min-height: 100%;
   background: var(--content-bg);
-  border-radius: v.$content-border-radius;
-  box-shadow: v.$content-box-shadow;
   padding: v.$content-padding;
-}
-
-/* 滚动条样式 */
-.pc-content-wrapper {
-  &::-webkit-scrollbar {
-    width: v.$scrollbar-width;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb-color);
-    border-radius: v.$scrollbar-thumb-border-radius;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: var(--scrollbar-thumb-hover-color);
-  }
+  overflow-y: auto;
+  overflow: hidden;
+  flex: 1;
 }
 
 :deep(.ant-page-header-back) {
