@@ -13,7 +13,7 @@ export const useRoleManagerStores = defineStore("roleManager", () => {
   const searchParams = reactive<RolePageSearchParams>({
     roleId: "",
     roleName: "",
-    status: "" as 0 | 1 | "",
+    state: "" as 0 | 1 | "",
   });
 
   const columns = ref<TableColumnsType>([
@@ -23,18 +23,15 @@ export const useRoleManagerStores = defineStore("roleManager", () => {
       key: "roleId",
       align: "center",
       width: 90,
-      minWidth: 90,
-      maxWidth: 200,
       resizable: true,
+      fixed: "left",
     },
     {
       title: "Role Name",
       dataIndex: "roleName",
       key: "roleName",
       align: "center",
-      width: 150,
-      minWidth: 150,
-      maxWidth: 200,
+      width: 130,
       resizable: true,
     },
     {
@@ -42,9 +39,7 @@ export const useRoleManagerStores = defineStore("roleManager", () => {
       dataIndex: "roleCode",
       key: "roleCode",
       align: "center",
-      width: 150,
-      minWidth: 150,
-      maxWidth: 200,
+      width: 130,
       resizable: true,
     },
     {
@@ -52,19 +47,15 @@ export const useRoleManagerStores = defineStore("roleManager", () => {
       dataIndex: "roleType",
       key: "roleType",
       align: "center",
-      width: 100,
-      minWidth: 100,
-      maxWidth: 200,
+      width: 40,
       resizable: true,
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
+      title: "State",
+      dataIndex: "state",
+      key: "state",
       align: "center",
       width: 100,
-      minWidth: 100,
-      maxWidth: 200,
       resizable: true,
     },
     {
@@ -73,8 +64,6 @@ export const useRoleManagerStores = defineStore("roleManager", () => {
       key: "createdBy",
       align: "center",
       width: 150,
-      minWidth: 150,
-      maxWidth: 200,
       resizable: true,
     },
     {
@@ -83,8 +72,6 @@ export const useRoleManagerStores = defineStore("roleManager", () => {
       key: "updatedBy",
       align: "center",
       width: 150,
-      minWidth: 150,
-      maxWidth: 200,
       resizable: true,
     },
     {
@@ -92,9 +79,7 @@ export const useRoleManagerStores = defineStore("roleManager", () => {
       dataIndex: "createTime",
       key: "createTime",
       align: "center",
-      width: 150,
-      minWidth: 150,
-      maxWidth: 200,
+      width: 200,
       resizable: true,
     },
     {
@@ -102,10 +87,17 @@ export const useRoleManagerStores = defineStore("roleManager", () => {
       dataIndex: "updateTime",
       key: "updateTime",
       align: "center",
-      width: 150,
-      minWidth: 150,
-      maxWidth: 200,
+      width: 200,
       resizable: true,
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      align: "center",
+      width: 300,
+      resizable: true,
+      fixed: "right",
     },
   ]);
 
@@ -127,6 +119,7 @@ export const useRoleManagerStores = defineStore("roleManager", () => {
     if (size) {
       pagination.pageSize = size;
     }
+    fetchRoles(searchParams);
   }
 
   async function fetchRoles(searchParams: RolePageSearchParams = {}) {

@@ -15,5 +15,5 @@ export interface RolePageSearchParams {
   roleId?: string;
   roleName?: string;
   roleCode?: string;
-  status?: 0 | 1 | "";
+  state?: 0 | 1 | "";
 }

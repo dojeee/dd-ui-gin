@@ -14,7 +14,6 @@
               <a-input
                 v-model:value="searchParams.roleId"
                 placeholder="role id"
-                @pressEnter="debounceedSearch"
               />
             </a-form-item>
           </a-col>
@@ -25,15 +24,14 @@
               <a-input
                 v-model:value="searchParams.roleName"
                 placeholder="role name"
-                @pressEnter="debounceedSearch"
               />
             </a-form-item>
           </a-col>
 
-          <!-- role status -->
+          <!-- role state -->
           <a-col :span="4">
-            <a-form-item label="Status" v-model:value="searchParams.status">
-              <a-select>
+            <a-form-item label="State">
+              <a-select v-model:value="searchParams.state">
                 <a-select-option value="">All</a-select-option>
                 <a-select-option :value="1">Enabled</a-select-option>
                 <a-select-option :value="0">Disabled</a-select-option>
@@ -44,12 +42,7 @@
           <a-col :span="4" :offset="2">
             <a-form-item>
               <a-space size="large">
-                <a-button
-                  type="primary"
-                  @click="handlerSearchPage"
-                  htmlType="submit"
-                  >Search</a-button
-                >
+                <a-button type="primary" htmlType="submit">Search</a-button>
                 <a-button @click="handleReset">Reset</a-button>
               </a-space>
             </a-form-item>
@@ -71,43 +64,48 @@
       </div>
 
       <!-- result table -->
-      <a-table
-        :columns="columns"
-        :dataSource="roleList"
-        :pagination="pagination"
-        :loading="loading"
-        :row-key="(record: Role) => record.roleId"
-        @change="handleTableChange"
-        @resize-column="handleResizeColumn"
-      >
-        <!-- result header -->
-        <template #headerCell="{ column }">
-          <template v-if="column.key === 'roleId'">
-            <span> Role ID </span>
-          </template>
-        </template>
-
-        <!-- result body -->
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.key === 'roleName'">
-            <a href="#">{{ record.roleName }}</a>
+      <div class="table-wrapper">
+        <a-table
+          :columns="columns"
+          :dataSource="roleList"
+          :pagination="pagination"
+          :loading="loading"
+          :row-key="(record: Role) => record.roleId"
+          @change="handleTableChange"
+          @resize-column="handleResizeColumn"
+          :scroll="{ x: 'max-content' }"
+        >
+          <!-- result header -->
+          <template #headerCell="{ column }">
+            <template v-if="column.key === 'roleId'">
+              <span> Role ID </span>
+            </template>
           </template>
 
-          <!-- actions -->
-          <template v-else-if="column.key === 'action'">
-            <span>
-              <a>Edit</a>
-              <a-divider type="" />
-              <a>Delete</a>
-              <a-divider type="" />
-              <a class=""
-                >More actions
-                <DownOutlined />
-              </a>
-            </span>
+          <!-- result body -->
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'roleName'">
+              <a href="#">{{ record.roleName }}</a>
+            </template>
+
+            <!-- actions -->
+            <template v-else-if="column.key === 'action'">
+              <span>
+                <a>✏️Edit</a>
+                <a-divider type="vertical" />
+                <a>🗑️Delete</a>
+                <a-divider type="vertical" />
+                <a-dropdown>
+                  <a class="ant-dropdown-link">
+                    ⚙️More actions
+                    <DownOutlined />
+                  </a>
+                </a-dropdown>
+              </span>
+            </template>
           </template>
-        </template>
-      </a-table>
+        </a-table>
+      </div>
     </div>
   </div>
 </template>
@@ -139,7 +137,7 @@ const handleReset = () => {
   console.log("clicked reset");
   searchParams.value.roleName = "";
   searchParams.value.roleId = "";
-  searchParams.value.status = "";
+  searchParams.value.state = "";
 };
 
 const handleTableChange = (pager: TablePaginationConfig) => {
@@ -181,6 +179,27 @@ onBeforeUnmount(() => {
 .search-result-list {
   background-color: var(--background-color-base);
   border-radius: v.$content-border-radius;
+  .table-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    /* 滚动条美化（可选） */
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::v-deep .ant-table-cell {
+      white-space: nowrap; /* 不换行，保持列宽紧凑 */
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
 }
 
 .result-top-operator-container {

@@ -87,12 +87,12 @@
             </template>
             <template v-else-if="column.key === 'action'">
               <span>
-                <a>Edit</a>
+                <a>✏️Edit</a>
                 <a-divider type="vertical" />
-                <a>Delete</a>
+                <a>🗑️Delete</a>
                 <a-divider type="vertical" />
-                <a class="ant-dropdown-link"
-                  >More actions
+                <a class="ant-dropdown-link">
+                  ⚙️More actions
                   <DownOutlined />
                 </a>
               </span>
