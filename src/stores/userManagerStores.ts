@@ -112,7 +112,6 @@ export const useUserManagerStores = defineStore("userManager", () => {
   async function fetchUsers(searchParams: UserPageSearchParams = {}) {
     loading.value = true;
     try {
-      console.log("searchParams------>", searchParams);
       const rawParams: Record<string, any> = {
         pageNumber: pagination.current,
         pageSize: pagination.pageSize,
@@ -134,13 +133,11 @@ export const useUserManagerStores = defineStore("userManager", () => {
         {} as Record<string, any>
       );
 
-      console.log("requestParams------>", requestParams);
       const response = await queryUsersByPageApi(requestParams);
       if (response.code === 200 && response.data) {
         const result = response.data;
         userList.value = result.items;
         pagination.total = result.total;
-        console.log("userList.result------>", result);
       } else {
         message.error(response.msg || "Failed to fetch user list.");
       }
@@ -157,7 +154,7 @@ export const useUserManagerStores = defineStore("userManager", () => {
     if (size) {
       pagination.pageSize = size;
     }
-    fetchUsers(); // Fetch data for the new page
+    fetchUsers(searchParams); // Fetch data for the new page
   }
 
   return {

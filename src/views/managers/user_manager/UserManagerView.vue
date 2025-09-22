@@ -36,12 +36,7 @@
           <a-col :span="4" :offset="2">
             <a-form-item>
               <a-space size="large">
-                <a-button
-                  type="primary"
-                  @click="handlerSearchPage"
-                  htmlType="submit"
-                  >Search</a-button
-                >
+                <a-button type="primary" htmlType="submit">Search</a-button>
                 <a-button @click="handleReset">Reset</a-button>
               </a-space>
             </a-form-item>
