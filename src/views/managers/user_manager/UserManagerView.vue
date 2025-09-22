@@ -13,7 +13,6 @@
               <a-input
                 v-model:value="searchParams.userName"
                 placeholder="user name"
-                @pressEnter="debounceedSearch"
               />
             </a-form-item>
           </a-col>
@@ -22,7 +21,6 @@
               <a-input
                 v-model:value="searchParams.mobile"
                 placeholder="mobile"
-                @pressEnter="debounceedSearch"
               />
             </a-form-item>
           </a-col>
@@ -137,7 +135,7 @@ onMounted(() => {
 
 // 4. 事件处理器调用 Store Actions
 const handlerSearchPage = () => {
-  pagination.value.current = 1; // 搜索时重置到第一页
+  pagination.value.current = 1;
   fetchUsers(searchParams.value);
 };
 

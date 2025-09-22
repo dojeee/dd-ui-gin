@@ -9,7 +9,6 @@ import {
 import { User, UserPageSearchParams } from "@/types/user";
 
 export const useUserManagerStores = defineStore("userManager", () => {
-  
   const searchParams = reactive<UserPageSearchParams>({
     userName: "",
     mobile: "",
@@ -129,6 +128,7 @@ export const useUserManagerStores = defineStore("userManager", () => {
   async function fetchUsers(searchParams: UserPageSearchParams = {}) {
     loading.value = true;
     try {
+      console.log("searchParams------>", searchParams);
       const rawParams: Record<string, any> = {
         pageNumber: pagination.current,
         pageSize: pagination.pageSize,
@@ -139,18 +139,24 @@ export const useUserManagerStores = defineStore("userManager", () => {
       const requestParams = Object.entries(rawParams).reduce(
         (acc, [key, value]) => {
           if (value !== "" && value !== null && value !== undefined) {
-            acc[key] = value;
+            if (key === "userState") {
+              acc[key] = Number(value);
+            } else {
+              acc[key] = value;
+            }
           }
           return acc;
         },
         {} as Record<string, any>
       );
 
+      console.log("requestParams------>", requestParams);
       const response = await queryUsersByPageApi(requestParams);
       if (response.code === 200 && response.data) {
         const result = response.data;
         userList.value = result.items;
         pagination.total = result.total;
+        console.log("userList.result------>", result);
       } else {
         message.error(response.msg || "Failed to fetch user list.");
       }
