@@ -2,18 +2,14 @@
   <div class="role-manager-container">
     <!-- form div -->
     <div class="search-form-container">
-      <a-form
-        :model="searchParams"
-        @submit.prevent="handlerSearchPage"
-        class="search-form"
-      >
+      <a-form :model="searchParams" @submit.prevent="handlerSearchPage">
         <a-row
           :gutter="{ xs: 8, sm: 16, md: 24 }"
           align="middle"
           class="search-form-row"
         >
           <!-- role id -->
-          <a-col :span="4" offset="1">
+          <a-col :span="5" offset="1">
             <a-form-item label="Role Id">
               <a-input
                 v-model:value="searchParams.roleId"
@@ -48,7 +44,10 @@
           <a-col :span="4" :offset="2">
             <a-form-item>
               <a-space size="large">
-                <a-button type="primary" @click="handlerSearchPage"
+                <a-button
+                  type="primary"
+                  @click="handlerSearchPage"
+                  htmlType="submit"
                   >Search</a-button
                 >
                 <a-button @click="handleReset">Reset</a-button>

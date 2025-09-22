@@ -2,13 +2,13 @@
   <div class="user-manager-container">
     <!-- 搜索表单 -->
     <div class="search-form-container">
-      <a-form>
+      <a-form :model="searchParams" @submit.prevent="handlerSearchPage">
         <a-row
           :gutter="{ xs: 8, sm: 16, md: 24 }"
           align="meddle"
           class="search-form-row"
         >
-          <a-col :span="4" :offset="1">
+          <a-col :span="5" :offset="1">
             <a-form-item label="User Name">
               <a-input
                 v-model:value="searchParams.userName"
@@ -17,7 +17,7 @@
               />
             </a-form-item>
           </a-col>
-          <a-col :span="4">
+          <a-col :span="5">
             <a-form-item label="Mobile">
               <a-input
                 v-model:value="searchParams.mobile"
@@ -26,7 +26,7 @@
               />
             </a-form-item>
           </a-col>
-          <a-col :span="3">
+          <a-col :span="4">
             <a-form-item label="Status">
               <a-select
                 v-model:value="searchParams.userState"
@@ -38,14 +38,17 @@
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :span="3" :offset="2">
+          <a-col :span="4" :offset="2">
             <a-form-item>
-              <div class="search-reset-button-container">
-                <a-button type="primary" @click="handlerSearchPage"
+              <a-space size="large">
+                <a-button
+                  type="primary"
+                  @click="handlerSearchPage"
+                  htmlType="submit"
                   >Search</a-button
                 >
                 <a-button @click="handleReset">Reset</a-button>
-              </div>
+              </a-space>
             </a-form-item>
           </a-col>
         </a-row>
@@ -216,10 +219,5 @@ onBeforeUnmount(() => {
       }
     }
   }
-}
-
-.search-reset-button-container {
-  display: flex;
-  gap: v.$spacing-sm;
 }
 </style>
