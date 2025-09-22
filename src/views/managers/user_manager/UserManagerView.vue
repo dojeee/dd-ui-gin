@@ -25,11 +25,8 @@
             </a-form-item>
           </a-col>
           <a-col :span="4">
-            <a-form-item label="Status">
-              <a-select
-                v-model:value="searchParams.userState"
-                placeholder="status"
-              >
+            <a-form-item label="State">
+              <a-select v-model:value="searchParams.state">
                 <a-select-option value="">All</a-select-option>
                 <a-select-option :value="1">Enabled</a-select-option>
                 <a-select-option :value="0">Disabled</a-select-option>
@@ -149,7 +146,7 @@ const debounceedSearch = debounce(() => {
 const handleReset = () => {
   searchParams.value.userName = "";
   searchParams.value.mobile = "";
-  searchParams.value.userState = "";
+  searchParams.value.state = "";
   handlerSearchPage();
 };
 

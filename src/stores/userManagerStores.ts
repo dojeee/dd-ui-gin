@@ -12,7 +12,7 @@ export const useUserManagerStores = defineStore("userManager", () => {
   const searchParams = reactive<UserPageSearchParams>({
     userName: "",
     mobile: "",
-    userState: "" as 0 | 1 | "",
+    state: "" as 0 | 1 | "",
   });
 
   // State
@@ -27,8 +27,8 @@ export const useUserManagerStores = defineStore("userManager", () => {
     pageSizeOptions: ["10", "20", "50", "100"],
   });
 
-  const renderUserState = ({ text: userState }: { text: 0 | 1 }) =>
-    userState === 1 ? "✅ Enabled" : "❌ Disabled";
+  const renderUserState = ({ text: state }: { text: 0 | 1 }) =>
+    state === 1 ? "✅ Enabled" : "❌ Disabled";
 
   const columns = ref<TableColumnsType>([
     {
@@ -123,7 +123,7 @@ export const useUserManagerStores = defineStore("userManager", () => {
       const requestParams = Object.entries(rawParams).reduce(
         (acc, [key, value]) => {
           if (value !== "" && value !== null && value !== undefined) {
-            if (key === "userState") {
+            if (key === "state") {
               acc[key] = Number(value);
             } else {
               acc[key] = value;

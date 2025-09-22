@@ -19,5 +19,5 @@ export interface Pagination {
 export interface UserPageSearchParams {
   userName?: string;
   mobile?: string;
-  userState?: 0 | 1 | "";
+  state?: 0 | 1 | "";
 }
