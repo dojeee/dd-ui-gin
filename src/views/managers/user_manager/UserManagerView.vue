@@ -73,38 +73,41 @@
         </div>
       </div>
 
-      <a-table
-        :columns="columns"
-        :dataSource="userList"
-        :pagination="pagination"
-        :loading="loading"
-        :row-key="(record: User) => record.userId"
-        @change="handleTableChange"
-        @resize-column="handleResizeColumn"
-      >
-        <template #headerCell="{ column }">
-          <template v-if="column.key === 'userId'">
-            <span> <SmileOutlined /> User ID </span>
+      <div class="table-wrapper">
+        <a-table
+          :columns="columns"
+          :dataSource="userList"
+          :pagination="pagination"
+          :loading="loading"
+          :row-key="(record: User) => record.userId"
+          @change="handleTableChange"
+          @resize-column="handleResizeColumn"
+          :scroll="{ x: 'max-content' }"
+        >
+          <template #headerCell="{ column }">
+            <template v-if="column.key === 'userId'">
+              <span> <SmileOutlined /> User ID </span>
+            </template>
           </template>
-        </template>
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.key === 'userName'">
-            <a href="#">{{ record.userName }}</a>
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'userName'">
+              <a href="#">{{ record.userName }}</a>
+            </template>
+            <template v-else-if="column.key === 'action'">
+              <span>
+                <a>Edit</a>
+                <a-divider type="vertical" />
+                <a>Delete</a>
+                <a-divider type="vertical" />
+                <a class="ant-dropdown-link"
+                  >More actions
+                  <DownOutlined />
+                </a>
+              </span>
+            </template>
           </template>
-          <template v-else-if="column.key === 'action'">
-            <span>
-              <a>Edit</a>
-              <a-divider type="vertical" />
-              <a>Delete</a>
-              <a-divider type="vertical" />
-              <a class="ant-dropdown-link"
-                >More actions
-                <DownOutlined />
-              </a>
-            </span>
-          </template>
-        </template>
-      </a-table>
+        </a-table>
+      </div>
     </div>
   </div>
 </template>
@@ -188,6 +191,27 @@ onBeforeUnmount(() => {
 .search-result-list {
   background-color: var(--background-color-base);
   border-radius: v.$content-border-radius;
+  .table-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    /* 滚动条美化（可选） */
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::v-deep .ant-table-cell {
+      white-space: nowrap; /* 不换行，保持列宽紧凑 */
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
 }
 
 .result-top-operator-container {
