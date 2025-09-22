@@ -3,7 +3,11 @@
     <!-- 搜索表单 -->
     <div class="search-form-container">
       <a-form>
-        <a-row :gutter="{ xs: 8, sm: 16, md: 24 }" align="bottom">
+        <a-row
+          :gutter="{ xs: 8, sm: 16, md: 24 }"
+          align="meddle"
+          class="search-form-row"
+        >
           <a-col :span="4" :offset="1">
             <a-form-item label="User Name">
               <a-input
@@ -59,9 +63,7 @@
 
         <!-- right section -->
         <div class="right-section">
-          <a-button type="primary" size="5" class="right-btn"
-            >New user</a-button
-          >
+          <a-button type="primary" class="right-button">New user</a-button>
           <a-button type="primary">
             <template #icon>
               <DownloadOutlined />
@@ -170,42 +172,41 @@ onBeforeUnmount(() => {
 .user-manager-container {
   display: flex;
   flex-direction: column;
+  gap: v.$spacing-sm;
 }
 
 .search-form-container {
-  background-color: var(--content-bg);
-  border-radius: v.$radius-md;
+  background-color: var(--background-color-base);
+  border-radius: v.$content-border-radius;
+}
+
+.search-form-row {
+  padding-top: v.$spacing-xm;
 }
 
 .search-result-list {
-  background-color: var(--content-bg);
-  padding: v.$spacing-md;
+  background-color: var(--background-color-base);
+  border-radius: v.$content-border-radius;
 }
 
 .result-top-operator-container {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: v.$spacing-sm;
+  flex-direction: row;
+  align-items: center;
   padding: v.$spacing-sm v.$spacing-md;
-  background-color: var(--content-bg);
-  border-radius: v.$radius-sm;
   flex-shrink: 0;
 
   .left-section {
     font-size: v.$font-size-xs;
     flex: 1;
-    min-width: 0;
   }
 
   .right-section {
     display: flex;
     gap: v.$spacing-sm;
-    /* 按钮之间的间距 */
     flex-shrink: 0;
-    /* 防止被挤压 */
 
-    .right-btn {
+    .right-button {
       border-radius: v.$radius-md;
       border: 1px solid var(--border-color);
       transition: all 0.3s ease;
