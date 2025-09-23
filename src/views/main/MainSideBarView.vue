@@ -42,9 +42,9 @@
           >
             <template #icon>
               <component
-                size="26"
                 :is="iconMap[child.icon]"
                 v-if="child.icon"
+                class="sidebar-icon"
               />
             </template>
             <span>{{ child.label }}</span>
@@ -58,7 +58,11 @@
           :title="menu.title"
         >
           <template #icon>
-            <component :is="iconMap[menu.icon]" v-if="menu.icon" />
+            <component
+              :is="iconMap[menu.icon]"
+              v-if="menu.icon"
+              class="sidebar-icon"
+            />
           </template>
           <span>{{ menu.label }}</span>
         </a-menu-item>
@@ -174,7 +178,6 @@ onMounted(() => {
   -ms-overflow-style: none;
   scrollbar-width: none;
   border-right: 0 !important;
-  /* Remove Ant Design's default border */
 }
 
 .menu-header-title {
@@ -202,7 +205,9 @@ onMounted(() => {
   background-color: var(--sidebar-item-hover-bg);
 }
 
-.sidebar-menu :deep(.ant-menu-item) {
+/* ========== 菜单项通用样式 ========== */
+.sidebar-menu :deep(.ant-menu-item),
+.sidebar-menu :deep(.ant-menu-submenu-title) {
   color: var(--sidebar-text-color);
   border-radius: v.$menu-border-radius;
   line-height: v.$menu-item-height;
@@ -210,79 +215,69 @@ onMounted(() => {
   user-select: none;
 }
 
-/* 子菜单标题样式 - 不应该有选中状态 */
+/* 子菜单标题特殊样式 */
 .sidebar-menu :deep(.ant-menu-submenu-title) {
   color: var(--sidebar-text-color-submenu);
   margin: v.$menu-item-margin-y v.$menu-item-margin-x !important;
   width: calc(100% - #{v.$menu-item-margin-x * 2});
-  padding: 0 v.$menu-padding-x !important;
-  user-select: none;
 }
 
+/* 选中状态 */
 .sidebar-menu :deep(.ant-menu-item-selected) {
   background-color: var(--sidebar-item-selected-bg) !important;
   color: var(--sidebar-text-color) !important;
 }
 
-/* 只有菜单项才有悬停效果，子菜单标题不要选中样式 */
-.sidebar-menu :deep(.ant-menu-item:not(.ant-menu-item-selected):hover) {
-  background-color: var(--sidebar-item-hover-bg) !important;
-  color: var(--sidebar-text-color) !important;
-}
-
-.sidebar-menu :deep(.ant-menu-sub) {
-  background-color: var(--sidebar-submenus-bg) !important;
-}
-
+/* 悬停状态 */
+.sidebar-menu :deep(.ant-menu-item:not(.ant-menu-item-selected):hover),
 .sidebar-menu :deep(.ant-menu-submenu-title:hover) {
   background-color: var(--sidebar-item-hover-bg) !important;
   color: var(--sidebar-text-color) !important;
 }
 
+/* 子菜单背景 */
+.sidebar-menu :deep(.ant-menu-sub) {
+  background-color: var(--sidebar-submenus-bg) !important;
+}
+
+/* 子菜单箭头颜色 */
 .sidebar-menu :deep(.ant-menu-submenu-arrow) {
   color: var(--sidebar-text-color-submenu);
 }
 
-/* 图标样式 */
-.sidebar-menu :deep(.anticon) {
-  color: var(--sidebar-icon-color);
-  font-size: v.$font-size-icon;
+/* ========== Phosphor 图标统一控制 ========== */
+.sidebar-menu :deep(.sidebar-icon) {
+  width: v.$font-size-icon;
+  height: v.$font-size-icon;
+  fill: var(--sidebar-icon-color);
+  stroke: none;
+  vertical-align: middle;
+  text-align: center;
 }
 
+/* 折叠状态：隐藏文字，只显示图标 */
+.sidebar-container.is-collapsed
+  .sidebar-menu
+  :deep(.ant-menu-item .ant-menu-title-content),
+.sidebar-container.is-collapsed
+  .sidebar-menu
+  :deep(.ant-menu-sub .ant-menu-item .ant-menu-title-content) {
+  display: none !important;
+}
+
+/* 折叠状态：图标水平居中 */
+.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-item) {
+  text-align: center !important;
+}
+
+/* 隐藏子菜单箭头（折叠时） */
 .sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-submenu-arrow) {
   display: none !important;
 }
 
+/* 修复折叠时子菜单显示问题 */
 .sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-sub) {
   display: block !important;
   transition: none !important;
-}
-
-/* 统一所有菜单项样式 - 一级和二级菜单项都显示为同样的图标 */
-.sidebar-container.is-collapsed .sidebar-menu :deep(.ant-menu-item),
-.sidebar-container.is-collapsed
-  .sidebar-menu
-  :deep(.ant-menu-sub .ant-menu-item) {
-  text-align: center !important;
-}
-
-/* 隐藏所有文字，只保留图标 */
-.sidebar-container.is-collapsed
-  .sidebar-menu
-  :deep(.ant-menu-item)
-  .ant-menu-title-content,
-.sidebar-container.is-collapsed
-  .sidebar-menu
-  :deep(.ant-menu-item)
-  span:not(.anticon),
-.sidebar-container.is-collapsed
-  .sidebar-menu
-  :deep(.ant-menu-sub .ant-menu-item)
-  .ant-menu-title-content,
-.sidebar-container.is-collapsed
-  .sidebar-menu
-  :deep(.ant-menu-sub .ant-menu-item)
-  span:not(.anticon) {
-  display: none !important;
 }
 </style>

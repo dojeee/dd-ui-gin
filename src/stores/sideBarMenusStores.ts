@@ -110,25 +110,20 @@ export const useSideBarMenusStores = defineStore("sideBarMenus", () => {
       children: [
         {
           key: "tags",
-          icon: "TagOutlined",
+          icon: "PhTag",
           label: "Tags",
           title: "Tags",
         },
-        {
-          key: "sources",
-          icon: "GlobalOutlined",
-          label: "Sources",
-          title: "Sources",
-        },
+
         {
           key: "leaderboard",
-          icon: "TrophyOutlined",
+          icon: "PhTrophy",
           label: "Leaderboard",
           title: "Leaderboard",
         },
         {
           key: "discussions",
-          icon: "MessageOutlined",
+          icon: "PhChatTeardropDots",
           label: "Discussions",
           title: "Discussions",
         },
