@@ -78,25 +78,25 @@ export const useSideBarMenusStores = defineStore("sideBarMenus", () => {
       children: [
         {
           key: "briefings",
-          icon: "ReadOutlined",
+          icon: "PhBookOpenText",
           label: "Presidential briefings",
           title: "Presidential briefings",
         },
         {
           key: "saves",
-          icon: "BookOutlined",
+          icon: "PhDownloadSimple",
           label: "Quick saves",
           title: "Quick saves",
         },
         {
           key: "readLater",
-          icon: "ClockCircleOutlined",
+          icon: "PhClockCounterClockwise",
           label: "Read it later",
           title: "Read it later",
         },
         {
           key: "newFolder",
-          icon: "PlusOutlined",
+          icon: "PhFolderPlus",
           label: "New folder",
           title: "New folder",
         },

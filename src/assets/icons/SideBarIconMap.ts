@@ -25,8 +25,16 @@ import {
   PhUsersThree,
   PhIdentificationBadge,
   PhUserCircleDashed,
+  PhClockCounterClockwise,
+  PhFolderPlus,
+  PhDownloadSimple,
+  PhBookOpenText,
 } from "@phosphor-icons/vue";
 export const iconMap = {
+  PhBookOpenText,
+  PhDownloadSimple,
+  PhFolderPlus,
+  PhClockCounterClockwise,
   PhUserCircleDashed,
   PhIdentificationBadge,
   PhUsersThree,
