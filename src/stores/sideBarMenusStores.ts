@@ -14,25 +14,25 @@ export const useSideBarMenusStores = defineStore("sideBarMenus", () => {
   const sideBarMenus = ref<PersonalMenuItem[]>([
     {
       key: "foryou",
-      icon: "CompassOutlined",
+      icon: "PhCardholder",
       label: "For You",
       title: "For You",
     },
     {
       key: "following",
-      icon: "UsergroupAddOutlined",
+      icon: "PhUsersFour",
       label: "Following",
       title: "Following",
     },
     {
       key: "explore",
-      icon: "RiseOutlined",
+      icon: "PhTrendUp",
       label: "Explore",
       title: "Explore",
     },
     {
       key: "history",
-      icon: "HistoryOutlined",
+      icon: "PhClockCounterClockwise",
       label: "History",
       title: "History",
     },
@@ -44,7 +44,7 @@ export const useSideBarMenusStores = defineStore("sideBarMenus", () => {
       children: [
         {
           key: "addCustomFeed",
-          icon: "PlusOutlined",
+          icon: "PhPlus",
           label: "Custom feed",
           title: "Custom feed",
         },
@@ -58,13 +58,13 @@ export const useSideBarMenusStores = defineStore("sideBarMenus", () => {
       children: [
         {
           key: "findSquads",
-          icon: "TeamOutlined",
+          icon: "PhUsersFour",
           label: "Find Squads",
           title: "Find Squads",
         },
         {
           key: "newSquad",
-          icon: "PlusOutlined",
+          icon: "PhPlus",
           label: "New Squad",
           title: "New Squad",
         },
