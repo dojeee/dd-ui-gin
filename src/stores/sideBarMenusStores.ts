@@ -142,19 +142,19 @@ export const useSideBarMenusStores = defineStore("sideBarMenus", () => {
       children: [
         {
           key: "usersManager",
-          icon: "UserOutlined",
+          icon: "PhUsersThree",
           label: "User manager",
           title: "User manager",
         },
         {
           key: "roleManager",
-          icon: "UserOutlined",
+          icon: "PhIdentificationBadge",
           label: "Role manager",
           title: "Role manager",
         },
         {
           key: "permissionManager",
-          icon: "UserOutlined",
+          icon: "PhUserCircleDashed",
           label: "Permission manager",
           title: "Permission manager",
         },

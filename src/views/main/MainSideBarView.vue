@@ -1,7 +1,7 @@
 <template>
   <a-layout-sider
     v-model:collapsed="collapsed"
-    :width="230"
+    :width="250"
     :collapsed-width="70"
     :class="['sidebar-container', { 'is-collapsed': collapsed }]"
   >
@@ -41,7 +41,11 @@
             :title="child.title"
           >
             <template #icon>
-              <component :is="iconMap[child.icon]" v-if="child.icon" />
+              <component
+                size="26"
+                :is="iconMap[child.icon]"
+                v-if="child.icon"
+              />
             </template>
             <span>{{ child.label }}</span>
           </a-menu-item>
@@ -184,7 +188,6 @@ onMounted(() => {
 .menu-toggle-btn {
   height: auto;
   left: 7px;
-  justify-content: center;
   color: var(--sidebar-icon-color);
   font-size: v.$font-size-icon;
   display: inline-flex;

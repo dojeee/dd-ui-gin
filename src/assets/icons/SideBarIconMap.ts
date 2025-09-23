@@ -20,7 +20,17 @@ import {
   LeftOutlined,
 } from "@ant-design/icons-vue";
 
+import {
+  PhUserList,
+  PhUsersThree,
+  PhIdentificationBadge,
+  PhUserCircleDashed,
+} from "@phosphor-icons/vue";
 export const iconMap = {
+  PhUserCircleDashed,
+  PhIdentificationBadge,
+  PhUsersThree,
+  PhUserList,
   CompassOutlined,
   UsergroupAddOutlined,
   RiseOutlined,
