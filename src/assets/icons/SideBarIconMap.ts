@@ -39,8 +39,14 @@ import {
   PhTrophy,
   PhChatTeardropDots,
   PhHouseLine,
+  PhPalette,
+  PhMoon,
+  PhSun,
 } from "@phosphor-icons/vue";
 export const iconMap = {
+  PhSun,
+  PhMoon,
+  PhPalette,
   PhHouseLine,
   PhChatTeardropDots,
   PhTrophy,

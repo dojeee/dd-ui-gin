@@ -31,21 +31,33 @@
               <a-menu-item key="theme-light"
                 >Light
                 <template #icon>
-                  <SmileOutlined />
+                  <component
+                    size="18"
+                    :is="iconMap['PhSun']"
+                    class="sidebar-icon"
+                  />
                 </template>
               </a-menu-item>
 
               <a-menu-item key="theme-dark">
                 Dark
                 <template #icon>
-                  <FrownOutlined />
+                  <component
+                    size="18"
+                    :is="iconMap['PhMoon']"
+                    class="sidebar-icon"
+                  />
                 </template>
               </a-menu-item>
 
               <a-menu-item key="color-theme">
                 Color
                 <template #icon>
-                  <FrownOutlined />
+                  <component
+                    size="18"
+                    :is="iconMap['PhPalette']"
+                    class="sidebar-icon"
+                  />
                 </template>
               </a-menu-item>
 
@@ -83,14 +95,12 @@ import {
   ControlOutlined,
   UserOutlined,
   SkinOutlined,
-  SmileOutlined,
-  FrownOutlined,
   LogoutOutlined,
 } from "@ant-design/icons-vue";
 import { useAuthStore } from "@/stores/authStores";
 import { useThemeStore } from "@/stores/themeStores";
 import { storeToRefs } from "pinia";
-import { computed } from "vue";
+import { iconMap } from "@/assets/icons/SideBarIconMap";
 
 // store
 const authStore = useAuthStore();
