@@ -101,12 +101,14 @@ import { useAuthStore } from "@/stores/authStores";
 import { useThemeStore } from "@/stores/themeStores";
 import { storeToRefs } from "pinia";
 import { iconMap } from "@/assets/icons/SideBarIconMap";
+import { useProfileStore } from "@/stores/profileStores";
 
 // store
 const authStore = useAuthStore();
 const themeStore = useThemeStore();
 const { token } = storeToRefs(authStore);
 const { theme } = storeToRefs(themeStore);
+const { showModal } = storeToRefs(useProfileStore());
 
 // router
 const router = useRouter();
@@ -138,7 +140,7 @@ const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
       themeStore.setTheme("color");
       break;
     case "1":
-      router.push("/profile");
+      showModal.value = true;
       break;
     case "2":
       logout();
