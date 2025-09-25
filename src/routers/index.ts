@@ -43,6 +43,7 @@ const router = createRouter({
             title: "User Manager",
             icon: "UserOutlined",
             requiresAuth: false,
+            pageHeader: true,
           },
         },
         {
@@ -53,6 +54,7 @@ const router = createRouter({
             title: "Role Manager",
             icon: "TeamOutlined",
             requiresAuth: false,
+            pageHeader: true,
           },
         },
         {
@@ -66,6 +68,7 @@ const router = createRouter({
             title: "Permission Manager",
             icon: "LockOutlined",
             requiresAuth: false,
+            pageHeader: true,
           },
         },
       ],
