@@ -2,6 +2,7 @@
   <a-layout-content class="content-container">
     <!-- 使用 a-page-header 实现头部 -->
     <a-page-header
+      v-show="showHeader"
       :class="['pc-header', 'ant-page-header-overwrite']"
       :back-icon="canGoBack ? h(LeftOutlined) : undefined"
       @back="handleBack"
@@ -67,7 +68,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, h } from "vue";
+import { computed, h, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { iconMap } from "@/assets/icons/SideBarIconMap";
 import { LeftOutlined } from "@ant-design/icons-vue";
@@ -79,6 +80,21 @@ const router = useRouter();
 const matchedRoutes = computed(() =>
   route.matched.filter((item) => item.meta?.title)
 );
+
+const showHeader = computed(() => {
+  const meta = route.meta;
+
+  if (meta.pageHeader !== undefined) {
+    return meta.pageHeader;
+  }
+  const title = meta.title as string | undefined;
+
+  if (title && title.toLowerCase().endsWith("manager")) {
+    console.log("执行判断了");
+    return true;
+  }
+  return false;
+});
 
 // 当前页面元数据
 const currentPage = computed(() => {
