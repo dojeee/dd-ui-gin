@@ -42,8 +42,10 @@ import {
   PhPalette,
   PhMoon,
   PhSun,
+  PhX,
 } from "@phosphor-icons/vue";
 export const iconMap = {
+  PhX,
   PhSun,
   PhMoon,
   PhPalette,
