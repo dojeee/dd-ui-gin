@@ -3,7 +3,7 @@
     <a-modal
       v-model:open="showModal"
       :title="null"
-      width="500px"
+      width="600px"
       :footer="null"
       :mask-closable="false"
       :closable="true"
@@ -12,27 +12,15 @@
       class="account-modal"
     >
       <!-- 自定义头部 -->
-      <div class="modal-header">
+      <!-- <div class="modal-header">
         <span class="modal-title">account</span>
-        <a-button type="link" @click="showModal = false" class="close-btn">
-          ×
-        </a-button>
-      </div>
+      </div> -->
 
       <!-- 主体内容 -->
       <div class="modal-body">
         <!-- 左侧菜单 -->
         <div class="sidebar">
-          <div
-            v-for="(item, index) in menuItems"
-            :key="index"
-            class="menu-item"
-            :class="{ active: activeMenu === item.key }"
-            @click="activeMenu = item.key"
-          >
-            <component :is="item.icon" />
-            {{ item.label }}
-          </div>
+          <a-menu mode="vertical" :items="menuItems"> </a-menu>
         </div>
 
         <!-- 右侧内容区 -->
@@ -67,11 +55,8 @@ import { useProfileStore } from "@/stores/profileStores";
 import { storeToRefs } from "pinia";
 
 const profileStore = useProfileStore();
-const { showModal } = storeToRefs(profileStore);
-const menuItems = ref([
-  { key: "profile", label: "userInfo", icon: "UserOutlined" },
-  { key: "settings", label: "settings", icon: "SettingOutlined" },
-]);
+const { showModal, menuItems } = storeToRefs(profileStore);
+
 const activeMenu = ref("profile");
 const darkMode = ref(false);
 const feature = ref();
@@ -88,27 +73,40 @@ const handlerProfileClick = () => {
 .profile-container {
   display: flex;
   justify-content: center;
-
   padding: v.$spacing-sm v.$spacing-md;
+}
 
-  .profile-inner-container {
-    display: flex;
-    // justify-content: space-between;
-    // align-items: center;
-    width: 60%;
-    height: 100%;
-    background-color: red;
+/* Modal 内部样式优化 */
+.account-modal {
+  :deep(.ant-modal-content) {
     border-radius: v.$content-border-radius;
-    flex-direction: row;
+  }
 
-    .profile-inner-left-container {
-      background-color: green;
-      // float: left;
+  .modal-body {
+    display: flex;
+    height: 400px; /* 可根据需要调整高度 */
+    margin: 0;
+    padding: 0;
+    background-color: #208ab4; /* 可选背景色 */
+
+    .sidebar {
+      width: 150px;
+      background-color: #963f3f;
+      border-right: 1px solid #275394;
+      flex-shrink: 0; /* 防止被压缩 */
+
+      // 覆盖 a-menu 默认样式，使其撑满高度
+      :deep(.ant-menu) {
+        height: 100%;
+        border-right: none;
+      }
     }
-    .profile-inner-right-container {
-      border-width: 10px;
-      background-color: blue;
-      // float: right;
+
+    .content-area {
+      flex: 1;
+      padding: v.$spacing-md;
+      background-color: #42c954;
+      overflow-y: auto; /* 内容过长时可滚动 */
     }
   }
 }
