@@ -14,22 +14,22 @@ export const useProfileStore = defineStore("profile", () => {
 
   const menuItems = ref<ProfileMenuItem[]>([
     {
-      key: "settings",
-      label: "Settings",
-      title: "Settings",
-      icon: "UserOutlined",
-    },
-    {
       key: "general",
       label: "General",
       title: "General",
-      icon: "UserOutlined",
+      icon: "PhGearSix",
     },
     {
       key: "notification",
       label: "Notification",
       title: "Notification",
-      icon: "UserOutlined",
+      icon: "PhBell",
+    },
+    {
+      key: "account",
+      label: "Account",
+      title: "Account",
+      icon: "PhUserCircle",
     },
   ]);
 
