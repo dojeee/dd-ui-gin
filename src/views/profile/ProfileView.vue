@@ -19,7 +19,13 @@
               <component size="20" :is="iconMap['PhX']" />
             </template>
           </a-button>
-          <a-menu mode="vertical">
+
+          <!-- 菜单 -->
+          <a-menu
+            mode="vertical"
+            class="sidebar-menu"
+            v-model:selectedKeys="selectedMenuKey"
+          >
             <a-menu-item
               v-for="menu in menuItems"
               :key="menu.key"
@@ -74,6 +80,7 @@ const handlerProfileClick = () => {
   console.log("clicked click");
   showModal.value = true;
 };
+const selectedMenuKey = ref(["general"]);
 
 const closeModal = () => {
   showModal.value = !showModal.value;
@@ -91,6 +98,8 @@ const closeModal = () => {
 }
 .account-modal {
   padding: v.$spacing-lg v.$spacing-md;
+  border-radius: v.$radius-md;
+
   .modal-body {
     display: flex;
 
@@ -112,5 +121,16 @@ const closeModal = () => {
       overflow-y: auto; /* 内容过长时可滚动 */
     }
   }
+}
+
+.sidebar-menu :deep(.ant-menu-item:not(.ant-menu-item-selected):hover),
+.sidebar-menu :deep(.ant-menu-submenu-title:hover) {
+  background-color: var(--sidebar-item-hover-bg) !important;
+  color: var(--sidebar-text-color) !important;
+}
+/* 选中状态 */
+.sidebar-menu :deep(.ant-menu-item-selected) {
+  background-color: var(--sidebar-item-selected-bg) !important;
+  color: var(--sidebar-text-color) !important;
 }
 </style>
