@@ -113,8 +113,7 @@ const closeModal = () => {
 // --- 左侧边栏 ---
 .sidebar {
   width: 200px;
-  background-color: var(--background-color-base);
-  border-right: 1px solid var(--border-color);
+  background-color: var(--settings-menu-bg);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -142,11 +141,12 @@ const closeModal = () => {
 }
 
 .sidebar__divider {
-  margin: 0 v.$spacing-md;
-  background-color: var(--border-color);
+  margin: 0 0;
+  background-color: var(--settings-divider-bg);
 }
 
 .sidebar__menu {
+  background-color: var(--settings-menu-bg);
   flex: 1; // 让菜单填满剩余垂直空间
   overflow-y: auto; // 内容超出时滚动
   border-right: none !important; // 强制移除 antd 自带的右边框
@@ -161,13 +161,13 @@ const closeModal = () => {
 // 悬停状态 (当未被选中时)
 .sidebar__menu :deep(.ant-menu-item:not(.ant-menu-item-selected):hover) {
   color: var(--sidebar-icon-color) !important;
-  background-color: var(--sidebar-item-hover-bg) !important;
+  background-color: var(--settings-menu-item-hover-bg) !important;
 }
 
 // 选中状态
 .sidebar__menu :deep(.ant-menu-item-selected) {
   color: var(--sidebar-icon-color) !important;
-  background-color: var(--sidebar-item-selected-bg) !important;
+  background-color: var(--settings-menu-item-selected-bg) !important;
 }
 
 // --- 右侧内容区 ---
