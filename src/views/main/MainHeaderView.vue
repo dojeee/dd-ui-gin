@@ -75,7 +75,7 @@
               </template>
             </a-menu-item>
 
-            <a-menu-item key="2" @click="logout"
+            <a-menu-item key="2"
               >Logout
               <template #icon>
                 <LogoutOutlined :rotate="270" />
@@ -107,8 +107,7 @@ import { useProfileStore } from "@/stores/profileStores";
 const authStore = useAuthStore();
 const themeStore = useThemeStore();
 const { token } = storeToRefs(authStore);
-const { theme } = storeToRefs(themeStore);
-const { showModal } = storeToRefs(useProfileStore());
+const { enableModal } = useProfileStore();
 
 // router
 const router = useRouter();
@@ -140,7 +139,7 @@ const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
       themeStore.setTheme("color");
       break;
     case "1":
-      showModal.value = true;
+      enableModal();
       break;
     case "2":
       logout();
