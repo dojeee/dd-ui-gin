@@ -56,6 +56,7 @@ $z-index-sidebar: 900;
 $z-index-header: 1000;
 
 // ===== 间距系统 =====
+$spacing-zero: 0px;
 $spacing-ss: 6px;
 $spacing-sm: 8px;
 $spacing-md: 12px;
@@ -77,15 +78,14 @@ $content-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 $radius-xs: 4px;
 $radius-sm: 6px;
 $radius-md: 8px;
-$content-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+$radius-lg: 10px;
+$radius-xl: 12px;
+$radius-full: 50%;
 
 // ===== 字体尺寸 =====
 $font-size-title: 18px;
 $font-size-description: 14px;
 $font-size-breadcrumb-icon: 15px;
-
-// ===== 阴影和颜色 =====
-// Note: 颜色变量已移至主题文件以支持主题切换
 
 // ===== 滚动条样式 =====
 $scrollbar-width: 6px;
