@@ -2,6 +2,8 @@
   <a-config-provider :theme="currentTheme">
     <a-layout class="app">
       <router-view></router-view>
+
+      <ProfileView />
     </a-layout>
   </a-config-provider>
 </template>
@@ -11,6 +13,7 @@ import { theme as antTheme } from "ant-design-vue";
 import { useThemeStore } from "./stores/themeStores";
 import { computed, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
+import ProfileView from "./views/profile/ProfileView.vue";
 
 const themeStore = useThemeStore();
 const { theme } = storeToRefs(themeStore);
