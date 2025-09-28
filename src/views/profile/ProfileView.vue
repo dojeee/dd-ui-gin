@@ -96,9 +96,7 @@ const activeMenu = computed(() => {
   return selectedMenuKey.value.length > 0 ? selectedMenuKey.value[0] : null;
 });
 
-// 关闭 Modal 的方法
 const closeModal = () => {
-  // 现在 disableModal 是一个正确的函数引用
   disableModal();
 };
 </script>
@@ -106,14 +104,10 @@ const closeModal = () => {
 <style lang="scss" scoped>
 @use "@/styles/design-tokens" as v;
 
-// ---------------------------------
-// --- 组件内部布局样式 (Scoped) ---
-// ---------------------------------
-
 // Modal 主体布局
 .account-modal-body {
   display: flex;
-  height: 550px; // 建议给 Modal 一个固定高度
+  height: 550px;
 }
 
 // --- 左侧边栏 ---
@@ -127,7 +121,7 @@ const closeModal = () => {
 }
 
 .sidebar__header {
-  padding: v.$spacing-sm v.$spacing-md; // 上下12px, 左右16px
+  padding: v.$spacing-sm v.$spacing-md;
 }
 
 .close-btn {
@@ -139,7 +133,7 @@ const closeModal = () => {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border-radius: 50%; // 确保是圆形
+  border-radius: 50%;
   transition: background-color v.$transition-speed ease;
 
   &:hover {
@@ -148,7 +142,7 @@ const closeModal = () => {
 }
 
 .sidebar__divider {
-  margin: 0 v.$spacing-md; // 分隔线左右留出边距
+  margin: 0 v.$spacing-md;
   background-color: var(--border-color);
 }
 
