@@ -46,8 +46,16 @@ import {
   PhGearSix,
   PhBell,
   PhUserCircle,
+  PhGear,
+  PhSunDim,
+  PhSignOut,
+  PhTShirt,
 } from "@phosphor-icons/vue";
 export const iconMap = {
+  PhTShirt,
+  PhSignOut,
+  PhSunDim,
+  PhGear,
   PhUserCircle,
   PhBell,
   PhGearSix,
