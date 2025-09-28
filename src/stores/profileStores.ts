@@ -33,5 +33,17 @@ export const useProfileStore = defineStore("profile", () => {
     },
   ]);
 
-  return { showModal, menuItems };
+  const enableModal = () => {
+    showModal.value = true;
+  };
+
+  const disableModal = () => {
+    showModal.value = false;
+  };
+
+  const toggleModal = () => {
+    showModal.value = !showModal.value;
+  };
+
+  return { showModal, menuItems, enableModal, disableModal, toggleModal };
 });
