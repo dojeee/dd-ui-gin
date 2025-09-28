@@ -80,34 +80,26 @@ import { ref, computed } from "vue";
 import { useProfileStore } from "@/stores/profileStores";
 import { storeToRefs } from "pinia";
 import { iconMap } from "@/assets/icons/SideBarIconMap";
-
-// 从 Pinia Store 获取状态
+// 1. 先获取完整的 store 实例
 const profileStore = useProfileStore();
+// 2. 从实例中直接解构出 actions (方法)
+const { disableModal } = profileStore;
+// 3. 使用 storeToRefs 来包裹 store 实例，从中解构出 state 和 getters 以保持响应性
 const { showModal, menuItems } = storeToRefs(profileStore);
-
-// --- 状态定义 ---
 
 // 控制菜单的选中项，默认为 'general'
 const selectedMenuKey = ref(["general"]);
 const darkMode = ref(false);
 
-// **【优化】** 使用 computed 属性，当 selectedMenuKey 变化时，activeMenu 会自动更新
-// 这样就实现了点击菜单切换右侧视图的功能
+// 使用 computed 属性，当 selectedMenuKey 变化时，activeMenu 会自动更新
 const activeMenu = computed(() => {
-  // selectedKeys 是一个数组，我们取第一个
   return selectedMenuKey.value.length > 0 ? selectedMenuKey.value[0] : null;
 });
 
-// --- 方法定义 ---
-
 // 关闭 Modal 的方法
 const closeModal = () => {
-  showModal.value = false; // 使用 false 更直接
-};
-
-const handlerProfileClick = () => {
-  console.log("clicked click");
-  showModal.value = true;
+  // 现在 disableModal 是一个正确的函数引用
+  disableModal();
 };
 </script>
 
@@ -126,7 +118,7 @@ const handlerProfileClick = () => {
 
 // --- 左侧边栏 ---
 .sidebar {
-  width: 220px;
+  width: 200px;
   background-color: var(--background-color-base);
   border-right: 1px solid var(--border-color);
   flex-shrink: 0;

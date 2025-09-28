@@ -25,60 +25,48 @@
           />
         </div>
         <template #overlay>
-          <a-menu @click="handleMenuClick">
+          <a-menu class="header-avatar-menu" @click="handleMenuClick">
             <!-- 主题切换项 -->
             <a-sub-menu key="themeSubMenu" title="Theme">
               <a-menu-item key="theme-light"
                 >Light
                 <template #icon>
-                  <component
-                    size="18"
-                    :is="iconMap['PhSun']"
-                    class="sidebar-icon"
-                  />
+                  <component size="18" :is="iconMap['PhSun']" />
                 </template>
               </a-menu-item>
 
               <a-menu-item key="theme-dark">
                 Dark
                 <template #icon>
-                  <component
-                    size="18"
-                    :is="iconMap['PhMoon']"
-                    class="sidebar-icon"
-                  />
+                  <component size="18" :is="iconMap['PhMoon']" />
                 </template>
               </a-menu-item>
 
               <a-menu-item key="color-theme">
                 Color
                 <template #icon>
-                  <component
-                    size="18"
-                    :is="iconMap['PhPalette']"
-                    class="sidebar-icon"
-                  />
+                  <component size="18" :is="iconMap['PhPalette']" />
                 </template>
               </a-menu-item>
 
               <template #icon>
-                <SkinOutlined />
+                <component size="18" :is="iconMap['PhTShirt']" />
               </template>
             </a-sub-menu>
 
             <a-menu-divider />
 
             <a-menu-item key="1"
-              >Profile
+              >Settings
               <template #icon>
-                <UserOutlined />
+                <component size="18" :is="iconMap['PhGear']" />
               </template>
             </a-menu-item>
 
             <a-menu-item key="2"
               >Logout
               <template #icon>
-                <LogoutOutlined :rotate="270" />
+                <component size="18" :is="iconMap['PhSignOut']" />
               </template>
             </a-menu-item>
           </a-menu>
@@ -214,6 +202,13 @@ const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
   font-size: 14px;
   color: var(--text-color-secondary);
   font-weight: 500;
+}
+
+.header-avatar-menu {
+  :deep(.ant-menu-submenu-title) {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .theme-switch {
