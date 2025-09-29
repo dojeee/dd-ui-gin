@@ -77,7 +77,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { useRouter } from "vue-router";
 import {
   ControlOutlined,
@@ -205,7 +204,22 @@ const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
 }
 
 .header-avatar-menu {
-  :deep(.ant-menu-submenu-title) {
+  
+  :deep(.ant-dropdown-menu-submenu-title) {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-tow; 
+  }
+
+  // 确保 icon 自身也居中
+  :deep(.ant-dropdown-menu-item-icon) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // 让箭头也垂直居中
+  :deep(.ant-dropdown-menu-submenu-arrow) {
     display: flex;
     align-items: center;
   }
