@@ -146,9 +146,10 @@ const closeModal = () => {
 }
 
 .sidebar__menu {
+  border-right: none !important;
   background-color: var(--settings-menu-bg);
   flex: 1; // 让菜单填满剩余垂直空间
-  overflow-y: auto; // 内容超出时滚动
+  overflow-y: none; // 内容超出时滚动
   margin-top: v.$spacing-xs; // 与分隔线留出空隙
 }
 
@@ -175,6 +176,7 @@ const closeModal = () => {
 }
 // --- 右侧内容区 ---
 .content-area {
+  border: none;
   flex: 1;
   padding: v.$spacing-xl;
   overflow-y: auto;
