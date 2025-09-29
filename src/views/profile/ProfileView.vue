@@ -160,6 +160,7 @@ const closeModal = () => {
 
 // 悬停状态 (当未被选中时)
 .sidebar__menu :deep(.ant-menu-item:not(.ant-menu-item-selected):hover) {
+  color: var(--sidebar-icon-color);
   background-color: var(--settings-menu-item-hover-bg) !important;
 }
 
