@@ -149,7 +149,6 @@ const closeModal = () => {
   background-color: var(--settings-menu-bg);
   flex: 1; // 让菜单填满剩余垂直空间
   overflow-y: auto; // 内容超出时滚动
-  border-right: none !important; // 强制移除 antd 自带的右边框
   margin-top: v.$spacing-xs; // 与分隔线留出空隙
 }
 
@@ -160,7 +159,6 @@ const closeModal = () => {
 
 // 悬停状态 (当未被选中时)
 .sidebar__menu :deep(.ant-menu-item:not(.ant-menu-item-selected):hover) {
-  color: var(--sidebar-icon-color) !important;
   background-color: var(--settings-menu-item-hover-bg) !important;
 }
 
@@ -170,6 +168,11 @@ const closeModal = () => {
   background-color: var(--settings-menu-item-selected-bg) !important;
 }
 
+.sidebar__menu :deep(.ant-menu-item svg),
+.sidebar__menu :deep(.ant-menu-item [class*="icon"]) {
+  vertical-align: middle;
+  display: inline-block;
+}
 // --- 右侧内容区 ---
 .content-area {
   flex: 1;
