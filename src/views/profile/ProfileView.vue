@@ -25,8 +25,6 @@
             </a-button>
           </div>
 
-          <a-divider class="sidebar__divider" />
-
           <a-menu
             mode="vertical"
             class="sidebar__menu"
@@ -47,7 +45,8 @@
 
         <div class="content-area">
           <div v-if="activeMenu === 'general'">
-            <p>ytryrChatGPT Plus</p>
+            <h3>General</h3>
+            <a-divider class="sidebar__divider" />
             <p>fff GPT-5</p>
             <a-button type="primary" size="small" style="margin-top: 16px">
               upgrade
@@ -62,10 +61,12 @@
 
           <div v-else-if="activeMenu === 'notification'">
             <h3>Notifications</h3>
+            <a-divider class="sidebar__divider" />
           </div>
 
           <div v-else-if="activeMenu === 'account'">
             <h3>Account Settings</h3>
+            <a-divider class="sidebar__divider" />
             <p>Dark Mode</p>
             <a-switch v-model:checked="darkMode" />
           </div>
@@ -124,7 +125,6 @@ const closeModal = () => {
 }
 
 .close-btn {
-  padding: 0;
   width: 32px;
   height: 32px;
   color: var(--sidebar-icon-color);
