@@ -10,11 +10,15 @@ interface ProfileMenuItem {
   title: string;
 }
 
+interface NotificationChannelType {
+  name: string;
+  enabled: boolean;
+}
 interface NotificationItemType {
   key: string;
   title: string;
   description: string;
-  notificationTypes: string[];
+  channels: NotificationChannelType[];
   options: [];
   value: [];
 }
@@ -49,25 +53,57 @@ export const useProfileStore = defineStore("profile", () => {
       key: "reply",
       title: "reply",
       description: "when someone replies to your comments",
-      notificationTypes: ["email", "push", "sms"],
       options: [],
       value: [],
+      channels: [
+        {
+          name: "email",
+          enabled: true,
+        },
+        {
+          name: "push",
+          enabled: true,
+        },
+        {
+          name: "sms",
+          enabled: false,
+        },
+      ],
     },
     {
       key: "like",
       title: "like",
       description: "when someone likes your comments",
-      notificationTypes: ["email", "push", "sms"],
       options: [],
       value: [],
+      channels: [
+        {
+          name: "email",
+          enabled: true,
+        },
+        {
+          name: "push",
+          enabled: true,
+        },
+      ],
     },
     {
       key: "tasks",
       title: "tasks",
       description: "when some tasks finished or expired",
-      notificationTypes: ["email", "push", "sms"],
+
       options: [],
       value: [],
+      channels: [
+        {
+          name: "email",
+          enabled: true,
+        },
+        {
+          name: "push",
+          enabled: true,
+        },
+      ],
     },
   ]);
 
