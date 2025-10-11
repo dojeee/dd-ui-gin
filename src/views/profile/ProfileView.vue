@@ -81,31 +81,46 @@
 
                   <template #actions>
                     <a-dropdown :trigger="['click']">
-                      <a-button type="text">
-                        {{
-                          item.notificationTypes.length > 0
-                            ? item.notificationTypes.join(", ")
-                            : "无"
-                        }}
-                        <template #icon>
-                          <component size="18" :is="iconMap['PhCaretDown']" />
-                        </template>
+                      <a-button
+                        type="default"
+                        class="notification-dropdown-btn"
+                      >
+                        <span>
+                          {{
+                            item.channels
+                              .filter((channel) => channel.enabled)
+                              .map((channel) => channel.name)
+                              .join(", ") || "Off"
+                          }}
+                        </span>
+                        <component
+                          :is="iconMap['PhCaretDown']"
+                          size="16"
+                          style="margin-left: 6px; vertical-align: middle"
+                        />
                       </a-button>
 
                       <template #overlay>
                         <a-menu>
                           <a-menu-item
-                            v-for="option in item.notificationTypes"
-                            :key="option"
+                            v-for="channel in item.channels"
+                            :key="channel.name"
+                            @click.prevent
+                            style="cursor: default"
                           >
-                            <a-checkbox-group
-                              v-model:value="item.value"
-                              style="width: 100%"
+                            <div
+                              style="
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                              "
                             >
-                              <a-checkbox :value="option">{{
-                                option
-                              }}</a-checkbox>
-                            </a-checkbox-group>
+                              <span>{{ channel.name }}</span>
+                              <a-switch
+                                size="small"
+                                v-model:checked="channel.enabled"
+                              />
+                            </div>
                           </a-menu-item>
                         </a-menu>
                       </template>
@@ -235,6 +250,16 @@ const closeModal = () => {
   padding: v.$spacing-xl;
   overflow-y: auto;
   background-color: var(--background-color-base);
+}
+
+// 在 profileView.vue 的 <style lang="scss" scoped> 中添加
+.notification-dropdown-btn {
+  // 可以根据你的设计调整
+  min-width: 120px;
+  text-align: left;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>
 
