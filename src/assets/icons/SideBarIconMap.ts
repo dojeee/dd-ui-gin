@@ -50,8 +50,10 @@ import {
   PhSunDim,
   PhSignOut,
   PhTShirt,
+  PhCaretDown,
 } from "@phosphor-icons/vue";
 export const iconMap = {
+  PhCaretDown,
   PhTShirt,
   PhSignOut,
   PhSunDim,

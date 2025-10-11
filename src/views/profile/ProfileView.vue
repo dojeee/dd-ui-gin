@@ -2,7 +2,7 @@
   <div class="profile-container">
     <a-modal
       v-model:open="showModal"
-      width="650px"
+      width="750px"
       :mask-closable="true"
       :closable="false"
       :destroy-on-close="true"
@@ -62,6 +62,58 @@
           <div v-else-if="activeMenu === 'notification'">
             <h3>Notifications</h3>
             <a-divider class="sidebar__divider" />
+
+            <a-list
+              item-layout="horizontal"
+              :data-source="notificationSettings"
+              class="notification-list"
+            >
+              <template #renderItem="{ item }">
+                <a-list-item>
+                  <a-list-item-meta>
+                    <template #title>
+                      <span>{{ item.title }}</span>
+                    </template>
+                    <template #description>
+                      {{ item.description }}
+                    </template>
+                  </a-list-item-meta>
+
+                  <template #actions>
+                    <a-dropdown :trigger="['click']">
+                      <a-button type="text">
+                        {{
+                          item.notificationTypes.length > 0
+                            ? item.notificationTypes.join(", ")
+                            : "无"
+                        }}
+                        <template #icon>
+                          <component size="18" :is="iconMap['PhCaretDown']" />
+                        </template>
+                      </a-button>
+
+                      <template #overlay>
+                        <a-menu>
+                          <a-menu-item
+                            v-for="option in item.notificationTypes"
+                            :key="option"
+                          >
+                            <a-checkbox-group
+                              v-model:value="item.value"
+                              style="width: 100%"
+                            >
+                              <a-checkbox :value="option">{{
+                                option
+                              }}</a-checkbox>
+                            </a-checkbox-group>
+                          </a-menu-item>
+                        </a-menu>
+                      </template>
+                    </a-dropdown>
+                  </template>
+                </a-list-item>
+              </template>
+            </a-list>
           </div>
 
           <div v-else-if="activeMenu === 'account'">
@@ -86,7 +138,8 @@ const profileStore = useProfileStore();
 // 2. 从实例中直接解构出 actions (方法)
 const { disableModal } = profileStore;
 // 3. 使用 storeToRefs 来包裹 store 实例，从中解构出 state 和 getters 以保持响应性
-const { showModal, menuItems } = storeToRefs(profileStore);
+const { showModal, menuItems, notificationSettings } =
+  storeToRefs(profileStore);
 
 // 控制菜单的选中项，默认为 'general'
 const selectedMenuKey = ref(["general"]);
