@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 
 import { ref } from "vue";
 import type { IconName } from "@/assets/icons/SideBarIconMap";
+import { notification } from "ant-design-vue";
 interface ProfileMenuItem {
   key: string;
   icon?: IconName;
@@ -9,7 +10,17 @@ interface ProfileMenuItem {
   title: string;
 }
 
+interface NotificationItemType {
+  key: string;
+  title: string;
+  description: string;
+  notificationTypes: string[];
+  options: [];
+  value: [];
+}
+
 export const useProfileStore = defineStore("profile", () => {
+  // state
   const showModal = ref(false);
 
   const menuItems = ref<ProfileMenuItem[]>([
@@ -33,6 +44,34 @@ export const useProfileStore = defineStore("profile", () => {
     },
   ]);
 
+  const notificationSettings = ref<NotificationItemType[]>([
+    {
+      key: "reply",
+      title: "reply",
+      description: "when someone replies to your comments",
+      notificationTypes: ["email", "push", "sms"],
+      options: [],
+      value: [],
+    },
+    {
+      key: "like",
+      title: "like",
+      description: "when someone likes your comments",
+      notificationTypes: ["email", "push", "sms"],
+      options: [],
+      value: [],
+    },
+    {
+      key: "tasks",
+      title: "tasks",
+      description: "when some tasks finished or expired",
+      notificationTypes: ["email", "push", "sms"],
+      options: [],
+      value: [],
+    },
+  ]);
+
+  // actions
   const enableModal = () => {
     showModal.value = true;
   };
@@ -45,5 +84,12 @@ export const useProfileStore = defineStore("profile", () => {
     showModal.value = !showModal.value;
   };
 
-  return { showModal, menuItems, enableModal, disableModal, toggleModal };
+  return {
+    showModal,
+    menuItems,
+    notificationSettings,
+    enableModal,
+    disableModal,
+    toggleModal,
+  };
 });
