@@ -266,7 +266,6 @@ $content-bg: var(--content-bg);
   flex: 1;
   min-height: 100%;
   background: var(--content-bg);
-  padding: v.$content-padding;
   overflow-y: auto;
   overflow: hidden;
   flex: 1;
