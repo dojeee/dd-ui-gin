@@ -3,8 +3,17 @@ import LoginView from "@/views/login/LoginView.vue";
 import MainView from "@/views/MainView.vue";
 import { useAuthStore } from "@/stores/authStores";
 import { message } from "ant-design-vue";
-import UserManagerView from "@/views/managers/user_manager/UserManagerView.vue";
-import RoleManagerView from "@/views/managers/role_manager/RoleManagerView.vue";
+import type { RouteRecordRaw } from "vue-router";
+
+import profileRoutes from "./modules/ProfileRouters";
+import managerRoutes from "./modules/ManagerRouters";
+import llmsRouters from "./modules/LlmRouters";
+
+const moduleRoutes: Array<RouteRecordRaw> = [
+  ...profileRoutes,
+  ...llmsRouters,
+  ...managerRoutes,
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -24,54 +33,7 @@ const router = createRouter({
         title: "Home",
         icon: "HomeOutlined",
       },
-      children: [
-        {
-          path: "profile",
-          name: "Profile",
-          component: () => import("@/views/profile/ProfileView.vue"),
-          meta: {
-            title: "Profile",
-            icon: "UserOutlined",
-            requiresAuth: true,
-          },
-        },
-        {
-          path: "user",
-          name: "UserManager",
-          component: UserManagerView,
-          meta: {
-            title: "User Manager",
-            icon: "UserOutlined",
-            requiresAuth: false,
-            pageHeader: true,
-          },
-        },
-        {
-          path: "role",
-          name: "RoleManager",
-          component: RoleManagerView,
-          meta: {
-            title: "Role Manager",
-            icon: "TeamOutlined",
-            requiresAuth: false,
-            pageHeader: true,
-          },
-        },
-        {
-          path: "permission",
-          name: "PermissionManager",
-          component: () =>
-            import(
-              "@/views/managers/permission_manager/PermissionManagerView.vue"
-            ),
-          meta: {
-            title: "Permission Manager",
-            icon: "LockOutlined",
-            requiresAuth: false,
-            pageHeader: true,
-          },
-        },
-      ],
+      children: moduleRoutes,
     },
   ],
 });
