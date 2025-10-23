@@ -11,7 +11,7 @@ const llmsRouters: Array<RouteRecordRaw> = [
       {
         path: "chat",
         name: "Chat",
-        component: () => import("@/views/llms/ConversationView.vue"),
+        component: () => import("@/views/llms/ChatView.vue"),
         meta: {
           title: "Chat",
           icon: "UserOutlined",

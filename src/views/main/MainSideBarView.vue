@@ -99,13 +99,16 @@ const handleMenuClick = ({ key }) => {
   console.log("menus is: ", key);
   switch (key) {
     case "usersManager":
-      ruoter.push("user");
+      ruoter.push("/manager/user");
       break;
     case "roleManager":
-      router.push("role");
+      router.push("/manager/role");
       break;
     case "permissionManager":
-      router.push("permission");
+      router.push("/manager/permission");
+      break;
+    case "chat":
+      router.push("/llms/chat");
       break;
     default:
       break;

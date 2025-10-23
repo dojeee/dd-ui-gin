@@ -25,10 +25,10 @@ export const useSideBarMenusStores = defineStore("sideBarMenus", () => {
       title: "Following",
     },
     {
-      key: "explore",
-      icon: "PhTrendUp",
-      label: "Explore",
-      title: "Explore",
+      key: "chat",
+      icon: "PhChatsTeardrop",
+      label: "Chat",
+      title: "Chat",
     },
     {
       key: "history",
