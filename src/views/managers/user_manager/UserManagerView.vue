@@ -169,6 +169,7 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   gap: v.$spacing-sm;
+  padding: v.$content-padding;
 }
 
 .search-form-container {

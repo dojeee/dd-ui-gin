@@ -14,5 +14,6 @@ const feature = ref();
 .permission-manager-container {
   display: flex;
   flex-direction: column;
+  padding: v.$content-padding;
 }
 </style>
