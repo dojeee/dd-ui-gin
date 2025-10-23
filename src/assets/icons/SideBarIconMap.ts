@@ -51,8 +51,10 @@ import {
   PhSignOut,
   PhTShirt,
   PhCaretDown,
+  PhChatsTeardrop,
 } from "@phosphor-icons/vue";
 export const iconMap = {
+  PhChatsTeardrop,
   PhCaretDown,
   PhTShirt,
   PhSignOut,
