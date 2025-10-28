@@ -2,6 +2,7 @@ import { getConversationByUserIdApi } from "@/api/llms/conversation";
 import { message } from "ant-design-vue";
 import { defineStore } from "pinia";
 import { ref } from "vue";
+
 interface Conversation {
   id: string;
   title: string;
@@ -11,6 +12,8 @@ export const useChatStores = defineStore("chat", () => {
   // state
   const loading = ref(false);
   const conversations = ref<Conversation[]>([]);
+  const searchQuery = ref("");
+
   // action
   async function fetchConversations(userId: string = "") {
     if (userId === "") {
@@ -38,5 +41,5 @@ export const useChatStores = defineStore("chat", () => {
     }
   }
 
-  return { conversations, loading, fetchConversations };
+  return { conversations, loading, searchQuery, fetchConversations };
 });
