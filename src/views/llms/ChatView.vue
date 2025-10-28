@@ -78,6 +78,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 @use "@/styles/design-tokens" as v;
+
 .chat-view-container {
   height: 100vh;
   display: flex;
@@ -87,8 +88,7 @@ onMounted(() => {
 .chat-sidebar {
   width: 270px;
   flex-shrink: 0;
-  height: 100%;
-  background-color: var(--sidebar-bg);
+  height: 100vh;
   display: flex;
   flex-direction: column;
   border-right: 1px solid var(--border-color-base);
@@ -99,35 +99,32 @@ onMounted(() => {
   margin-bottom: v.$spacing-lg;
 }
 
-/* 2. 搜索框区域 —— 调大一点 */
 .sidebar-search {
-  margin-bottom: v.$spacing-lg; // 👈 新增：与下方分隔
+  margin-bottom: v.$spacing-lg;
   :deep(.ant-input-search) {
     .ant-input {
-      height: 36px; // 默认是 32px，稍高一点
+      height: 36px;
       font-size: 14px;
-      padding: 0 11px; // 保持内边距舒适
+      padding: 0 11px;
     }
     .ant-btn {
-      height: 36px; // 按钮也同步高度
+      height: 36px;
     }
   }
 }
 
-/* 3. 菜单容器 —— 确保可滚动且不被挤压 */
 .sidebar-menu-wrapper {
-  flex: 1; // 占据剩余空间
-  min-height: 0; // 👈 关键！允许 flex 子项收缩
-  overflow-y: auto; // 垂直滚动
-  padding-top: v.$spacing-sm; // 与上方分隔线留点空隙
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-top: v.$spacing-sm;
 }
 
 .conversation-menu {
   border-right: none;
 }
 
-/* 可选：分隔线样式微调 */
 :deep(.ant-divider) {
-  margin: v.$spacing-md 0; // 上下留空
+  margin: v.$spacing-md 0;
 }
 </style>
