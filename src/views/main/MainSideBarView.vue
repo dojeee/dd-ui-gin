@@ -108,6 +108,7 @@ const handleMenuClick = ({ key }) => {
       router.push("/manager/permission");
       break;
     case "chat":
+      collapsed.value = true;
       router.push("/llms/chat");
       break;
     default:

@@ -1,70 +1,24 @@
 <template>
   <div class="chat-view-container">
-    <contextHolder />
-    <Conversations
-      default-active-key="item1"
-      :menu="menuConfig"
-      :items="items"
-      class="conversation-style"
-    />
     <a-button>sdds</a-button>
+    <a-menu mode="inline" class="chat-sidebar-menu">
+      <div></div>
+      <template>
+        <a-sub-menu> </a-sub-menu>
+      </template>
+    </a-menu>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  DeleteOutlined,
-  EditOutlined,
-  StopOutlined,
-} from "@ant-design/icons-vue";
-import { theme, message } from "ant-design-vue";
-import { Conversations, type ConversationsProps } from "ant-design-x-vue";
-import { computed, h } from "vue";
+import { useChatStores } from "@/stores/llms/chatStores";
+import { onMounted } from "vue";
 
-defineOptions({ name: "AXConversationsWithMenuSetup" });
+const useChatStore = useChatStores();
 
-const items: ConversationsProps["items"] = Array.from({ length: 20 }).map(
-  (_, index) => ({
-    key: `item${index + 1}`,
-    label: `Conversation Item ${index + 1}`,
-    disabled: index === 3,
-  })
-);
-
-const [messageApi, contextHolder] = message.useMessage();
-const { token } = theme.useToken();
-
-const style = computed(() => ({
-  // width: "256px",
-  background: token.value.colorBgContainer,
-  borderRadius: token.value.borderRadius,
-  height: "100%",
-  overflow: "auto",
-}));
-
-const menuConfig: ConversationsProps["menu"] = (conversation) => ({
-  items: [
-    {
-      label: "Operation 1",
-      key: "operation1",
-      icon: h(EditOutlined),
-    },
-    {
-      label: "Operation 2",
-      key: "operation2",
-      icon: h(StopOutlined),
-      disabled: true,
-    },
-    {
-      label: "Operation 3",
-      key: "operation3",
-      icon: h(DeleteOutlined),
-      danger: true,
-    },
-  ],
-  onClick: (menuInfo) => {
-    messageApi.info(`Click ${conversation.key} - ${menuInfo.key}`);
-  },
+onMounted(() => {
+  console.log("mounted");
+  useChatStore.fetchConversations("1001");
 });
 </script>
 
@@ -73,7 +27,7 @@ const menuConfig: ConversationsProps["menu"] = (conversation) => ({
 .chat-view-container {
   height: 100vh;
   display: flex;
-  flex-direction: row; /* 保持横向布局 */
+  flex-direction: row;
   overflow: hidden;
 }
 
