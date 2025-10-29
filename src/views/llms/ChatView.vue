@@ -41,11 +41,10 @@
               {{ conv.title || "Untitled Conversation" }}
             </span>
 
-            <!-- 替换原来的 a-button -->
             <a-dropdown
               :trigger="['click']"
               placement="bottomRight"
-              :getPopupContainer="() => document.body"
+              :getPopupContainer="getPopupContainer"
               @click.stop
             >
               <a-button type="text" size="small" class="more-btn">
@@ -119,6 +118,10 @@ const handleMoreAction = (action: string, conversationId: string) => {
     default:
       break;
   }
+};
+
+const getPopupContainer = (): HTMLElement => {
+  return document.body;
 };
 
 const handleCreateConversation = () => {
