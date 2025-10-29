@@ -12,7 +12,6 @@ export const useChatStores = defineStore("chat", () => {
   // state
   const loading = ref(false);
   const conversations = ref<Conversation[]>([]);
-  const searchQuery = ref("");
 
   // action
   async function fetchConversations(userId: string = "") {
@@ -41,5 +40,5 @@ export const useChatStores = defineStore("chat", () => {
     }
   }
 
-  return { conversations, loading, searchQuery, fetchConversations };
+  return { conversations, loading, fetchConversations };
 });
