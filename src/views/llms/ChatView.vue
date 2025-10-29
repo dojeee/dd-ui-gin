@@ -40,14 +40,30 @@
             <span class="conversation-title">
               {{ conv.title || "Untitled Conversation" }}
             </span>
-            <a-button
-              type="circle"
-              size="small"
-              class="more-btn"
-              @click.stop="handleMoreAction(conv.id)"
+
+            <!-- 替换原来的 a-button -->
+            <a-dropdown
+              :trigger="['click']"
+              placement="bottomRight"
+              :getPopupContainer="() => document.body"
+              @click.stop
             >
-              <MoreOutlined />
-            </a-button>
+              <a-button type="text" size="small" class="more-btn">
+                <MoreOutlined />
+              </a-button>
+              <template #overlay>
+                <a-menu @click="({ key }) => handleMoreAction(key, conv.id)">
+                  <a-menu-item key="rename">
+                    <EditOutlined />
+                    Rename
+                  </a-menu-item>
+                  <a-menu-item key="delete" danger>
+                    <DeleteOutlined />
+                    Delete
+                  </a-menu-item>
+                </a-menu>
+              </template>
+            </a-dropdown>
           </div>
 
           <!-- 空状态 -->
@@ -63,7 +79,11 @@
 <script setup lang="ts">
 import { useChatStores } from "@/stores/llms/chatStores";
 import { onMounted, computed, ref } from "vue";
-import { MoreOutlined } from "@ant-design/icons-vue";
+import {
+  MoreOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons-vue";
 import { storeToRefs } from "pinia";
 
 const useChatStore = useChatStores();
@@ -86,8 +106,19 @@ const handleConversationClick = (id: string) => {
   console.log("Clicked conversation ID:", id);
 };
 
-const handleMoreAction = (id: string) => {
-  console.log("More actions for conversation ID:", id);
+const handleMoreAction = (action: string, conversationId: string) => {
+  switch (action) {
+    case "rename":
+      console.log("Rename conversation:", conversationId);
+      // 调用重命名逻辑
+      break;
+    case "delete":
+      console.log("Delete conversation:", conversationId);
+      // 调用删除逻辑（可加确认弹窗）
+      break;
+    default:
+      break;
+  }
 };
 
 const handleCreateConversation = () => {
@@ -265,5 +296,27 @@ $border-color: #333333;
   text-align: center;
   color: $text-color-secondary;
   font-size: 14px;
+}
+
+:deep(.ant-dropdown-menu) {
+  background-color: $sidebar-bg;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  min-width: 120px; /* 防止菜单过窄 */
+
+  .ant-dropdown-menu-item {
+    color: $text-color;
+    padding: 8px 16px;
+    font-size: 14px;
+
+    &:hover {
+      background-color: $item-hover-bg;
+    }
+
+    &-danger {
+      color: #ff4d4f;
+    }
+  }
 }
 </style>
