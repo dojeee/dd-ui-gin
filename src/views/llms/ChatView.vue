@@ -41,7 +41,7 @@
               {{ conv.title || "Untitled Conversation" }}
             </span>
             <a-button
-              type="text"
+              type="circle"
               size="small"
               class="more-btn"
               @click.stop="handleMoreAction(conv.id)"
@@ -106,6 +106,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 @use "@/styles/design-tokens" as v;
 
+// 🖤 深色主题变量
 $sidebar-bg: #141414;
 $item-hover-bg: #2a2a2a;
 $item-active-bg: #363636;
@@ -159,7 +160,7 @@ $border-color: #333333;
       background-color: #222222;
       border: 1px solid #333;
       color: $text-color;
-      border-radius: 6px;
+      border-radius: 8px;
 
       &:focus {
         border-color: #5b42d8;
@@ -184,7 +185,6 @@ $border-color: #333333;
   }
 }
 
-// 分隔线
 :deep(.ant-divider) {
   margin: v.$spacing-md 0;
   border-color: $border-color;
@@ -203,7 +203,6 @@ $border-color: #333333;
   margin: 0;
 }
 
-// 分组标题（如“今天”、“过去 7 天”）
 .group-title {
   padding: 8px 12px;
   font-size: 12px;
@@ -214,14 +213,17 @@ $border-color: #333333;
   margin-bottom: 8px;
 }
 
-// 对话项
 .conversation-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
-  border-radius: 6px;
+
+  padding: 6px 8px 8px 8px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+
   transition: background-color 0.2s;
   color: $text-color;
 
@@ -242,8 +244,7 @@ $border-color: #333333;
     font-size: 14px;
   }
 
-  .delete-btn {
-    opacity: 0;
+  .more-btn {
     margin-left: 8px;
     color: $text-color-secondary;
     padding: 0 4px;
@@ -259,9 +260,10 @@ $border-color: #333333;
   }
 }
 
-// 选中项样式（可选）
-.conversation-item--selected {
-  background-color: $item-active-bg;
-  border-left: 3px solid #5b42d8;
+.empty-state {
+  padding: 20px;
+  text-align: center;
+  color: $text-color-secondary;
+  font-size: 14px;
 }
 </style>
