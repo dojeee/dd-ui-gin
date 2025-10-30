@@ -47,7 +47,7 @@
               :getPopupContainer="getPopupContainer"
               @click.stop
             >
-              <a-button type="text" size="small" class="more-btn">
+              <a-button type="circle" size="small" class="more-btn">
                 <MoreOutlined />
               </a-button>
               <template #overlay>
@@ -72,11 +72,31 @@
         </div>
       </div>
     </div>
+
+    <a-modal
+      v-model:open="renameModalOpen"
+      title="Rename conversation"
+      :confirm-loading="renameLoading"
+      @ok="handleRenameModalOk"
+      @cancel="handleRenameModalCancel"
+      destroy-on-close
+    >
+      <a-form layout="vertical" class="rename-modal-form">
+        <a-form-item>
+          <a-input
+            v-model:value="renameTitle"
+            placeholder="Enter new title"
+            :maxlength="60"
+          />
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useChatStores } from "@/stores/llms/chatStores";
+import { renameConversationApi } from "@/api/llms/conversation";
 import { onMounted, computed, ref, onUnmounted } from "vue";
 import {
   MoreOutlined,
@@ -84,12 +104,17 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons-vue";
 import { storeToRefs } from "pinia";
+import { message } from "ant-design-vue";
 
 const useChatStore = useChatStores();
 const { conversations, loading, showHeader } = storeToRefs(useChatStore);
 
 const activeConversationId = ref<string | null>(null);
 const searchQuery = ref("");
+const renameModalOpen = ref(false);
+const renameTargetId = ref<string | null>(null);
+const renameTitle = ref("");
+const renameLoading = ref(false);
 
 const filteredConversations = computed(() => {
   const list = conversations.value || [];
@@ -108,8 +133,7 @@ const handleConversationClick = (id: string) => {
 const handleMoreAction = (action: string, conversationId: string) => {
   switch (action) {
     case "rename":
-      console.log("Rename conversation:", conversationId);
-      // 调用重命名逻辑
+      openRenameModal(conversationId);
       break;
     case "delete":
       console.log("Delete conversation:", conversationId);
@@ -130,6 +154,59 @@ const handleCreateConversation = () => {
 
 const onSearch = (value: string) => {
   console.log("Search:", value);
+};
+
+const openRenameModal = (conversationId: string) => {
+  const target = conversations.value.find((item) => item.id === conversationId);
+  renameTargetId.value = conversationId;
+  renameTitle.value = target?.title ?? "";
+  renameModalOpen.value = true;
+};
+
+const handleRenameModalCancel = () => {
+  renameModalOpen.value = false;
+  renameTitle.value = "";
+  renameTargetId.value = null;
+  renameLoading.value = false;
+};
+
+const handleRenameModalOk = async () => {
+  if (renameLoading.value) {
+    return;
+  }
+
+  const title = renameTitle.value.trim();
+  if (!title) {
+    message.warning("Title cannot be empty");
+    return;
+  }
+
+  const conversationId = renameTargetId.value;
+  if (!conversationId) {
+    message.error("Conversation not found");
+    return;
+  }
+
+  renameLoading.value = true;
+
+  try {
+    const response = await renameConversationApi(conversationId, title);
+    if (response.code === 200) {
+      const target = conversations.value.find((item) => item.id === conversationId);
+      if (target) {
+        target.title = title;
+      }
+      message.success("Conversation renamed successfully");
+      handleRenameModalCancel();
+    } else {
+      message.error(response.msg || "Failed to rename conversation");
+    }
+  } catch (error) {
+    console.error("Failed to rename conversation", error);
+    message.error("Failed to rename conversation");
+  } finally {
+    renameLoading.value = false;
+  }
 };
 
 onMounted(() => {
@@ -234,12 +311,12 @@ $border-color: #333333;
   overflow-y: auto;
   padding-top: v.$spacing-sm;
   
-  /* 需求3: 隐藏滚动条 */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   
   &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    display: none;
   }
 }
 
@@ -311,6 +388,15 @@ $border-color: #333333;
   text-align: center;
   color: $text-color-secondary;
   font-size: 14px;
+}
+
+.rename-modal-form {
+  margin-top: 18px;
+
+  :deep(.ant-form-item) {
+    margin-top: 20px;
+    margin-bottom: 0;
+  }
 }
 
 :deep(.ant-dropdown-menu) {
