@@ -166,8 +166,6 @@ onBeforeUnmount(() => {
   flex-direction: column;
   gap: v.$spacing-sm;
   padding: v.$content-padding;
-  height: 100%;
-  overflow-y: auto;
   
   /* 需求4: 默认隐藏滚动条，悬停时显示 */
   scrollbar-width: thin;

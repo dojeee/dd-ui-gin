@@ -1,5 +1,5 @@
 <template>
-  <a-layout-footer class="footer-container">
+  <a-layout-footer v-show="false" class="footer-container">
     Ant Design ©2018 Created by Ant UED
   </a-layout-footer>
 </template>

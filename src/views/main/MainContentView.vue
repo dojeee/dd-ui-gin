@@ -1,14 +1,15 @@
 <template>
   <a-layout-content class="content-container">
     <!-- 使用 a-page-header 实现头部 -->
-    <a-page-header
-      v-show="showHeader"
-      :class="['pc-header', 'ant-page-header-overwrite']"
-      :back-icon="canGoBack ? h(LeftOutlined) : undefined"
-      @back="handleBack"
-      :title="null"
-      class="page-header"
-    >
+    <div class="pc-content-wrapper">
+      <a-page-header
+        v-show="showHeader"
+        :class="['pc-header', 'ant-page-header-overwrite']"
+        :back-icon="canGoBack ? h(LeftOutlined) : undefined"
+        @back="handleBack"
+        :title="null"
+        class="page-header"
+      >
       <!-- 自定义面包屑 -->
       <template #breadcrumb>
         <a-breadcrumb class="pc-breadcrumb">
@@ -52,10 +53,9 @@
           <slot name="page-actions"></slot>
         </div>
       </template>
-    </a-page-header>
+      </a-page-header>
 
-    <!-- 主体内容 -->
-    <div class="pc-content-wrapper">
+      <!-- 主体内容 -->
       <div class="pc-content">
         <router-view v-slot="{ Component, route }">
           <keep-alive :include="cachedViews">
@@ -243,8 +243,9 @@ $content-bg: var(--content-bg);
 /* 滚动条样式 */
 .pc-content-wrapper {
   flex: 1;
-  // overflow-y: auto;
-  // overflow-x: hidden;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
   &::-webkit-scrollbar {
     width: v.$scrollbar-width;
   }
@@ -264,9 +265,8 @@ $content-bg: var(--content-bg);
 }
 .pc-content {
   flex: 1;
-  min-height: 100%;
+  min-height: 0;
   background: var(--content-bg);
-  overflow: hidden;
 }
 
 :deep(.ant-page-header-back) {
