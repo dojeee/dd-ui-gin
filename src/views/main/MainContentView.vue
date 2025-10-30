@@ -243,8 +243,8 @@ $content-bg: var(--content-bg);
 /* 滚动条样式 */
 .pc-content-wrapper {
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
+  // overflow-y: auto;
+  // overflow-x: hidden;
   &::-webkit-scrollbar {
     width: v.$scrollbar-width;
   }
@@ -266,9 +266,7 @@ $content-bg: var(--content-bg);
   flex: 1;
   min-height: 100%;
   background: var(--content-bg);
-  overflow-y: auto;
   overflow: hidden;
-  flex: 1;
 }
 
 :deep(.ant-page-header-back) {

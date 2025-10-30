@@ -1,5 +1,5 @@
 <template>
-  <a-layout-header class="header-container">
+  <a-layout-header v-show="showHeader" class="header-container">
     <h2
       class="header-title"
       role="button"
@@ -89,6 +89,10 @@ import { useThemeStore } from "@/stores/themeStores";
 import { storeToRefs } from "pinia";
 import { iconMap } from "@/assets/icons/SideBarIconMap";
 import { useProfileStore } from "@/stores/profileStores";
+import { useChatStores } from "@/stores/llms/chatStores";
+
+const chatStore = useChatStores();
+const { showHeader } = storeToRefs(chatStore)
 
 // store
 const authStore = useAuthStore();
@@ -204,11 +208,10 @@ const handleMenuClick = (e: { key: string; domEvent: MouseEvent }): void => {
 }
 
 .header-avatar-menu {
-  
   :deep(.ant-dropdown-menu-submenu-title) {
     display: flex;
     align-items: center;
-    gap: v.$spacing-tow; 
+    gap: v.$spacing-tow;
   }
 
   // 确保 icon 自身也居中
