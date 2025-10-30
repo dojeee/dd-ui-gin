@@ -77,7 +77,7 @@
 
 <script setup lang="ts">
 import { useChatStores } from "@/stores/llms/chatStores";
-import { onMounted, computed, ref } from "vue";
+import { onMounted, computed, ref, onUnmounted } from "vue";
 import {
   MoreOutlined,
   EditOutlined,
@@ -86,7 +86,7 @@ import {
 import { storeToRefs } from "pinia";
 
 const useChatStore = useChatStores();
-const { conversations, loading } = storeToRefs(useChatStore);
+const { conversations, loading, showHeader } = storeToRefs(useChatStore);
 
 const activeConversationId = ref<string | null>(null);
 const searchQuery = ref("");
@@ -134,6 +134,10 @@ const onSearch = (value: string) => {
 
 onMounted(() => {
   useChatStore.fetchConversations("1001");
+  showHeader.value = false;
+});
+onUnmounted(() => {
+  showHeader.value = true;
 });
 </script>
 
@@ -229,6 +233,14 @@ $border-color: #333333;
   min-height: 0;
   overflow-y: auto;
   padding-top: v.$spacing-sm;
+  
+  /* 需求3: 隐藏滚动条 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 }
 
 .conversation-list {
