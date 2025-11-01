@@ -11,12 +11,8 @@
 
       <!-- 2. sidebar search -->
       <div class="sidebar-search">
-        <a-input-search
-          v-model:value="searchQuery"
-          placeholder="Search conversations"
-          size="small"
-          @search="onSearch"
-        />
+        <a-input-search v-model:value="searchQuery" placeholder="Search conversations" size="small"
+          @search="onSearch" />
       </div>
 
       <a-divider />
@@ -28,25 +24,14 @@
           <div class="group-title">All conversations</div>
 
           <!-- conversation content -->
-          <div
-            v-for="conv in filteredConversations"
-            :key="conv.id"
-            class="conversation-item"
-            :class="{
-              'conversation-item--active': activeConversationId === conv.id,
-            }"
-            @click="handleConversationClick(conv.id)"
-          >
+          <div v-for="conv in filteredConversations" :key="conv.id" class="conversation-item" :class="{
+            'conversation-item--active': activeConversationId === conv.id,
+          }" @click="handleConversationClick(conv.id)">
             <span class="conversation-title">
               {{ conv.title || "Untitled Conversation" }}
             </span>
 
-            <a-dropdown
-              :trigger="['click']"
-              placement="bottomRight"
-              :getPopupContainer="getPopupContainer"
-              @click.stop
-            >
+            <a-dropdown :trigger="['click']" placement="bottomRight" :getPopupContainer="getPopupContainer" @click.stop>
               <a-button type="circle" size="small" class="more-btn">
                 <MoreOutlined />
               </a-button>
@@ -73,21 +58,11 @@
       </div>
     </div>
 
-    <a-modal
-      v-model:open="renameModalOpen"
-      title="Rename conversation"
-      :confirm-loading="renameLoading"
-      @ok="handleRenameModalOk"
-      @cancel="handleRenameModalCancel"
-      destroy-on-close
-    >
+    <a-modal v-model:open="renameModalOpen" title="Rename conversation" :confirm-loading="renameLoading"
+      @ok="handleRenameModalOk" @cancel="handleRenameModalCancel" destroy-on-close>
       <a-form layout="vertical" class="rename-modal-form">
         <a-form-item>
-          <a-input
-            v-model:value="renameTitle"
-            placeholder="Enter new title"
-            :maxlength="60"
-          />
+          <a-input v-model:value="renameTitle" placeholder="Enter new title" :maxlength="60" />
         </a-form-item>
       </a-form>
     </a-modal>
@@ -96,7 +71,6 @@
 
 <script setup lang="ts">
 import { useChatStores } from "@/stores/llms/chatStores";
-import { renameConversationApi } from "@/api/llms/conversation";
 import { onMounted, computed, ref, onUnmounted } from "vue";
 import {
   MoreOutlined,
@@ -104,17 +78,16 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons-vue";
 import { storeToRefs } from "pinia";
-import { message } from "ant-design-vue";
+import { message,Modal } from "ant-design-vue";
 
 const useChatStore = useChatStores();
-const { conversations, loading, showHeader } = storeToRefs(useChatStore);
-
+const { conversations, loading, showHeader, renameLoading, renameTargetId, renameTitle } =
+  storeToRefs(useChatStore);
 const activeConversationId = ref<string | null>(null);
 const searchQuery = ref("");
 const renameModalOpen = ref(false);
-const renameTargetId = ref<string | null>(null);
-const renameTitle = ref("");
-const renameLoading = ref(false);
+
+
 
 const filteredConversations = computed(() => {
   const list = conversations.value || [];
@@ -137,7 +110,16 @@ const handleMoreAction = (action: string, conversationId: string) => {
       break;
     case "delete":
       console.log("Delete conversation:", conversationId);
-      // 调用删除逻辑（可加确认弹窗）
+      Modal.confirm({
+        title: "Delete conversation",
+        content: "Are you sure you want to delete this conversation?",
+        onOk: async () => {
+          await useChatStore.deleteConversation();
+        },
+        onCancel: () => {
+          message.info("Cancel delete");
+        },
+      });
       break;
     default:
       break;
@@ -174,39 +156,8 @@ const handleRenameModalOk = async () => {
   if (renameLoading.value) {
     return;
   }
-
-  const title = renameTitle.value.trim();
-  if (!title) {
-    message.warning("Title cannot be empty");
-    return;
-  }
-
-  const conversationId = renameTargetId.value;
-  if (!conversationId) {
-    message.error("Conversation not found");
-    return;
-  }
-
-  renameLoading.value = true;
-
-  try {
-    const response = await renameConversationApi(conversationId, title);
-    if (response.code === 200) {
-      const target = conversations.value.find((item) => item.id === conversationId);
-      if (target) {
-        target.title = title;
-      }
-      message.success("Conversation renamed successfully");
-      handleRenameModalCancel();
-    } else {
-      message.error(response.msg || "Failed to rename conversation");
-    }
-  } catch (error) {
-    console.error("Failed to rename conversation", error);
-    message.error("Failed to rename conversation");
-  } finally {
-    renameLoading.value = false;
-  }
+  await useChatStore.updateConversationTitle();
+  handleRenameModalCancel();
 };
 
 onMounted(() => {
@@ -310,11 +261,10 @@ $border-color: #333333;
   min-height: 0;
   overflow-y: auto;
   padding-top: v.$spacing-sm;
-  
 
   scrollbar-width: none;
   -ms-overflow-style: none;
-  
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -404,7 +354,8 @@ $border-color: #333333;
   border: 1px solid $border-color;
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  min-width: 120px; /* 防止菜单过窄 */
+  min-width: 120px;
+  /* 防止菜单过窄 */
 
   .ant-dropdown-menu-item {
     color: $text-color;

@@ -1,4 +1,4 @@
-import { getConversationByUserIdApi } from "@/api/llms/conversation";
+import { getConversationByUserIdApi, renameConversationApi, deleteConversationApi } from "@/api/llms/conversation";
 import { message } from "ant-design-vue";
 import { defineStore } from "pinia";
 import { ref } from "vue";
@@ -13,6 +13,9 @@ export const useChatStores = defineStore("chat", () => {
   const loading = ref(false);
   const conversations = ref<Conversation[]>([]);
   const showHeader = ref(true);
+  const renameTitle = ref("");
+  const renameLoading = ref(false);
+  const renameTargetId = ref<string | null>(null);
   // action
   async function fetchConversations(userId: string = "") {
     if (userId === "") {
@@ -40,5 +43,74 @@ export const useChatStores = defineStore("chat", () => {
     }
   }
 
-  return { conversations, showHeader, loading, fetchConversations };
+  async function updateConversationTitle() {
+    const title = renameTitle.value.trim();
+    if (!title) {
+      message.warning("Title cannot be empty");
+      return;
+    }
+
+    const conversationId = renameTargetId.value;
+    if (!conversationId) {
+      message.error("Conversation not found");
+      return;
+    }
+
+    renameLoading.value = true;
+
+    try {
+      const response = await renameConversationApi(conversationId, title);
+      if (response.code === 200) {
+        const target = conversations.value.find(
+          (item) => item.id === conversationId
+        );
+        if (target) {
+          target.title = title;
+        }
+        message.success("Conversation renamed successfully");
+      } else {
+        message.error(response.msg || "Failed to rename conversation");
+      }
+    } catch (error) {
+      console.error("Failed to rename conversation", error);
+      message.error("Failed to rename conversation");
+    } finally {
+      renameLoading.value = false;
+    }
+  }
+
+  async function deleteConversation() {
+    const conversationId = renameTargetId.value;
+    if (!conversationId) {
+      message.error("Conversation not found");
+      return;
+    }
+
+    try {
+      const response = await deleteConversationApi(conversationId)
+      if (response.code === 200) {
+        const target = conversations.value.find(
+          (item) => item.id === conversationId
+        );
+        if (target) {
+          target.title = title;
+        }
+        message.success("Conversation renamed successfully");
+      } else {
+        message.error(response.msg || "Failed to rename conversation");
+      }
+    } catch (error) {
+      console.error("Failed to rename conversation", error);
+      message.error("Failed to rename conversation");
+    } finally {
+      renameLoading.value = false;
+    }
+
+
+
+  }
+  return { conversations, 
+    showHeader, loading, renameLoading,renameTargetId,
+    renameTitle,
+    fetchConversations,updateConversationTitle,deleteConversation};
 });
