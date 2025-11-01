@@ -16,3 +16,8 @@ export const renameConversationApi = (
     title,
   });
 };
+
+
+export const deleteConversationApi = (id: string): Promise<ApiResponse> => {
+  return apiService.post("/llms/conversation/deleteById", { id });
+};
