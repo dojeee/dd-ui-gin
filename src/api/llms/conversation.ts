@@ -8,11 +8,11 @@ export const getConversationByUserIdApi = (
 };
 
 export const renameConversationApi = (
-  conversationId: string,
+  id: string,
   title: string
 ): Promise<ApiResponse> => {
-  return apiService.post("/llms/conversation/rename", {
-    conversationId,
+  return apiService.post("/llms/conversation/updateTitle", {
+    id,
     title,
   });
 };

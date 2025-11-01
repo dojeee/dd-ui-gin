@@ -71,7 +71,7 @@
   </a-layout-sider>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue";
 import { useSideBarMenusStores } from "@/stores/sideBarMenusStores";
