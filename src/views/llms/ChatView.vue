@@ -11,7 +11,10 @@
 
       <!-- 2. sidebar search -->
       <div class="sidebar-search">
-        <a-input-search v-model:value="searchQuery" placeholder="Search conversations" size="small"
+        <a-input-search 
+        v-model:value="searchQuery"
+         placeholder="Search conversations"
+          size="large"
           @search="onSearch" />
       </div>
 
@@ -172,13 +175,6 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 @use "@/styles/design-tokens" as v;
 
-// 🖤 深色主题变量
-$sidebar-bg: #141414;
-$item-hover-bg: #2a2a2a;
-$item-active-bg: #363636;
-$text-color: #ffffff;
-$text-color-secondary: #999999;
-$border-color: #333333;
 
 .chat-view-container {
   height: 100vh;
@@ -192,15 +188,14 @@ $border-color: #333333;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: $sidebar-bg;
-  border-right: 1px solid $border-color;
+  background-color: var(--sidebar-bg);
+  border-right: 0.8px solid var(--sidebar-right-border-color);
   padding: v.$content-padding;
-  color: $text-color;
+  color: var(--sidebar-text-color);
 }
 
 .sidebar-header {
   margin-bottom: v.$spacing-lg;
-
   .ant-btn {
     background: linear-gradient(90deg, #5b42d8, #7c5de7);
     border: none;
@@ -208,52 +203,18 @@ $border-color: #333333;
     font-size: 14px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(91, 66, 216, 0.3);
-
-    &:hover {
-      background: linear-gradient(90deg, #6a50e0, #8a6df1);
-    }
   }
 }
 
 .sidebar-search {
-  margin-bottom: v.$spacing-lg;
+  
+  margin-bottom: 10px;
 
-  :deep(.ant-input-search) {
-    .ant-input {
-      height: 36px;
-      font-size: 14px;
-      padding: 0 11px;
-      background-color: #222222;
-      border: 1px solid #333;
-      color: $text-color;
-      border-radius: 8px;
-
-      &:focus {
-        border-color: #5b42d8;
-        box-shadow: 0 0 0 2px rgba(91, 66, 216, 0.2);
-      }
-
-      &::placeholder {
-        color: $text-color-secondary;
-      }
-    }
-
-    .ant-btn {
-      height: 36px;
-      background-color: #222222;
-      border: 1px solid #333;
-      color: $text-color-secondary;
-
-      &:hover {
-        background-color: #333333;
-      }
-    }
-  }
 }
 
 :deep(.ant-divider) {
   margin: v.$spacing-md 0;
-  border-color: $border-color;
+  border-color: var(--border-color-base);
 }
 
 .sidebar-menu-wrapper {
@@ -279,7 +240,7 @@ $border-color: #333333;
 .group-title {
   padding: 8px 12px;
   font-size: 12px;
-  color: $text-color-secondary;
+  color: var(text-color-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-top: 16px;
@@ -298,15 +259,15 @@ $border-color: #333333;
   cursor: pointer;
 
   transition: background-color 0.2s;
-  color: $text-color;
+  color: var(--sidebar-text-color);
 
   &:hover {
-    background-color: $item-hover-bg;
+    background-color: var(--sidebar-item-hover-bg);
   }
 
   &--active {
-    background-color: $item-active-bg;
-    color: $text-color;
+    background-color: var(--sidebar-item-selected-bg);
+    color: var(--sidebar-text-color);
   }
 
   .conversation-title {
@@ -319,12 +280,12 @@ $border-color: #333333;
 
   .more-btn {
     margin-left: 8px;
-    color: $text-color-secondary;
+    color: var(--sidebar-text-color-submenu);
     padding: 0 4px;
     font-size: 16px;
 
     &:hover {
-      color: $text-color;
+      color: var(--sidebar-text-color);
     }
 
     .conversation-item:hover & {
@@ -336,7 +297,7 @@ $border-color: #333333;
 .empty-state {
   padding: 20px;
   text-align: center;
-  color: $text-color-secondary;
+  color: var(--sidebar-text-color-submenu);
   font-size: 14px;
 }
 
@@ -350,20 +311,20 @@ $border-color: #333333;
 }
 
 :deep(.ant-dropdown-menu) {
-  background-color: $sidebar-bg;
-  border: 1px solid $border-color;
+  background-color: var(--sidebar-bg);
+  border: 1px solid var(--sidebar-right-border-color);
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   min-width: 120px;
   /* 防止菜单过窄 */
 
   .ant-dropdown-menu-item {
-    color: $text-color;
+    color: var(--sidebar-item-selected-bg);
     padding: 8px 16px;
     font-size: 14px;
 
     &:hover {
-      background-color: $item-hover-bg;
+      background-color: var(--sidebar-item-hover-bg);
     }
 
     &-danger {
