@@ -240,7 +240,7 @@ onUnmounted(() => {
 .group-title {
   padding: 8px 12px;
   font-size: 12px;
-  color: var(text-color-secondary);
+  color: gray;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-top: 16px;
