@@ -79,8 +79,8 @@ export const useChatStores = defineStore("chat", () => {
     }
   }
 
-  async function deleteConversation() {
-    const conversationId = renameTargetId.value;
+  async function deleteConversation(conversationId: string) {
+    
     if (!conversationId) {
       message.error("Conversation not found");
       return;
@@ -93,14 +93,16 @@ export const useChatStores = defineStore("chat", () => {
           (item) => item.id === conversationId
         );
         if (target) {
-          target.title = title;
+          conversations.value = conversations.value.filter(
+            (item) => item.id !== conversationId
+          );
         }
-        message.success("Conversation renamed successfully");
+        message.success("Conversation deleted successfully");
       } else {
-        message.error(response.msg || "Failed to rename conversation");
+        message.error(response.msg || "Failed to delete conversation");
       }
     } catch (error) {
-      console.error("Failed to rename conversation", error);
+      console.error("Failed to delete conversation", error);
       message.error("Failed to rename conversation");
     } finally {
       renameLoading.value = false;

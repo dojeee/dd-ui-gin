@@ -116,8 +116,8 @@ const handleMoreAction = (action: string, conversationId: string) => {
       Modal.confirm({
         title: "Delete conversation",
         content: "Are you sure you want to delete this conversation?",
-        onOk: async () => {
-          await useChatStore.deleteConversation();
+        onOk: () => {
+           useChatStore.deleteConversation(conversationId);
         },
         onCancel: () => {
           message.info("Cancel delete");
