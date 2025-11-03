@@ -103,7 +103,7 @@ const filteredConversations = computed(() => {
 
 const handleConversationClick = (id: string) => {
   activeConversationId.value = id;
-  console.log("Clicked conversation ID:", id);
+  useChatStore.fetchConversationMessages(id);
 };
 
 const handleMoreAction = (action: string, conversationId: string) => {

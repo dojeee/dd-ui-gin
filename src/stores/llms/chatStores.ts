@@ -1,8 +1,8 @@
-import { getConversationByUserIdApi, renameConversationApi, deleteConversationApi } from "@/api/llms/conversation";
+import { getConversationByUserIdApi, renameConversationApi, deleteConversationApi,getConversationMessagesApi } from "@/api/llms/conversation";
 import { message } from "ant-design-vue";
 import { defineStore } from "pinia";
 import { ref } from "vue";
-
+import { MessagesType } from "@/types/llms";
 interface Conversation {
   id: string;
   title: string;
@@ -16,6 +16,8 @@ export const useChatStores = defineStore("chat", () => {
   const renameTitle = ref("");
   const renameLoading = ref(false);
   const renameTargetId = ref<string | null>(null);
+
+  const messages = ref<MessagesType[]>([]);
   // action
   async function fetchConversations(userId: string = "") {
     if (userId === "") {
@@ -107,12 +109,32 @@ export const useChatStores = defineStore("chat", () => {
     } finally {
       renameLoading.value = false;
     }
+  }
 
-
-
+  async function fetchConversationMessages(conversationId: string) {
+    if (conversationId === "") {
+      return;
+    }
+    loading.value = true;
+    try {
+      await getConversationMessagesApi(conversationId).then((res) => {
+        if (res.code === 200 && res.data) {
+          const result = res.data;
+          messages.value = result;
+          console.log(messages.value);
+        } else {
+          message.error(res.msg || "Failed to fetch conversations list.");
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching conversations:", error);
+    } finally {
+      loading.value = false;
+    }
+    
   }
   return { conversations, 
     showHeader, loading, renameLoading,renameTargetId,
     renameTitle,
-    fetchConversations,updateConversationTitle,deleteConversation};
+    fetchConversations,updateConversationTitle,deleteConversation,fetchConversationMessages};
 });
