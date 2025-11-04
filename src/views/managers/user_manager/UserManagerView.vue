@@ -3,25 +3,15 @@
     <!-- 搜索表单 -->
     <div class="search-form-container">
       <a-form :model="searchParams" @submit.prevent="handlerSearchPage">
-        <a-row
-          :gutter="{ xs: 8, sm: 16, md: 24 }"
-          align="meddle"
-          class="search-form-row"
-        >
+        <a-row :gutter="{ xs: 8, sm: 16, md: 24 }" align="meddle" class="search-form-row">
           <a-col :span="5" :offset="1">
             <a-form-item label="User Name">
-              <a-input
-                v-model:value="searchParams.userName"
-                placeholder="user name"
-              />
+              <a-input v-model:value="searchParams.userName" placeholder="user name" />
             </a-form-item>
           </a-col>
           <a-col :span="5">
             <a-form-item label="Mobile">
-              <a-input
-                v-model:value="searchParams.mobile"
-                placeholder="mobile"
-              />
+              <a-input v-model:value="searchParams.mobile" placeholder="mobile" />
             </a-form-item>
           </a-col>
           <a-col :span="4">
@@ -66,19 +56,14 @@
       </div>
 
       <div class="table-wrapper">
-        <a-table
-          :columns="columns"
-          :dataSource="userList"
-          :pagination="pagination"
-          :loading="loading"
-          :row-key="(record: User) => record.userId"
-          @change="handleTableChange"
-          @resize-column="handleResizeColumn"
-          :scroll="{ x: 'max-content' }"
-        >
+        <a-table :columns="columns" :dataSource="userList" :pagination="pagination" :loading="loading"
+          :row-key="(record: User) => record.userId" @change="handleTableChange" @resize-column="handleResizeColumn"
+          :scroll="{ x: 'max-content' }">
           <template #headerCell="{ column }">
             <template v-if="column.key === 'userId'">
-              <span> <SmileOutlined /> User ID </span>
+              <span>
+                <SmileOutlined /> User ID
+              </span>
             </template>
           </template>
           <template #bodyCell="{ column, record }">
@@ -89,7 +74,7 @@
               <span>
                 <a>✏️Edit</a>
                 <a-divider type="vertical" />
-                <a>🗑️Delete</a>
+                <a @click="confirmDelete(record)">🗑️Delete</a>
                 <a-divider type="vertical" />
                 <a class="ant-dropdown-link">
                   ⚙️More actions
@@ -116,12 +101,13 @@ import { storeToRefs } from "pinia";
 import type { TablePaginationConfig } from "ant-design-vue";
 import { debounce } from "lodash-es";
 import type { User } from "@/types/user";
-
+import { Modal } from "ant-design-vue";
+import { message } from "ant-design-vue";
 // 1. 初始化 Store 并保持响应性
 const userManagerStore = useUserManagerStores();
 const { userList, columns, pagination, loading, searchParams } =
   storeToRefs(userManagerStore);
-const { fetchUsers, setPage } = userManagerStore;
+const { fetchUsers, setPage, deleteUserById } = userManagerStore;
 
 // 3. 组件挂载时加载数据
 onMounted(() => {
@@ -157,6 +143,24 @@ function handleResizeColumn(w: number, col: { width: number }) {
   col.width = w;
 }
 
+
+const confirmDelete = (record: User) => {
+  Modal.confirm({
+    title: 'Confirm Delete',
+    content: `Are you sure you want to delete the user "${record.userName}"? This action cannot be undone.`,
+    okText: 'Yes',
+    okType: 'danger',
+    cancelText: 'No',
+    onOk() {
+      return deleteUserById(record.userId);
+    },
+    onCancel() {
+      console.log('Delete cancelled');
+    },
+  });
+
+}
+
 onBeforeUnmount(() => {
   debounceedSearch.cancel();
 });
@@ -170,33 +174,33 @@ onBeforeUnmount(() => {
   flex-direction: column;
   gap: v.$spacing-sm;
   padding: v.$content-padding;
-  
+
   /* 需求4: 默认隐藏滚动条，悬停时显示 */
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
-  
+
   &:hover {
     scrollbar-color: var(--scrollbar-thumb-color) transparent;
   }
-  
+
   &::-webkit-scrollbar {
     width: 8px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background-color: transparent;
     border-radius: 4px;
     transition: background-color 0.3s ease;
   }
-  
+
   &:hover::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb-color, #ccc);
   }
-  
+
   &::-webkit-scrollbar-thumb:hover {
     background-color: var(--scrollbar-thumb-hover-color, #999);
   }
@@ -214,23 +218,29 @@ onBeforeUnmount(() => {
 .search-result-list {
   background-color: var(--background-color-base);
   border-radius: v.$content-border-radius;
+
   .table-wrapper {
     overflow-x: auto;
     overflow-y: hidden;
     width: 100%;
+
     /* 滚动条美化（可选） */
     &::-webkit-scrollbar {
       height: 8px;
     }
+
     &::-webkit-scrollbar-thumb {
       background: #ccc;
       border-radius: 4px;
     }
+
     &::-webkit-scrollbar-track {
       background: #f1f1f1;
     }
+
     ::v-deep .ant-table-cell {
-      white-space: nowrap; /* 不换行，保持列宽紧凑 */
+      white-space: nowrap;
+      /* 不换行，保持列宽紧凑 */
       text-overflow: ellipsis;
       overflow: hidden;
     }

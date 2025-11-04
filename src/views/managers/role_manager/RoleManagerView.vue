@@ -3,28 +3,18 @@
     <!-- form div -->
     <div class="search-form-container">
       <a-form :model="searchParams" @submit.prevent="handlerSearchPage">
-        <a-row
-          :gutter="{ xs: 8, sm: 16, md: 24 }"
-          align="middle"
-          class="search-form-row"
-        >
+        <a-row :gutter="{ xs: 8, sm: 16, md: 24 }" align="middle" class="search-form-row">
           <!-- role id -->
           <a-col :span="5" offset="1">
             <a-form-item label="Role Id">
-              <a-input
-                v-model:value="searchParams.roleId"
-                placeholder="role id"
-              />
+              <a-input v-model:value="searchParams.roleId" placeholder="role id" />
             </a-form-item>
           </a-col>
 
           <!-- role name -->
           <a-col :span="5">
             <a-form-item label="Role Name">
-              <a-input
-                v-model:value="searchParams.roleName"
-                placeholder="role name"
-              />
+              <a-input v-model:value="searchParams.roleName" placeholder="role name" />
             </a-form-item>
           </a-col>
 
@@ -65,16 +55,9 @@
 
       <!-- result table -->
       <div class="table-wrapper">
-        <a-table
-          :columns="columns"
-          :dataSource="roleList"
-          :pagination="pagination"
-          :loading="loading"
-          :row-key="(record: Role) => record.roleId"
-          @change="handleTableChange"
-          @resize-column="handleResizeColumn"
-          :scroll="{ x: 'max-content' }"
-        >
+        <a-table :columns="columns" :dataSource="roleList" :pagination="pagination" :loading="loading"
+          :row-key="(record: Role) => record.roleId" @change="handleTableChange" @resize-column="handleResizeColumn"
+          :scroll="{ x: 'max-content' }">
           <!-- result header -->
           <template #headerCell="{ column }">
             <template v-if="column.key === 'roleId'">
@@ -161,38 +144,39 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 @use "@/styles/design-tokens" as v;
+
 .role-manager-container {
   display: flex;
   flex-direction: column;
   gap: v.$spacing-sm;
   padding: v.$content-padding;
-  
+
   /* 需求4: 默认隐藏滚动条，悬停时显示 */
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
-  
+
   &:hover {
     scrollbar-color: var(--scrollbar-thumb-color) transparent;
   }
-  
+
   &::-webkit-scrollbar {
     width: 8px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background-color: transparent;
     border-radius: 4px;
     transition: background-color 0.3s ease;
   }
-  
+
   &:hover::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb-color, #ccc);
   }
-  
+
   &::-webkit-scrollbar-thumb:hover {
     background-color: var(--scrollbar-thumb-hover-color, #999);
   }
@@ -210,23 +194,29 @@ onBeforeUnmount(() => {
 .search-result-list {
   background-color: var(--background-color-base);
   border-radius: v.$content-border-radius;
+
   .table-wrapper {
     overflow-x: auto;
     overflow-y: hidden;
     width: 100%;
+
     /* 滚动条美化（可选） */
     &::-webkit-scrollbar {
       height: 8px;
     }
+
     &::-webkit-scrollbar-thumb {
       background: #ccc;
       border-radius: 4px;
     }
+
     &::-webkit-scrollbar-track {
       background: #f1f1f1;
     }
+
     ::v-deep .ant-table-cell {
-      white-space: nowrap; /* 不换行，保持列宽紧凑 */
+      white-space: nowrap;
+      /* 不换行，保持列宽紧凑 */
       text-overflow: ellipsis;
       overflow: hidden;
     }
@@ -254,6 +244,7 @@ onBeforeUnmount(() => {
       border-radius: v.$radius-md;
       border: 1px solid var(--border-color);
       transition: all 0.3s ease;
+
       &:hover {
         border-color: var(--primary-color);
       }

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { reactive, ref } from "vue";
-import { queryUsersByPageApi } from "@/api/user";
+import { queryUsersByPageApi, deleteUserByIdApi } from "@/api/user";
 import {
   message,
   TableColumnsType,
@@ -9,24 +9,12 @@ import {
 import { User, UserPageSearchParams } from "@/types/user";
 
 export const useUserManagerStores = defineStore("userManager", () => {
+  // State
   const searchParams = reactive<UserPageSearchParams>({
     userName: "",
     mobile: "",
     state: "" as 0 | 1 | "",
   });
-
-  // State
-  const userList = ref<User[]>([]);
-  const loading = ref(false);
-  const pagination = reactive<TablePaginationConfig>({
-    current: 1,
-    pageSize: 10,
-    total: 0,
-    showSizeChanger: true,
-    showTotal: (total) => `Total ${total} items`,
-    pageSizeOptions: ["10", "20", "50", "100"],
-  });
-
   const renderUserState = ({ text: state }: { text: 0 | 1 }) =>
     state === 1 ? "✅ Enabled" : "❌ Disabled";
 
@@ -108,6 +96,17 @@ export const useUserManagerStores = defineStore("userManager", () => {
     },
   ]);
 
+  const userList = ref<User[]>([]);
+  const loading = ref(false);
+  const pagination = reactive<TablePaginationConfig>({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+    showSizeChanger: true,
+    showTotal: (total) => `Total ${total} items`,
+    pageSizeOptions: ["10", "20", "50", "100"],
+  });
+
   // Actions
   async function fetchUsers(searchParams: UserPageSearchParams = {}) {
     loading.value = true;
@@ -149,6 +148,22 @@ export const useUserManagerStores = defineStore("userManager", () => {
     }
   }
 
+  async function deleteUserById(userId: number) {
+    try {
+      const response = await deleteUserByIdApi(userId);
+      if (response.code === 200) {
+        message.success("User deleted successfully.");
+        await fetchUsers({ ...searchParams });
+      } else {
+        message.error(response.msg || "Failed to delete user.");
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      message.error("An error occurred while deleting the user.");
+    } finally {
+    }
+  }
+
   function setPage(page: number, size?: number) {
     pagination.current = page;
     if (size) {
@@ -168,5 +183,6 @@ export const useUserManagerStores = defineStore("userManager", () => {
     // Actions
     fetchUsers,
     setPage,
+    deleteUserById,
   };
 });
