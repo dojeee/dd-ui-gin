@@ -24,3 +24,7 @@ export const listUsersApi = () => {
 export const queryUsersByPageApi = (params: any): Promise<ApiResponse> => {
   return apiService.post("/users/queryByPage", params);
 };
+
+export const deleteUserByIdApi = (userId: any): Promise<ApiResponse> => {
+  return apiService.post("/users/delete", { userId: userId });
+};
