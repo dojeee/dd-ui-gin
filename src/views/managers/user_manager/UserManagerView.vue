@@ -111,7 +111,7 @@ import {
   DownOutlined,
   DownloadOutlined,
 } from "@ant-design/icons-vue";
-import { useUserManagerStores } from "@/stores/userManagerStores";
+import { useUserManagerStores } from "@/stores/managers/userManagerStores";
 import { storeToRefs } from "pinia";
 import type { TablePaginationConfig } from "ant-design-vue";
 import { debounce } from "lodash-es";

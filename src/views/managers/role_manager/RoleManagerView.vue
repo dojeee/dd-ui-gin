@@ -111,7 +111,7 @@
 </template>
 <script setup lang="ts">
 import { h, ref, onMounted, onBeforeUnmount } from "vue";
-import { useRoleManagerStores } from "@/stores/roleManagerStores";
+import { useRoleManagerStores } from "@/stores/managers/roleManagerStores";
 import { storeToRefs } from "pinia";
 import { Role } from "@/types/role";
 import { TablePaginationConfig } from "ant-design-vue";
